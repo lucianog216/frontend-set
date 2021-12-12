@@ -1,0 +1,75 @@
+
+
+  
+
+  <body>
+   <form form [formGroup]="usuarioForm">
+
+  <div class="wrapper">
+      <div class="left">
+          <img [src]="'http://localhost:8080/api/uploads/usuarios/'+ uid " 
+          alt="user" width="100">
+          
+      </div>
+      <div class="right">
+          <div class="info">
+              <h3>Informacion</h3>
+              <div class="info_data">
+                   <div class="data">
+                      
+                      <h4>Nombre</h4>
+                      <input type="text" class="from-control" formControlName="nombre" >
+                   </div>
+                   <div class="data">
+                     <h4>Apellido</h4>
+                      <input type="text" class="from-control"  formControlName="apellido" >
+                </div>
+                <div class="data">
+                  <h4>Correo</h4>
+                  <input type="text" class="from-control" formControlName="correo">
+               </div>
+              </div>
+              <div class="info_data">
+                <div class="data">
+             </div>
+           </div>
+              <div class="info_data">
+                <div class="data">
+                   <h4>N. de Celular </h4>
+                   <input type="text" class="from-control" formControlName="celular">
+                </div>
+                <div class="data">
+                   <h4>T. de usuario</h4>
+                   <input type="text" class="from-control" formControlName="rol">
+             </div>
+             <div class="data">
+                <h4>Rut</h4>
+                <input type="text" class="from-control" formControlName="rut">
+            </div>
+           </div>
+              <div class="info_data">
+                <div class="data">
+                   <h4>Region </h4>
+                   <input type="text" class="from-control" formControlName="region">
+                </div>
+                <div class="data">
+                   <h4>Ciudad</h4>
+                   <input type="text" class="from-control" formControlName="ciudad">
+             </div>
+             <div class="data">
+                <h4>F. de ingreso</h4>
+                <input type="text" class="from-control" formControlName="ingreso">
+            </div>
+           </div>
+              <div class="info_data">
+           </div>
+          </div>
+          <div class="social_media">
+
+             <button type="button" style="margin-left: 10px" class="btn btn-outline-info waves-effect" routerLink="/guardia/list" >Regresar</button>
+
+          </div>
+      </div>
+  </div>
+  </form>
+  </body>

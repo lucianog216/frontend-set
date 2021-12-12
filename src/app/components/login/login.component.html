@@ -1,0 +1,62 @@
+<!-- <div class="c">
+    <form class="login" (submit)="signIp()" >
+      <p class="title">iniciar sesion</p>
+      <input type="text" placeholder="Usuario" [(ngModel)]="user.correo" name="correo" autofocus />
+      <i class="fa fa-user"></i>
+      <input type="password" [(ngModel)]="user.password" name="password" placeholder="Conatraseña" />
+      <i class="fa fa-key"></i>
+      <a href="#">¿Has olvidado tu contraseña?</a>
+      <button type="submit">
+        <i class="spinner"></i>
+        <span class="state">INGRESAR</span>
+      </button>
+    </form>
+    
+  </div> -->
+
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+
+<body>
+    <div class="container">
+        <div class="myCard">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="myLeftCtn">
+                        <form class="myForm text-center" (submit)="signIp()">
+                            <header>Iniciar Sesion</header>
+                            <div class="form-group">
+                                <i class="fas fa-user"></i>
+                                <input class="myInput" type="text" placeholder="Correo Electronico" [(ngModel)]="user.correo" name="Correo" required>
+                            </div>
+                            <div class="form-group">
+                                <i class="fas fa-lock"></i>
+                                <input class="myInput" type="password" [(ngModel)]="user.password" name="password" placeholder="Conatraseña" required>
+                            </div>
+
+                            <div class="form-groupp">
+                                <input type="submit" class="butt" value="INGRESAR">
+                            </div>
+
+                            <div id="google-btn" data-onsuccess="onSignIn" style="margin: 20px auto 0; ">
+                                <div id="my-signin2"></div>
+                            </div>
+                            <!--                               <a class="btn btn-block btn-social  btn-google" (click)="login()" type="button">
+                                <span class = "fa fa-google"> | </span> Iniciar sesión en Google
+                              </a> -->
+
+                        </form>
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="myRightCtn"> 
+                    
+
+                        <img class="foto" src= "../../../assets/FotoLgin4200.png">
+                    
+
+                   </div>
+                </div>
+            </div>
+        </div>
+    </div>

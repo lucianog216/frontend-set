@@ -1,0 +1,103 @@
+body{
+    background:none;
+    position:center ;
+
+}
+.p{
+    text-align: center;
+    font-size: 200%;
+    color: rgb(12, 12, 12);
+    font-style: initial;
+    text-shadow: rgb(14, 13, 13) 0 0 10px;
+  }
+#advanced-search-form{
+    background-color: #fff; 
+    max-width: 1200px;
+    margin: 10px auto 0;
+    padding: 30px;
+    color: #858b8e;
+    box-shadow: 6px 6px 6px rgba(0,0,0,0.2);
+}
+
+
+#advanced-search-form .form-group{
+	margin-bottom: 20px;
+    margin-left:20px;
+	width: 30%;
+    float:left ;
+    text-align: left;
+    position: absolute center ;
+}
+.text-danger{
+	
+    position: absolute center ;
+}
+#advanced-search-form .form-groupp{
+	margin-bottom: 20px;
+    margin-right: 55px;
+    margin-left: 20px;
+	width: 25%;
+    float:left ;
+    text-align: left;
+    position: absolute center ;
+}
+
+#advanced-search-form-form-group .f{
+
+    padding: 12px 20px;
+    margin-left:40px;
+    height: 50px;
+    border-radius: 2px;
+    margin-bottom: 15px;
+    border: 1px solid #aaa;
+}
+
+
+.form-control{
+    padding: 12px 20px;
+    height: auto;
+    border-radius: 2px;
+    margin-bottom: 15px;
+    border: 1px solid #aaa;
+}
+
+
+#advanced-search-form .btn{
+    width: 46%;
+    margin: 10px auto 0;
+    display: block;
+    outline: none;
+}
+
+@media screen and (max-width: 800px){
+    #advanced-search-form .form-group{
+        width: 45%;
+    }#advanced-search-form .form-groupp{
+        width: 45%;
+    }
+
+
+    #advanced-search-form{
+        margin-top: 0;
+    }
+}
+
+@media screen and (max-width: 560px){
+    #advanced-search-form .form-group{
+        width: 100%;
+        margin-left: 0;
+    }
+    #advanced-search-form .form-groupp{
+        width: 100%;
+        margin-left: 0;
+    }
+    
+
+    #advanced-search-form h2{
+        text-align: center;
+    }
+}
+
+
+
+

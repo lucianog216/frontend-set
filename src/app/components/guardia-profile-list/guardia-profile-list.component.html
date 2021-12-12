@@ -1,0 +1,234 @@
+<!--<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" routerLink="/usuario">
+        <i class="fas fa-link"></i> SET
+      </a>
+     
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ">
+          
+          <li class="nav-item dropdown">
+            
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/guardia/list">Visualizacion General</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/usuario/usuario_guardia_lista">Lista de Guardia</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/usuario/usuario_supervisor_lista">Supervisores</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link " routerLink="/usuario/usuario_guardia_lista">Guardias</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" routerLink="" (click)="logout()" >Salir</a>
+          </li>
+          
+        </ul>
+        
+          
+      </div>
+    </div>
+  </nav>-->
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" routerLink="/usuario">
+        <i class="fas fa-link"></i> SET
+      </a>
+     
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ">
+          
+          <li class="nav-item dropdown">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/guardia/calendario">Calendario </a>
+            </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/guardia/list_turno">Turnos </a>
+          </li>
+          
+          <!--<li class="nav-item">
+            <a class="nav-link" routerLink="/usuario/usuario_supervisor_lista">Supervisores</a>
+          </li>-->
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/guardia/list_equipos"> Mi Equipos</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link " routerLink="">Mi historial</a>
+          </li>
+         
+        </ul>
+      </div>
+      <div class="nav-item ">
+  
+        <ul   class=navbar-nav ml-auto>
+          <li class=nav-item dropdown dropdown-menu-right>
+            <a class=nav-link dropdown-toggle href=# id=navbarDropdown role=button data-toggle=dropdown aria-haspopup=true aria-expanded=false>
+              <i class="far fa-user"> </i>
+              <span class="user" style="margin-left: 10px;" >{{datoUsuario}}</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-dark" aria-labelledby=navbarDropdown>
+              <a class=dropdown-item routerLink="/guardia/info_personal">Informacion Personal</a>
+
+              <div class=dropdown-divider></div>
+              <a class=dropdown-item  routerLink="" (click)="logout()">Salir</a>
+            </div>
+          </li>
+        </ul>   
+      </div>
+    </div>
+  </nav>
+
+
+
+
+  
+  <div class="container">
+<div class="to">
+    <div class="row">
+      <div class="col-12 mt-3 mb-1">
+         
+        <p class="p"> Informacion General - Modulo Guardia</p>
+        
+      </div>
+    </div>
+    <div class="row ">
+      <div class="col ">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between px-md-1">
+              <div class="align-self-center">
+                <i class="fas fa-pencil-alt text-info fa-3x"></i>
+              </div>
+              <div class="text-end">
+                <h3>3</h3>
+                <p class="mb-0">Total Administradores</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between px-md-1">
+              <div class="align-self-center">
+                <i class="far fa-comment-alt text-warning fa-3x"></i>
+              </div>
+              <div class="text-end">
+                <h3>2</h3>
+                <p class="mb-0">Total Supervisores</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between px-md-1">
+              <div class="align-self-center">
+                <i class="far fa-user text-success fa-3x"></i>
+              </div>
+              <div class="text-end">
+                <h3>7</h3>
+                <p class="mb-0">Total Guardias</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between px-md-1">
+              <div class="align-self-center">
+                <i class="far fa-user text-success fa-3x"></i>
+              </div>
+              <div class="text-end">
+                <h3>{{totalUsuario}}</h3>
+                <p class="mb-0">Total Usuarios</p>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+     </div>
+     
+     </div>
+    </div>
+
+
+
+     <div class="container-fluid">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" 
+      class="table table-striped table-bordered row-border hover">
+        
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Correo electrónico</th>
+            <th>Tipo de usuario</th>
+            <th>Accion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let usuarios of listUsuario" >
+            <td><strong>{{usuarios.nombre}}</strong></td>
+            <td>{{usuarios.apellido}}</td>
+            <td>{{usuarios.correo}}</td>
+            <td>{{usuarios.rol}}</td>
+            <td><button [routerLink]="['/guardia/usuariodescripcion', usuarios.uid]" type="button" class="btn" style="background-color:#1b9e1d;border: 0px !important;color:white;" data-toggle="tooltip" title="Ver Solicitud"><i class="fa fa-eye" aria-hidden="true"></i> </button>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+
+
+
+
+
+
+
+     <!--<table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Correo electrónico</th>
+          <th>Tipo de usuario</th>
+          <th>Accion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let usuarios of listUsuario" >
+          <td><strong>{{usuarios.nombre}}</strong></td>
+          <td>{{usuarios.apellido}}</td>
+          <td>{{usuarios.correo}}</td>
+          <td>{{usuarios.rol}}</td>
+          <td><button type="button" [routerLink]="['/guardia/usuariodescripcion', usuarios.uid]" class="btn btn-outline-primary ">Visualizacion</button>
+
+        </tr>
+        
+        
+                 
+        
+        
+        
+      </tbody>
+    </table>-->
+  
+  
+  
+     
+  
+    
+  

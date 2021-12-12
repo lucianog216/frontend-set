@@ -1,0 +1,128 @@
+<!--<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" routerLink="/usuario">
+        <i class="fas fa-link"></i> SET
+      </a>
+     
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ">
+          
+          <li class="nav-item dropdown">
+            
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/guardia/list">Visualizacion General</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/usuario/usuario_guardia_lista">Lista de Guardia</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/usuario/usuario_supervisor_lista">Supervisores</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link " routerLink="/usuario/usuario_guardia_lista">Guardias</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" routerLink="" (click)="logout()" >Salir</a>
+          </li>
+          
+        </ul>
+        
+          
+      </div>
+    </div>
+  </nav>-->
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" routerLink="/usuario">
+        <i class="fas fa-link"></i> SET
+      </a>
+     
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ">
+          
+          <li class="nav-item dropdown">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/guardia/calendario">Calendario </a>
+            </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/guardia/list_turno">Turnos </a>
+          </li>
+          
+          <!--<li class="nav-item">
+            <a class="nav-link" routerLink="/usuario/usuario_supervisor_lista">Supervisores</a>
+          </li>-->
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/guardia/list_equipos"> Mi Equipos</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link " routerLink="">Mi historial</a>
+          </li>
+         
+        </ul>
+      </div>
+      <div class="nav-item ">
+  
+        <ul   class=navbar-nav ml-auto>
+          <li class=nav-item dropdown dropdown-menu-right>
+            <a class=nav-link dropdown-toggle href=# id=navbarDropdown role=button data-toggle=dropdown aria-haspopup=true aria-expanded=false>
+              <i class="far fa-user"> </i>
+              <span class="user" style="margin-left: 10px;" >{{datoUsuario}}</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-dark" aria-labelledby=navbarDropdown>
+              <a class=dropdown-item routerLink="/guardia/info_personal">Informacion Personal</a>
+
+              <div class=dropdown-divider></div>
+              <a class=dropdown-item  routerLink="" (click)="logout()">Salir</a>
+            </div>
+          </li>
+        </ul>   
+      </div>
+    </div>
+  </nav>
+
+  
+  <div class="container">
+
+    <div class="row">
+      <div class="col-12 mt-3 mb-1">
+        <p class="p">  Visualizacion Turnos - Modulo Administrador</p>
+      </div>
+    </div>
+
+  
+    <div class="container">
+
+      <link rel="stylesheet" href="https://cdn.lineicons.com/3.0/lineicons.css"> 
+      <section class="price_plan_area section_padding_130_80" id="pricing" >
+            <div class="container" style="margin: 30px auto 0;" >
+              
+              <div class="row justify-content-center"  >
+                <!-- Single Price Plan Area-->
+                <div class="col-12 col-sm-8 col-md-6 col-lg-4" *ngFor="let turnos of listturnos"    >
+                  <div class="single_price_plan wow fadeInUp" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+                    <div class="title">
+                      <p>Usuario creador: </p>
+                      <h3>{{turnos.usuario.nombre}}</h3>
+                      <div class="line"></div>
+                    </div>
+                    <div class="price">
+                      <h4>{{turnos.nombre}}</h4>
+                    </div>
+                    <div class="description">
+                      <p><i class="lni lni-checkmark-circle"></i>Ingreso: {{turnos.ingreso}}</p>
+                      <p><i class="lni lni-checkmark-circle"></i>Salida: {{turnos.salida}}</p>
+                      <p><i class="lni lni-checkmark-circle"></i>Total horas: {{turnos.horas}}Hrs</p>
+                      <p><i class="lni lni-checkmark-circle"></i>Colacion: {{turnos.colacion}}</p>
+                    
+                    </div>
+                  
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          </section>
+    </div> 
+    
+</div>   

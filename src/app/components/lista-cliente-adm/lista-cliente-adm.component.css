@@ -1,0 +1,16 @@
+.p{
+    text-align: center;
+    font-size: 200%;
+    color: rgb(12, 12, 12);
+    font-style: initial;
+    text-shadow: rgb(14, 13, 13) 0 0 10px;
+  }
+  .container-fluid{
+    width: 1000px;
+    background-color:white;
+    margin: 25px auto 0;
+    border-radius: 15px;
+    padding: 10px;
+    text-align: center;
+  }
+  

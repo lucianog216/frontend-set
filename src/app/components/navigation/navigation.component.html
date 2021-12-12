@@ -1,0 +1,25 @@
+
+
+
+        <h2 class="p">Guardia elimiar</h2>
+  
+        <body>
+
+            <form form [formGroup]="teamsForm"  >
+           
+            
+                <div class="form-groupp">
+                    <label class="nombre text-dark">Guardias</label>
+                    <select class="f"  class="form-select form-select-lg mb-1" formControlName="guardia" style="height: 50px;"  >
+                      <option *ngFor="let results of listResults1" [value]="results.uid" >Nombre: {{results.nombre}}</option>
+                          
+                  </select>
+                </div>
+                <p class="center-content">
+                    <input  class="btn btn-info btn-lg btn-responsive"value="Agregar Equipo">
+                </p>
+            </form>
+        </body>
+
+
+        
