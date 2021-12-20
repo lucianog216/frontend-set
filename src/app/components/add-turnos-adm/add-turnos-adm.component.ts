@@ -15,7 +15,7 @@ export class AddTurnosAdmComponent implements OnInit {
   totalturnos: number = 0;
   datoUsuario=[];
   turnoForm: FormGroup;
-  titulo = 'Agregar Turno';
+  titulo = 'Agregar Horario';
   _id: string | null;
 
   constructor(private fb: FormBuilder, 
@@ -85,7 +85,7 @@ export class AddTurnosAdmComponent implements OnInit {
 //obtener y editar
 geteditarTurno(){
   if(this._id !== null) {
-    this.titulo = 'Editar Turno';
+    this.titulo = 'Editar Horario';
     this.usuarioService.obtenerTurnos(this._id).subscribe(data =>{
       console.log(data);
       this.turnoForm.patchValue({
@@ -100,13 +100,17 @@ geteditarTurno(){
 }
   logout(){
     localStorage.removeItem('token');
-    localStorage.removeItem('rol');
-    localStorage.removeItem('nombre');
-    localStorage.removeItem('correo');
-    localStorage.removeItem('apellido');
-    localStorage.removeItem('celular');
-    localStorage.removeItem('uid')
-    this.router.navigate(['login'])
+      localStorage.removeItem('rol');
+      localStorage.removeItem('nombre');
+      localStorage.removeItem('correo');
+      localStorage.removeItem('apellido');
+      localStorage.removeItem('celular');
+      localStorage.removeItem('uid');
+      localStorage.removeItem('region');
+      localStorage.removeItem('direccion');
+      localStorage.removeItem('ciudad');
+      localStorage.removeItem('team');
+      this.router.navigate(['login'])
   }
 
 }

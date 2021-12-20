@@ -137,7 +137,7 @@ export class InformacionPersonalUsuarioComponent implements OnInit {
       region: this.usuarioForm.get('region')?.value,
       ciudad: this.usuarioForm.get('ciudad')?.value,
       direccion: this.usuarioForm.get('direccion')?.value,
-      img: this.usuarioForm.get('img')?.value,
+      
       
     }
     if (this.uid !== null)
@@ -186,6 +186,10 @@ export class InformacionPersonalUsuarioComponent implements OnInit {
       localStorage.removeItem('apellido');
       localStorage.removeItem('celular');
       localStorage.removeItem('uid');
+      localStorage.removeItem('region');
+      localStorage.removeItem('direccion');
+      localStorage.removeItem('ciudad');
+      localStorage.removeItem('team');
       this.router.navigate(['login'])
   }
 

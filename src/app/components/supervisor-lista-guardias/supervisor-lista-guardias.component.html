@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 	<div class="container">
-	  <a class="navbar-brand" routerLink="/usuario">
+	  <a class="navbar-brand" routerLink="/supervisor/lista_guardia">
 		<i class="fas fa-link"></i> SET
 	  </a>
 	 
@@ -23,12 +23,21 @@
 			  <li><a class="dropdown-item" routerLink="/supervisor/AgregarGuardia" >Agregar Guardias</a></li>
 			</ul>
 		  </li>
-		  <li class="nav-item" style="margin-left: 15px;">
-			<a class="nav-link" routerLink="/supervisor/CalendarioMañana">Calendario</a>
+		  <li class="nav-item dropdown" style="margin-left: 15px;">
+			<a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+			  Turnos
+			</a>
+			<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+			  <li><a class="dropdown-item" routerLink="/supervisor/list_turnos">Visualizacion turnos</a></li>
+			  <div class=dropdown-divider></div>
+			 
+			  <li><a class="dropdown-item"  routerLink="/supervisor/turnero"> Agregar turnos </a></li>
+			</ul>
 		  </li>
+
 		  
 		  <li class="nav-item" style="margin-left: 15px;">
-			<a class="nav-link" routerLink="/supervisor/list_turnos">Turnos</a>
+			<a class="nav-link" routerLink="/supervisor/CalendarioMañana">Calendario</a>
 		  </li>
           <li class="nav-item" style="margin-left: 15px;">
 			<a class="nav-link" routerLink="/supervisor/list_equipos" >Visualizar Equipos</a>
@@ -39,7 +48,8 @@
 		  <li class="nav-item" style="margin-left: 15px;">
 			<a class="nav-link" routerLink="/supervisor/servicio_add"> Servicios </a>
 		  </li>
-		</ul>
+		  
+		</ul> 
 	  </div>
 	  <div class="nav-item ">
   
@@ -70,6 +80,7 @@
 
 
 
+
 <div class="to">
   <div class="row">
     <div class="col-12 mt-3 mb-1">
@@ -79,68 +90,26 @@
     </div>
   </div>
   <div class="row ">
-    <div class="col ">
-      <div class="card">
-        <div class="card-body">
-          <div class="d-flex justify-content-between px-md-1">
-            <div class="align-self-center">
-              <i class="fas fa-pencil-alt text-info fa-3x"></i>
-            </div>
-            <div class="text-end">
-              <h3>3</h3>
-              <p class="mb-0">Total Administradores</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col">
-      <div class="card">
-        <div class="card-body">
-          <div class="d-flex justify-content-between px-md-1">
-            <div class="align-self-center">
-              <i class="far fa-comment-alt text-warning fa-3x"></i>
-            </div>
-            <div class="text-end">
-              <h3>2</h3>
-              <p class="mb-0">Total Supervisores</p>
+    <div class="col " *ngFor="let turnos of listturnos" >
+		<div class="card">
+			<div class="card-body">
+			  <div class="d-flex justify-content-between px-md-1">
+				<div class="align-self-center">
+				  <i class="far fa-comment-alt text-warning fa-3x"></i>
+				</div>
+				<div class="text-end">
+              <h3>{{turnos.nombre}}</h3>
+              <p class="mb-0">Ingreso: {{turnos.ingreso}}</p>
+			  <p class="mb-0">Salida: {{turnos.salida}}</p>
             </div>
           </div>
         </div>
       </div>
     </div>
     
-    <div class="col">
-      <div class="card">
-        <div class="card-body">
-          <div class="d-flex justify-content-between px-md-1">
-            <div class="align-self-center">
-              <i class="far fa-user text-success fa-3x"></i>
-            </div>
-            <div class="text-end">
-              <h3>{{totalResults}}</h3>
-              <p class="mb-0">Total Guardias</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col">
-      <div class="card">
-        <div class="card-body">
-          <div class="d-flex justify-content-between px-md-1">
-            <div class="align-self-center">
-              <i class="far fa-user text-success fa-3x"></i>
-            </div>
-            <div class="text-end">
-              <h3>{{totalUsuario}}</h3>
-              <p class="mb-0">Total Usuarios</p>
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    
+    
+    
    </div>    
    </div>
 
@@ -160,7 +129,7 @@
             <th>Nombre</th>
           <th>Apellido</th>
           <th>Correo electrónico</th>
-          <th>Celular</th>
+         
           <th>Tipo de usuario</th>
           <th>Teams</th>
           <th>Accion</th>
@@ -172,7 +141,7 @@
             <td><strong>{{results.nombre}}</strong></td>
             <td>{{results.nombre}}</td>
             <td>{{results.correo}}</td>
-            <td>{{results.celular}}</td>
+           
             <td>{{results.rol}}</td>
             <td *ngIf="results.team">{{results.team.nombre}}</td>
             <td *ngIf="!results.team"></td>
@@ -185,26 +154,4 @@
       
 
 
- <!-- <table>
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Apellido</th>
-        <th>Correo electrónico</th>
-        <th>Tipo de usuario</th>
-        <th>Accion</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let results of listResults " >
-        <td><strong>{{results.nombre}}</strong></td>
-        <td>{{results.apellido}}</td>
-        <td>{{results.correo}}</td>
-        <td>{{results.rol}}</td>
-        <button [routerLink]="['/guardia/editar', results.uid]"  style="margin-left: 5px" class="btn btn-outline-success" >Editar</button>
-       
-      </tr>
-  
-    </tbody>
-  </table>-->
   

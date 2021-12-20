@@ -21,6 +21,9 @@ export class GuardiaCalendarioComponent implements OnInit {
   public options: any;
 
 
+  
+
+
   totalUsuario: number = 0;
   totalResults: number = 0;
   totalclientes: number = 0;
@@ -31,6 +34,8 @@ export class GuardiaCalendarioComponent implements OnInit {
   celularUser=[];
   rolUser=[];
   uidUser=[];
+  data2=[]
+  data3=[]
   imgUser=[];
   img=[];
   direccionUser=[];
@@ -38,6 +43,7 @@ export class GuardiaCalendarioComponent implements OnInit {
   ciudaduser =[];
   usuarioForm: FormGroup;
   uid: string | null;
+  datoUid : string
   constructor(private router: Router,
     private usuarioService: UsuarioService,
     private aRouter: ActivatedRoute,
@@ -60,40 +66,34 @@ export class GuardiaCalendarioComponent implements OnInit {
     this.obtenerClientes()
     this.obtenerUsuario()
     this.obtenerSupervisores()
+    
+    this.obtenerTurnero1();
+
+
+    
 
     this.options = {
-      plugins: [dayGridPlugin,timeGridPlugin,interactionPlugin],
-      defaulDate: new Date(),
+      plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
+      defaultDate: new Date(),
       locale: esLocale,
+      timeZone: 'UTC',
+      
       header: {
         left: 'prev,next',
         center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        right: 'dayGridMonth,timeGridWeek,list',
+        color: '#ff9f89',
+        
+        display: 'background',
       },
-      editable: false
+      eventColor: '#378006',
+     
+      dayMaxEvents: true, // allow "more" link when too many events
+      editable: true,
+      selectable: true,
+     
     }
-
-    this.events = [
-      {
-        title: "evento 1",
-        start: new Date(),
-        description: "Evento1"
-      },
-      {
-        title: "evento 2",
-        start: new Date(new Date().getTime()+ 86400000),
-        description: "Evento 2"
-      },
-      {
-        title: "evento 3",
-        start: new Date(new Date().getTime()+ (86400000 * 2) ), 
-        end: new Date(new Date().getTime()+ (86400000 * 3) ), 
-        description: "Evento 3"
-      }
-
-
-    ]
-
+   
 
 
     var datoNombre = localStorage.getItem('nombre');
@@ -121,13 +121,7 @@ export class GuardiaCalendarioComponent implements OnInit {
     }else{
       this.correoUser = JSON.parse(datoCorreo)
     }
-   /* var datoImg = localStorage.getItem('img');
-    if(datoImg == null){
-      this.imgUser =[];
-      console.log(this.imgUser);
-    }else{
-      this.imgUser = JSON.parse(datoImg)
-    }*/
+   
     var datociudad = localStorage.getItem('ciudad');
     if(datociudad == null){
       this.ciudaduser =[];
@@ -145,44 +139,96 @@ export class GuardiaCalendarioComponent implements OnInit {
       this.direccionUser =[];
     }else{
       this.direccionUser = JSON.parse(datodireccion)
-    }
-    
-
-    if (this.uid !== null)
-    this.usuarioService.obtenerimg(this.uid).subscribe(res=>{
-     localStorage.setItem('img2', res); 
-     console.log(res);
+    }var datoid = localStorage.getItem('uid');
+    if(datoid == null){
      
-    })
-    
-   
-  }
-  
-  addUsuario(){
-   
-    
-
-    const USUARIO : usuario = {
-     
-      nombre: this.usuarioForm.get('nombre')?.value,
-      apellido: this.usuarioForm.get('apellido')?.value,
-      celular: this.usuarioForm.get('celular')?.value,
-      password: this.usuarioForm.get('password')?.value,
-      correo: this.usuarioForm.get('correo')?.value,
-      rol: this.usuarioForm.get('rol')?.value,
-      rut: this.usuarioForm.get('rut')?.value,
-      region: this.usuarioForm.get('region')?.value,
-      ciudad: this.usuarioForm.get('ciudad')?.value,
-      direccion: this.usuarioForm.get('direccion')?.value,
-      img: this.usuarioForm.get('img')?.value,
+    }else{
+      this.datoUid = datoid
       
     }
-    if (this.uid !== null)
-      this.usuarioService.editarUsuario(this.uid, USUARIO).subscribe(data =>{})
-      this.toastr.info('El usuario fue actualizado con exito!', 'Usuario actualizado');
-      this.router.navigate(['/usuario'])  
     
+   
   }
+  obtenerTurnero1() {
+
+  var datoid = localStorage.getItem('uid');
+  if(datoid == null){
+   
+  }else{
+    this.datoUid = datoid
+    console.log(this.datoUid)
+  }
+    this.usuarioService.getTurnerosid(this.datoUid).subscribe(data => {
+      this.data3 = data.results[0];
+     
+      this.events=[];
+
+      for(let i=0;i<this.data3.length;i++){
+        
+        this.events.push(   
+       
+          {
+
+            title : this.data3[i].guardia.nombre,
+            start: this.data3[i].inicio,
+            end: this.data3[i].final,
+            description: this.data3[i].descripcion,
+          }
+        );
+      
+         
+      }
+
+  }, error => {
+    console.log(error);
+  })
+}
+  
+
+
+
+ /* obtenerTurnero() {
+    this.usuarioService.getTurneros().subscribe(data => {
+      this.data2 = data.turnos;
+      this.events=[];
+      console.log(this.data2);
+      for(let i=0;i<this.data2.length;i++){
+        this.events.push(   
+          {
+
+            title : this.data2[i].cliente.nombre,
+            
+            start: this.data2[i].inicio,
+            end: this.data2[i].final,
+            description: this.data2[i].descripcion,
+          }
+        );
+      
+         
+      }
+    
+      
+      
+      // this.events =  [
+       
+      //   {
+      //     title : data.titulo,
+      //     start: data.inicio,
+      //     end: "2021-12-10T16:23:00",
+      //     descripcion: "Evento1"
+      //   },
+        
+      //  ]
+
+
+
+    }, error => {
+      console.log(error);
+    })
+  }*/
+
+  
+  
   obtenerUsuario() {
     this.usuarioService.getUsuarios().subscribe(data => {
      this.totalUsuario = data.total;
@@ -223,6 +269,10 @@ export class GuardiaCalendarioComponent implements OnInit {
       localStorage.removeItem('apellido');
       localStorage.removeItem('celular');
       localStorage.removeItem('uid');
+      localStorage.removeItem('region');
+      localStorage.removeItem('direccion');
+      localStorage.removeItem('ciudad');
+      localStorage.removeItem('team');
       this.router.navigate(['login'])
   }
 

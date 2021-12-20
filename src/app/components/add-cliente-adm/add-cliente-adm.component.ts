@@ -139,13 +139,17 @@ geteditarCliente(){
 
   logout(){
     localStorage.removeItem('token');
-    localStorage.removeItem('rol');
-    localStorage.removeItem('nombre');
-    localStorage.removeItem('correo');
-    localStorage.removeItem('apellido');
-    localStorage.removeItem('celular');
-    localStorage.removeItem('uid')
-    this.router.navigate(['login'])
+      localStorage.removeItem('rol');
+      localStorage.removeItem('nombre');
+      localStorage.removeItem('correo');
+      localStorage.removeItem('apellido');
+      localStorage.removeItem('celular');
+      localStorage.removeItem('uid');
+      localStorage.removeItem('region');
+      localStorage.removeItem('direccion');
+      localStorage.removeItem('ciudad');
+      localStorage.removeItem('team');
+      this.router.navigate(['login'])
   }
 
 }

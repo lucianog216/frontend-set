@@ -14,9 +14,10 @@ export interface RESTListarUsuario2 {
 }
 
 export interface servicio{
-    titulo: string;
+    title: string;
     descripcion: string;
     turno: string; 
+    date: string;
 }
 
 export interface login{
@@ -193,11 +194,13 @@ export interface Servicio {
     imagenes:    any[];
     estado:      boolean;
     evento?:     any[];
-    titulo:      string;
+    title:      string;
     descripcion: string;
     turno:       Cliente;
     usuario?:    string;
-    inicio:      Date;
+    start:        string;
+    end:        string;
+    date:      Date;
     id:          string;
     usuarioIn?:  Cliente;
     termino?:    Date;
@@ -205,15 +208,47 @@ export interface Servicio {
     team?:       Cliente | null;
     cliente?:    Cliente;
 }
+
 export interface IEvent {
+    title: string,
+    start: string,
+    end: string,
+}
+ 
+export interface IEvent2 {
+    
+
+    title: string,
+    start: string,
+    end: string,
+        
+    
+
+}
+export interface IEvent1 {
     id?: string;
     title: string;
-    start: Date;
-    end: Date;
+    start: string;
+    end: string;
     descripcion: string;
+   
     
 }
+
+
+
+
 export interface Cliente {
     _id:    string;
     nombre: string;
+}
+
+
+
+export interface turneros{
+    guardia: string;
+    inicio: Date;
+    final: Date;
+    cliente: string;
+    turno: string;
 }

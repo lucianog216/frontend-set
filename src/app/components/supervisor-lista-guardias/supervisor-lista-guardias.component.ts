@@ -1,10 +1,11 @@
 import { Component, OnInit,OnDestroy } from '@angular/core';
-import { results } from 'src/app/interfaces/interfaces';
+import { Results, results } from 'src/app/interfaces/interfaces';
 import {Router} from '@angular/router';
 import Swal from 'sweetalert2';
 import { usuario } from 'src/app/models/Usuario';
 import { Subject } from 'rxjs';
 import { UsuarioService } from '../../services/usuario.service';
+import { Turnos } from 'src/app/models/Turnos';
 
 @Component({
   selector: 'app-supervisor-lista-guardias',
@@ -15,7 +16,11 @@ import { UsuarioService } from '../../services/usuario.service';
 export class SupervisorListaGuardiasComponent implements OnInit, OnDestroy {
   listUsuario: usuario[] = [];
   totalUsuario: number = 0;
+  listturnos: Turnos[] = [];
+  totalturnos: number = 0;
   listResults: results[] = [];
+  listResultsSuper: Results[] = [];
+  totalResultsSuper: number = 0;
   totalResults: number = 0;
   dtOptions: DataTables.Settings = {};
   datoUsuario=[];
@@ -42,10 +47,14 @@ export class SupervisorListaGuardiasComponent implements OnInit, OnDestroy {
     this.usuarioService.getResults().subscribe(data => {
       this.listResults = data.results;
       this.totalResults = data.total;
+      
        this.dtTrigger.next();
-       console.log(this.totalResults)
+       
       });
       this.obtenerUsuario();
+      this.obtenerSupervisores()
+      this.obtenerTurnos() ;
+      
   }
   obtenerUsuario() {
     this.usuarioService.getUsuarios().subscribe(data => {
@@ -56,8 +65,19 @@ export class SupervisorListaGuardiasComponent implements OnInit, OnDestroy {
       console.log(error);
     })
   }
+  obtenerTurnos() {
+    this.usuarioService.getTurnos().subscribe(data => {
+      this.totalturnos = data.totalturnos;
+      this.listturnos = data.turnos;
+      console.log(this.listturnos)
+    }, error => {
+      console.log(error);
+    })
+
+  }
   ngOnDestroy(): void{
     this.dtTrigger.unsubscribe();
+    this.obtenerSupervisores();
 
   }
   logout(){
@@ -68,7 +88,11 @@ export class SupervisorListaGuardiasComponent implements OnInit, OnDestroy {
       localStorage.removeItem('apellido');
       localStorage.removeItem('celular');
       localStorage.removeItem('uid');
-     this.router.navigate(['login'])
+      localStorage.removeItem('region');
+      localStorage.removeItem('direccion');
+      localStorage.removeItem('ciudad');
+      localStorage.removeItem('team');
+      this.router.navigate(['login'])
   }
   deleteUsuario(uid: string ) {
     Swal.fire({
@@ -95,6 +119,18 @@ export class SupervisorListaGuardiasComponent implements OnInit, OnDestroy {
         )
       }
     })      
+    }
+
+    obtenerSupervisores() {
+    
+      this.usuarioService.getResultsSupervisor().subscribe(data => {
+       this.listResultsSuper = data.results;
+       this.totalResultsSuper = data.total;
+       console.log('supervisor',this.totalResultsSuper);
+      }, error => {
+        console.log(error);
+       
+      })
     }
     
 

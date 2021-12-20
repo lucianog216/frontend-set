@@ -4,17 +4,21 @@ import { Subject } from 'rxjs';
 import {Router} from '@angular/router';
 import Swal from 'sweetalert2';
 import { Turnos } from 'src/app/models/Turnos';
+import * as moment from 'moment';
+import 'moment/locale/es';
 @Component({
   selector: 'app-supervisor-list-turnos',
   templateUrl: './supervisor-list-turnos.component.html',
   styleUrls: ['./supervisor-list-turnos.component.css']
 })
 export class SupervisorListTurnosComponent implements OnInit {
+  moment: any = moment;
   listturnos: Turnos[] = [];
   totalturnos: number = 0;
   datoUsuario=[];
   dtOptions: DataTables.Settings = {};
   dtTrigger = new Subject();
+  data2 =[]
 
   constructor(private usuarioService: UsuarioService, private router: Router) { }
 
@@ -35,9 +39,10 @@ export class SupervisorListTurnosComponent implements OnInit {
     }
     this.obtenerTurnos(); 
     
+    
 
-    this.usuarioService.getTurnos().subscribe(data => {
-       this.listturnos = data.turnos;
+    this.usuarioService.getTurneros().subscribe(data => {
+      this.data2 = data.turnos;
        this.dtTrigger.next();
       });
       
@@ -72,10 +77,11 @@ export class SupervisorListTurnosComponent implements OnInit {
     })      
     }
     
+  
     obtenerTurnos() {
-    this.usuarioService.getTurnos().subscribe(data => {
+    this.usuarioService.getTurneros().subscribe(data => {
       this.totalturnos = data.totalturnos;
-      this.listturnos = data.turnos;
+     
       console.log(this.listturnos)
     }, error => {
       console.log(error);
@@ -89,7 +95,11 @@ export class SupervisorListTurnosComponent implements OnInit {
       localStorage.removeItem('correo');
       localStorage.removeItem('apellido');
       localStorage.removeItem('celular');
-      localStorage.removeItem('uid')
+      localStorage.removeItem('uid');
+      localStorage.removeItem('region');
+      localStorage.removeItem('direccion');
+      localStorage.removeItem('ciudad');
+      localStorage.removeItem('team');
       this.router.navigate(['login'])
   }
 }

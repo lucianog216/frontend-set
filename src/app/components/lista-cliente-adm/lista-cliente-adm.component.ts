@@ -94,7 +94,11 @@ export class ListaClienteAdmComponent implements OnInit {
       localStorage.removeItem('correo');
       localStorage.removeItem('apellido');
       localStorage.removeItem('celular');
-      localStorage.removeItem('uid')
+      localStorage.removeItem('uid');
+      localStorage.removeItem('region');
+      localStorage.removeItem('direccion');
+      localStorage.removeItem('ciudad');
+      localStorage.removeItem('team');
       this.router.navigate(['login'])
   }
 }

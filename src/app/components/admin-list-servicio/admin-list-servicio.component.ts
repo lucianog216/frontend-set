@@ -3,6 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { RESTListarServi, Servicio } from 'src/app/interfaces/interfaces';
 import { UsuarioService } from '../../services/usuario.service';
 import { Subject } from 'rxjs';
+import * as moment from 'moment';
+import 'moment/locale/es';
+
 @Component({
   selector: 'app-admin-list-servicio',
   templateUrl: './admin-list-servicio.component.html',
@@ -10,7 +13,10 @@ import { Subject } from 'rxjs';
   providers:[UsuarioService]
 })
 export class AdminListServicioComponent implements OnInit {
+  moment: any = moment;
+  
   datoUsuario =[];
+  listteams2 =[];
   listServ: Servicio[] = [];
   totalServ: number = 0;
   dtOptions: DataTables.Settings = {};
@@ -19,7 +25,7 @@ export class AdminListServicioComponent implements OnInit {
     private usuarioService: UsuarioService,) { }
 
   ngOnInit(): void {
-    
+    this.obtenerSrev();
 
 
     var datoNombre = localStorage.getItem('nombre');
@@ -31,24 +37,29 @@ export class AdminListServicioComponent implements OnInit {
 
 }
 
- /* obtenerSrev() {
+  obtenerSrev() {
     this.usuarioService.getServicio().subscribe(data => {
       this.totalServ = data.total;
       this.listServ = data.servicios;
-      console.log(data)
+       this.listteams2= data.servicios;
+      console.log(this.listteams2)
     }, error => {
       console.log(error);
     })
-  }*/
+  }
   
   logout(){
     localStorage.removeItem('token');
-    localStorage.removeItem('rol');
-    localStorage.removeItem('nombre');
-    localStorage.removeItem('correo');
-    localStorage.removeItem('apellido');
-    localStorage.removeItem('celular');
-    localStorage.removeItem('uid')
-    this.router.navigate(['login'])
+      localStorage.removeItem('rol');
+      localStorage.removeItem('nombre');
+      localStorage.removeItem('correo');
+      localStorage.removeItem('apellido');
+      localStorage.removeItem('celular');
+      localStorage.removeItem('uid');
+      localStorage.removeItem('region');
+      localStorage.removeItem('direccion');
+      localStorage.removeItem('ciudad');
+      localStorage.removeItem('team');
+      this.router.navigate(['login'])
   }
 }

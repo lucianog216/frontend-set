@@ -4,27 +4,38 @@ import { Subject } from 'rxjs';
 import {Router} from '@angular/router';
 import Swal from 'sweetalert2';
 import {TeamRESP  } from 'src/app/interfaces/interfaces';
+import * as moment from 'moment';
+import 'moment/locale/es';
+
 @Component({
   selector: 'app-guardia-list-equipos',
   templateUrl: './guardia-list-equipos.component.html',
   styleUrls: ['./guardia-list-equipos.component.css']
 })
 export class GuardiaListEquiposComponent implements OnInit {
+  moment: any = moment;
   listteams: TeamRESP[] = [];
   uid: string | null;
   totalteams: number = 0;
   datoUsuario=[];
+  listteams2=[];
   apellidoUser=[];
   correoUser=[];
   celularUser=[];
   rolUser=[];
+  datoTeam : string
+  data3=[];
+  data4=[];
+  data5=[];
+  data6=[];
   uidUser=[];
   imgUser=[];
+  datoUid : string
   img=[];
   direccionUser=[];
   regionUser=[];
   ciudaduser =[];
-  teamuser=[];
+  teamuser : string;
   dtOptions: DataTables.Settings = {};
   dtTrigger = new Subject();
   constructor(private usuarioService: UsuarioService, private router: Router) {
@@ -43,7 +54,8 @@ export class GuardiaListEquiposComponent implements OnInit {
     
 
     this.obtenerTeams(); 
-    
+    this.obtenerTeams1();
+    this.obtenerTurnero2()
     var datoNombre = localStorage.getItem('nombre');
     if(datoNombre == null){
       this.datoUsuario =[];
@@ -69,13 +81,7 @@ export class GuardiaListEquiposComponent implements OnInit {
     }else{
       this.correoUser = JSON.parse(datoCorreo)
     }
-   /* var datoImg = localStorage.getItem('img');
-    if(datoImg == null){
-      this.imgUser =[];
-      console.log(this.imgUser);
-    }else{
-      this.imgUser = JSON.parse(datoImg)
-    }*/
+   
     var datociudad = localStorage.getItem('ciudad');
     if(datociudad == null){
       this.ciudaduser =[];
@@ -84,9 +90,9 @@ export class GuardiaListEquiposComponent implements OnInit {
     }
     var datoteam = localStorage.getItem('team');
     if(datoteam == null){
-      this.teamuser =[];
+     
     }else{
-      this.teamuser = JSON.parse(datoteam)
+      this.teamuser = (datoteam)
     }
     var datoregion = localStorage.getItem('region');
     if(datoregion == null){
@@ -116,20 +122,55 @@ export class GuardiaListEquiposComponent implements OnInit {
       
   }
   obtenerTeams() {
+  
     this.usuarioService.getTeams().subscribe(data => {
       this.totalteams = data.total;
       this.listteams = data.teams;
-      console.log(this.listteams[0].guardias[1].nombre);
+      this.listteams2= data.teams[1].guardias;
 
-      var listteams2= data.teams[0].guardias
-      if(listteams2 == null){
-        
-      }
+      
+
+      
       
     }, error => {
       console.log(error);
     })
   }
+
+  obtenerTeams1() {
+    var datoteam = localStorage.getItem ('team');
+    if(datoteam == null){
+      
+    }else{
+      this.teamuser = (datoteam)
+      console.log(this.teamuser)
+    }
+    this.usuarioService.getTurneroTeams(this.teamuser).subscribe(data => {
+      this.data3 = data.results[0];
+      console.log(this.data3)
+  }, error => {
+    console.log(error);
+  })
+}
+
+obtenerTurnero2() {
+  var datoid = localStorage.getItem('uid');
+  if(datoid == null){
+  }else{
+    this.datoUid = datoid
+    console.log(this.datoUid)
+  }
+    this.usuarioService.getTurnerosid(this.datoUid).subscribe(data => {
+      this.data4 = data.results[0];
+      for(let i=0;i<this.data4.length;i++){
+        this.data5 = this.data4[i].usuario.nombre,
+        this.data6 = this.data4[i].team.nombre
+      }
+      
+  }, error => {
+    console.log(error);
+  })
+}
   ngOnDestroy(): void{
     this.dtTrigger.unsubscribe();
   }
@@ -169,7 +210,11 @@ export class GuardiaListEquiposComponent implements OnInit {
       localStorage.removeItem('correo');
       localStorage.removeItem('apellido');
       localStorage.removeItem('celular');
-      localStorage.removeItem('uid')
+      localStorage.removeItem('uid');
+      localStorage.removeItem('region');
+      localStorage.removeItem('direccion');
+      localStorage.removeItem('ciudad');
+      localStorage.removeItem('team');
       this.router.navigate(['login'])
   }
 }

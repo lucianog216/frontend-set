@@ -39,6 +39,9 @@ import { AdminListServicioComponent } from './components/admin-list-servicio/adm
 import { GuardiaCalendarioComponent }from './components/guardia-calendario/guardia-calendario.component'
 import {SupervisorCalendarioComponent} from './components/supervisor-calendario/supervisor-calendario.component'
 import {SupervisorAddEventoComponent} from './components/supervisor-add-evento/supervisor-add-evento.component'
+import { Supervisor_turnerosComponent } from './components/supervisor_turneros/supervisor_turneros.component';
+import { SupervisorListaguardiaEquipoComponent } from './components/supervisor-listaguardia-equipo/supervisor-listaguardia-equipo.component';
+import { SupervisorTurnosListComponent } from './components/supervisor-turnos-list/supervisor-turnos-list.component';
 
 
 
@@ -125,6 +128,11 @@ pathMatch: 'full',
     canActivate: [ValidateRolAdminGuard]
   },
   {
+    path:'supervisor/turno_listas',
+    component:SupervisorTurnosListComponent,
+    canActivate: [ValidateRolAdminGuard]
+  },
+  {
     path:'supervisor/CalendarioMañana',
     component:SupervisorCalendarioComponent,
     canActivate: [ValidateRolAdminGuard]
@@ -159,6 +167,12 @@ pathMatch: 'full',
     path:'supervisor/list_turnos',
     component:SupervisorListTurnosComponent,
     canActivate: [ValidateRolAdminGuard]
+  },
+  {
+    path:'supervisor/listGuardia_equipo/:_id',
+    component: SupervisorListaguardiaEquipoComponent,
+    canActivate: [ValidateRolAdminGuard]
+  
   },
   {
     path:'supervisor/addGuardia_equipo/:_id',
@@ -243,6 +257,11 @@ pathMatch: 'full',
   canActivate: [ValidateRolAdminGuard]
 },
 {
+  path:'supervisor/turnero',
+  component:Supervisor_turnerosComponent,
+  canActivate: [ValidateRolAdminGuard]
+},
+{
   path:'supervisor/calendario_evento',
   component:SupervisorAddEventoComponent,
   canActivate: [ValidateRolAdminGuard]
@@ -260,9 +279,9 @@ pathMatch: 'full',
 
 },
 {
-  path: 'usuario/usuario_supervisor_lista',
+  path: 'usuario/usuario_supervisor_lista/:_id',
   component: UsuarioSupervisorListComponent,
-  
+  canActivate: [AuthGuard]
 },
 {
   path: 'login',

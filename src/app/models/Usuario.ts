@@ -8,12 +8,12 @@ export interface usuario {
     password: string;
     correo:   string;
     region:  {_id:string,
-      nombre:string};
+    nombre:string};
     ciudad:    string;
     direccion: string;
     rut:      string;
     rol:      string;
-    img:      string;
+   
   
 
 

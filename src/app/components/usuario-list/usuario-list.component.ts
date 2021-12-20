@@ -80,7 +80,11 @@ export class UsuarioListComponent implements OnDestroy, OnInit {
       localStorage.removeItem('apellido');
       localStorage.removeItem('celular');
       localStorage.removeItem('uid');
-     this.router.navigate(['login'])
+      localStorage.removeItem('region');
+      localStorage.removeItem('direccion');
+      localStorage.removeItem('ciudad');
+      localStorage.removeItem('team');
+      this.router.navigate(['login'])
     
   }
   

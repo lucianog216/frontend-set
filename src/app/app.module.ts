@@ -56,6 +56,10 @@ import { SupervisorCalendarioComponent } from './components/supervisor-calendari
 import { FullCalendarModule } from 'primeng/fullcalendar';
 import { CalendarModule } from 'primeng/calendar';
 import { SupervisorAddEventoComponent } from './components/supervisor-add-evento/supervisor-add-evento.component';
+import { Supervisor_turnerosComponent } from './components/supervisor_turneros/supervisor_turneros.component';
+import { SupervisorListaguardiaEquipoComponent } from './components/supervisor-listaguardia-equipo/supervisor-listaguardia-equipo.component';
+import {NgxPaginationModule} from 'ngx-pagination';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -95,6 +99,10 @@ import { SupervisorAddEventoComponent } from './components/supervisor-add-evento
     GuardiaCalendarioComponent,
     SupervisorCalendarioComponent,
     SupervisorAddEventoComponent,
+    Supervisor_turnerosComponent,
+    SupervisorListaguardiaEquipoComponent,
+    
+
 
 
   ],
@@ -107,11 +115,13 @@ import { SupervisorAddEventoComponent } from './components/supervisor-add-evento
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    CommonModule,
     ReactiveFormsModule,
     DataTablesModule,
     BrowserAnimationsModule,
     FullCalendarModule,
     CalendarModule,
+    NgxPaginationModule,
     ToastrModule.forRoot()
   
   ],

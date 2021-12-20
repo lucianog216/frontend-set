@@ -1,4 +1,7 @@
-body{font-family: Arial; background-color: #18A383; box-sizing: border-box;}
+.container-fluid{
+    background-color: rgb(255, 255, 255);
+    
+}
 .p{
     text-align: center;
     font-size: 200%;
@@ -12,66 +15,75 @@ form{
     color: #999;
     font-size: 0.8em;
     padding: 10px;
-    margin: 20px auto 0;	
+    margin: 5px auto 0;	
     width: 400px;
 float: center;
 }
-.nombre{
-    margin: 5px auto 0;
-    
-
-}
-.titulo{
-    padding: 10px;
-    text-align: center;
-    color: white;
-    text-shadow: #fff 0 0 10px;
-    
-}
-.field{
-    border: solid 1px #ccc;
-
-    padding: 10px;
-    float: center;
-    width: 360px;
-    
-}
-.field:focus{
-    border-color: #18A383;
-}
-.center-content{
-    text-align: center;
-}
-.form-groupp{
-margin-bottom: 20px;
-margin-left:20px;
-margin: 20px auto 0;
-width: 350px;
-float:center;
-text-align:left;
-
-}
-
-.btn{
-border-radius: 3px;
-margin: 30px auto 0;
-display: inline-block;
-padding: 10px 55px;
-text-decoration: none;
-text-shadow: 0 1px 0 #ffffff4d;
-box-shadow: 0 1px 1px rgba(0,0,0,0.3); 
-}
-
-.btn-green{
-color: white;
-background-color: #3CC93F;
-}
-.btn-green:hover{
-background-color: #37B839;	
-}
-.btn-green:active{
-background-color: #29962A;
-}
 
 
 
+.main-box {
+    background: #FFFFFF;
+    -webkit-box-shadow: 1px 1px 2px 0 #CCCCCC;
+    -moz-box-shadow: 1px 1px 2px 0 #CCCCCC;
+    -o-box-shadow: 1px 1px 2px 0 #CCCCCC;
+    -ms-box-shadow: 1px 1px 2px 0 #CCCCCC;
+    box-shadow: 1px 1px 2px 0 #CCCCCC;
+    margin-bottom: 16px;
+    -webikt-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+.table a.table-link.danger {
+    color: #e74c3c;
+}
+.label {
+    border-radius: 3px;
+    font-size: 0.875em;
+    font-weight: 600;
+}
+.user-list tbody td .user-subhead {
+    font-size: 0.875em;
+    font-style: italic;
+}
+.user-list tbody td .text-dark {
+    display: block;
+    font-size: 1.25em;
+    padding-top: 3px;
+    margin-left: 60px;
+}
+a {
+    color: #3498db;
+    outline: none!important;
+}
+.user-list tbody td>img {
+    position: relative;
+    max-width: 50px;
+    float: left;
+    margin-right: 15px;
+}
+
+.table thead tr th {
+    text-transform: uppercase;
+    font-size: 0.875em;
+}
+.table thead tr th {
+    border-bottom: 2px solid #e7ebee;
+}
+.table tbody tr td:first-child {
+    font-size: 1.125em;
+    font-weight: 300;
+}
+.table tbody tr td {
+    font-size: 0.875em;
+    vertical-align: middle;
+    border-top: 1px solid #e7ebee;
+    padding: 12px 8px;
+}
+a:hover{
+text-decoration:none;
+}
+
+.my-pagination .ngx-pagination .current {
+    background: red;
+  }

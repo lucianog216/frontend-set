@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 	<div class="container">
-	  <a class="navbar-brand" routerLink="/usuario">
+	  <a class="navbar-brand" routerLink="/supervisor/lista_guardia">
 		<i class="fas fa-link"></i> SET
 	  </a>
 	 
@@ -23,12 +23,20 @@
 			  <li><a class="dropdown-item" routerLink="/supervisor/AgregarGuardia" >Agregar Guardias</a></li>
 			</ul>
 		  </li>
-		  <li class="nav-item" style="margin-left: 15px;">
-			<a class="nav-link" routerLink="/supervisor/CalendarioMañana">Calendario</a>
+		  <li class="nav-item dropdown" style="margin-left: 15px;">
+			<a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+			  Turnos
+			</a>
+			<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+			  <li><a class="dropdown-item" routerLink="/supervisor/list_turnos">Turnos</a></li>
+			  <div class=dropdown-divider></div>
+			  <li><a class="dropdown-item"  routerLink="/supervisor/turnero"> Asignacion turnos </a></li>
+			</ul>
 		  </li>
+
 		  
 		  <li class="nav-item" style="margin-left: 15px;">
-			<a class="nav-link" routerLink="/supervisor/list_turnos">Turnos</a>
+			<a class="nav-link" routerLink="/supervisor/CalendarioMañana">Calendario</a>
 		  </li>
           <li class="nav-item" style="margin-left: 15px;">
 			<a class="nav-link" routerLink="/supervisor/list_equipos" >Visualizar Equipos</a>
@@ -39,7 +47,8 @@
 		  <li class="nav-item" style="margin-left: 15px;">
 			<a class="nav-link" routerLink="/supervisor/servicio_add"> Servicios </a>
 		  </li>
-		</ul>
+		  
+		</ul> 
 	  </div>
 	  <div class="nav-item ">
   
@@ -63,37 +72,106 @@
 	
   
 
+
+  
+
+
+
+
+
+  
+
+
+
+  <div class="container-fluid">
+  
+  
+	<body>
+	  <div class="row">
+		<div class="col-12 mt-3 mb-1">
+		  <p class="p">  Guardia - Modulo Superviso</p>
+		</div>
+	  </div>
 	
-
-
-
-
-
-  
-
-
-
-
-  <h2 class="p">{{titulo}}</h2>
-  
-  <body>
-
-    <form form [formGroup]="teamsForm"  (ngSubmit)="addTeams()">
-           
-            
-      <div class="form-groupp">
-          <label class="nombre text-dark">Guardias</label>
-          <select class="f"  class="form-select form-select-lg mb-1" formControlName="guardia" style="height: 50px;"  >
-            <option *ngFor="let results of listResults1" [value]="results.uid" >Nombre: {{results.nombre}}</option>
-                
-        </select>
-      </div>
-      <p class="center-content">
-          <input type="submit" class="btn btn-info btn-lg btn-responsive" value="Agregar Equipo">
-      </p>
-  </form>
-
-  </body>
-
-
-  
+	  <form form [formGroup]="teamsForm"  (ngSubmit)="addTeams()">
+			 
+			  
+		<div class="form-groupp">
+			<label class="nombre text-dark">Guardias</label>
+			<select class="f"  class="form-select form-select-lg mb-1" formControlName="guardia" style="height: 50px;"  >
+			  <option *ngFor="let results of listResults1" [value]="results.uid" >Nombre: {{results.nombre}}</option>
+				  
+		  </select>
+		</div>
+		<p class="center-content">
+			<input type="submit" class="btn btn-info btn-lg btn-responsive" value="Agregar Guardia">
+		</p>
+	</form>
+	
+	<div style="padding: 5px;"></div>
+	<div class="container bootstrap snippets bootdey">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="main-box no-header clearfix">
+					<div class="main-box-body clearfix">
+						<div class="table-responsive">
+							<table class="table user-list">
+								<thead>
+									<tr>
+									<th><span>Guardia</span></th>
+									<th><span>Ingresado</span></th>
+									<th class="text-center"><span>Direccion</span></th>
+									<th><span>Correo</span></th>
+									<th>&nbsp;</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr *ngFor="let guardia of listteams3 | paginate: { itemsPerPage: 3, currentPage: page }">
+										<td>
+											<img img [src]="'http://localhost:8080/api/uploads/usuarios/'+ guardia._id "alt="500">
+											<span class="text-dark">{{guardia.nombre}}</span>
+											<span class="user-subhead">{{guardia.apellido}}</span>
+										</td>
+										<td>{{moment(guardia.ingreso).format('LL')}}</td>
+										<td class="text-center">
+											<span class="label label-default">{{guardia.direccion}}</span>
+										</td>
+										<td>
+											<span >{{guardia.correo}}</span>
+										</td>
+										<td style="width: 20%;">
+											<a  class="table-link text-warning" [routerLink]="['/supervisor/usuariodescripcion', guardia._id]">
+												<span class="fa-stack" >
+													<i class="fa fa-square fa-stack-2x"></i>
+													<i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+												</span>
+											</a>
+											<a href="#" class="table-link text-info" [routerLink]="['/guardia/editar', guardia._id]">
+												<span class="fa-stack">
+													<i class="fa fa-square fa-stack-2x"></i>
+													<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+												</span>
+											</a>
+											<a href="#" class="table-link danger">
+												<span class="fa-stack">
+													<i class="fa fa-square fa-stack-2x"></i>
+													<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+												</span>
+											</a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<pagination-controls (pageChange)="page = $event"
+	previousLabel="Anterior"
+	nextLabel="Siguiente"></pagination-controls>
+	</div>
+	
+	
+	</body>
+	</div>

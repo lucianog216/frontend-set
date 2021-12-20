@@ -112,12 +112,12 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('apellido', JSON.stringify(res.usuario.apellido));
         localStorage.setItem('correo', JSON.stringify(res.usuario.correo));
         localStorage.setItem('celular', JSON.stringify(res.usuario.celular));
-        localStorage.setItem('team', JSON.stringify(res.usuario.team));
+        localStorage.setItem('team', res.usuario.team);
         localStorage.getItem('rol')
-        console.log(res.usuario.ciudad);
+        console.log(this.user);
 
         const rol = localStorage.getItem('rol');
-        if (rol== 'SUPERVISOR_ROLE'){
+        if (rol== '60b7fbeec86aab40dc8b5e9c'){
           this.router.navigate(['supervisor/lista_guardia']);
           Swal.fire({
             position: 'top-end',
@@ -127,7 +127,7 @@ export class LoginComponent implements OnInit {
             showConfirmButton: false,
             timer: 3000
           })
-        }if(rol== 'ADMIN_ROLE'){
+        }if(rol== '60b7fb45c86aab40dc8b5e99'){
           this.router.navigate(['usuario']);
           Swal.fire({
             position: 'top-end',
@@ -137,8 +137,8 @@ export class LoginComponent implements OnInit {
             showConfirmButton: false,
             timer: 1500
           })
-        }if(rol== 'GUARDIA_ROLE'){
-          this.router.navigate(['guardia/list']);
+        }if(rol== '60b7fbd0c86aab40dc8b5e9b'){
+          this.router.navigate(['guardia/calendario']);
           Swal.fire({
             position: 'top-end',
             icon: 'success',

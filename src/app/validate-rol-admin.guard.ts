@@ -19,7 +19,7 @@ export class ValidateRolAdminGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
     let rol = localStorage.getItem('rol');
-    if (rol== 'SUPERVISOR_ROLE'){
+    if (rol== '60b7fbeec86aab40dc8b5e9c'){
       
      
       

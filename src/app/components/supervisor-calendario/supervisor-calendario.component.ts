@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import{FormBuilder, FormGroup, NgForm, Validators} from '@angular/forms';
 import {AuthService} from '../../services/auth.service';
-import {  IEvent } from '../../interfaces/interfaces';
+import {  IEvent, IEvent1 } from '../../interfaces/interfaces';
 import { UsuarioService } from '../../services/usuario.service';
 import { ToastrService } from 'ngx-toastr';
 import { usuario } from 'src/app/models/Usuario';
@@ -13,6 +13,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import esLocale from '@fullcalendar/core/locales/es';
 import { HttpClient } from '@angular/common/http';
 import { data } from 'jquery';
+import { diffDates } from '@fullcalendar/core/util/misc';
 declare var $: any;
 
 @Component({
@@ -22,13 +23,15 @@ declare var $: any;
 })
 export class SupervisorCalendarioComponent implements OnInit {
 
-  public events: any;
+ 
   public options: any;
   public options2: any;
+  public events: any=[];
   public fechaEventosList: Date;
   title = 'easyfullcalendar';
   posts: any;
 
+  calendarData : any[];
   totalUsuario: number = 0;
   totalResults: number = 0;
   totalclientes: number = 0;
@@ -40,10 +43,16 @@ export class SupervisorCalendarioComponent implements OnInit {
   rolUser=[];
   uidUser=[];
   imgUser=[];
+  totalServ=[];
+  listServ=[];
   img=[];
+ data2=[]
   direccionUser=[];
   regionUser=[];
   ciudaduser =[];
+ 
+
+
   usuarioForm: FormGroup;
   uid: string | null;
   
@@ -67,15 +76,25 @@ export class SupervisorCalendarioComponent implements OnInit {
        
     
         this.options = {
-          plugins: [dayGridPlugin,timeGridPlugin,interactionPlugin],
+          plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin],
           defaultDate: new Date(),
           locale: esLocale,
+          timeZone: 'UTC',
+          
           header: {
             left: 'prev,next',
             center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            right: 'dayGridMonth,timeGridWeek,list',
+            color: '#ff9f89',
+            
+            display: 'background',
           },
-          editable: false
+          eventColor: '#378006',
+         
+          dayMaxEvents: true, // allow "more" link when too many events
+          editable: true,
+          selectable: true,
+         
         }
 
        /* eventRender: (e) =>  {
@@ -91,7 +110,7 @@ export class SupervisorCalendarioComponent implements OnInit {
         editable: false
       };*/
     
-        this.options2 = {
+       /* this.options2 = {
           plugins: [listPlugin, dayGridPlugin],
           locale: esLocale,
           defaultDate: new Date(),
@@ -102,7 +121,7 @@ export class SupervisorCalendarioComponent implements OnInit {
             right: ''
           },
           editable: false
-        };
+        };*/
     }
 
    
@@ -113,10 +132,14 @@ export class SupervisorCalendarioComponent implements OnInit {
     this.obtenerClientes()
     this.obtenerUsuario()
     this.obtenerSupervisores()
+    this.obtenerSrev();
     
     
 
-   /* this.events = [
+
+    /*this.events = [
+      
+
       {
         "title": "evento 1",
         "start": "2021-12-10T14:23:00",
@@ -149,9 +172,6 @@ export class SupervisorCalendarioComponent implements OnInit {
 
     ]*/
 
-
-
-
     var datoNombre = localStorage.getItem('nombre');
     if(datoNombre == null){
       this.datoUsuario =[];
@@ -159,6 +179,7 @@ export class SupervisorCalendarioComponent implements OnInit {
       this.datoUsuario = JSON.parse(datoNombre)
       
     }
+    
     var datoApellido = localStorage.getItem('apellido');
     if(datoApellido == null){
       this.apellidoUser =[];
@@ -177,13 +198,7 @@ export class SupervisorCalendarioComponent implements OnInit {
     }else{
       this.correoUser = JSON.parse(datoCorreo)
     }
-   /* var datoImg = localStorage.getItem('img');
-    if(datoImg == null){
-      this.imgUser =[];
-      console.log(this.imgUser);
-    }else{
-      this.imgUser = JSON.parse(datoImg)
-    }*/
+  
     var datociudad = localStorage.getItem('ciudad');
     if(datociudad == null){
       this.ciudaduser =[];
@@ -231,7 +246,7 @@ export class SupervisorCalendarioComponent implements OnInit {
       region: this.usuarioForm.get('region')?.value,
       ciudad: this.usuarioForm.get('ciudad')?.value,
       direccion: this.usuarioForm.get('direccion')?.value,
-      img: this.usuarioForm.get('img')?.value,
+      
       
     }
     if (this.uid !== null)
@@ -248,6 +263,52 @@ export class SupervisorCalendarioComponent implements OnInit {
       console.log(error);
     })
   }
+
+
+  obtenerSrev() {
+    this.usuarioService.getServicio().subscribe(data => {
+      this.data2 = data.servicios;
+      this.events=[];
+      
+
+      
+      for(let i=0;i<this.data2.length;i++){
+        console.log(this.data2[i].title);
+        this.events.push(   
+       
+          {
+            title : this.data2[i].title,
+            start: this.data2[i].date,
+            end: this.data2[i].start,
+            description: this.data2[i].descripcion,
+          }
+        );
+         
+      }
+      
+      
+      
+      // this.events =  [
+       
+      //   {
+      //     title : data.titulo,
+      //     start: data.inicio,
+      //     end: "2021-12-10T16:23:00",
+      //     descripcion: "Evento1"
+      //   },
+        
+      //  ]
+
+
+
+    }, error => {
+      console.log(error);
+    })
+  }
+
+
+
+
   obtenerGuardias() {
     this.usuarioService.getResults().subscribe(data => {
       this.totalResults = data.total;
@@ -280,6 +341,10 @@ export class SupervisorCalendarioComponent implements OnInit {
       localStorage.removeItem('apellido');
       localStorage.removeItem('celular');
       localStorage.removeItem('uid');
+      localStorage.removeItem('region');
+      localStorage.removeItem('direccion');
+      localStorage.removeItem('ciudad');
+      localStorage.removeItem('team');
       this.router.navigate(['login'])
   }
 

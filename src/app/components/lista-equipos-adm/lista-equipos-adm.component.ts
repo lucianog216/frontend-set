@@ -72,7 +72,7 @@ export class ListaEquiposAdmComponent implements OnInit {
     this.usuarioService.getTeams().subscribe(data => {
       this.totalteams = data.total;
       this.listteams = data.teams;
-      console.log(this.listteams[0].guardias[0]);
+     
 
       var listteams2= data.teams[0].guardias
       if(listteams2 == null){
@@ -219,7 +219,11 @@ export class ListaEquiposAdmComponent implements OnInit {
       localStorage.removeItem('correo');
       localStorage.removeItem('apellido');
       localStorage.removeItem('celular');
-      localStorage.removeItem('uid')
+      localStorage.removeItem('uid');
+      localStorage.removeItem('region');
+      localStorage.removeItem('direccion');
+      localStorage.removeItem('ciudad');
+      localStorage.removeItem('team');
       this.router.navigate(['login'])
   }
 }

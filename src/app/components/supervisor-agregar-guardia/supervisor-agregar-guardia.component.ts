@@ -81,7 +81,7 @@ export class SupervisorAgregarGuardiaComponent implements OnInit {
       region: this.usuarioForm.get('region')?.value,
       ciudad: this.usuarioForm.get('ciudad')?.value,
       direccion: this.usuarioForm.get('direccion')?.value,
-      img: this.usuarioForm.get('img')?.value,
+      
     }
     if (this.uid !== null){
       this.usuarioService.editarUsuario(this.uid, USUARIO).subscribe(data =>{})
@@ -137,13 +137,17 @@ export class SupervisorAgregarGuardiaComponent implements OnInit {
     }
     logout(){
       localStorage.removeItem('token');
-        localStorage.removeItem('rol');
-        localStorage.removeItem('nombre');
-        localStorage.removeItem('correo');
-        localStorage.removeItem('apellido');
-        localStorage.removeItem('celular');
-        localStorage.removeItem('uid');
-       this.router.navigate(['login'])
+      localStorage.removeItem('rol');
+      localStorage.removeItem('nombre');
+      localStorage.removeItem('correo');
+      localStorage.removeItem('apellido');
+      localStorage.removeItem('celular');
+      localStorage.removeItem('uid');
+      localStorage.removeItem('region');
+      localStorage.removeItem('direccion');
+      localStorage.removeItem('ciudad');
+      localStorage.removeItem('team');
+      this.router.navigate(['login'])
     }
     
   }

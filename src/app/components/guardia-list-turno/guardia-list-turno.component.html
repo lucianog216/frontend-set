@@ -56,8 +56,9 @@
             <a class="nav-link" routerLink="/guardia/list_equipos"> Mi Equipos</a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link " routerLink="">Mi historial</a>
+            <a class="nav-link " routerLink="/guardia/list">Lista general</a>
           </li>
+
          
         </ul>
       </div>
@@ -81,48 +82,47 @@
     </div>
   </nav>
 
+
+
+
+
+
   
   <div class="container">
 
     <div class="row">
       <div class="col-12 mt-3 mb-1">
-        <p class="p">  Visualizacion Turnos - Modulo Administrador</p>
+        <p class="p">  Visualizacion Turnos - Modulo Guardia</p>
       </div>
     </div>
 
   
     <div class="container">
 
-      <link rel="stylesheet" href="https://cdn.lineicons.com/3.0/lineicons.css"> 
-      <section class="price_plan_area section_padding_130_80" id="pricing" >
-            <div class="container" style="margin: 30px auto 0;" >
-              
-              <div class="row justify-content-center"  >
-                <!-- Single Price Plan Area-->
-                <div class="col-12 col-sm-8 col-md-6 col-lg-4" *ngFor="let turnos of listturnos"    >
-                  <div class="single_price_plan wow fadeInUp" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
-                    <div class="title">
-                      <p>Usuario creador: </p>
-                      <h3>{{turnos.usuario.nombre}}</h3>
-                      <div class="line"></div>
-                    </div>
-                    <div class="price">
-                      <h4>{{turnos.nombre}}</h4>
-                    </div>
-                    <div class="description">
-                      <p><i class="lni lni-checkmark-circle"></i>Ingreso: {{turnos.ingreso}}</p>
-                      <p><i class="lni lni-checkmark-circle"></i>Salida: {{turnos.salida}}</p>
-                      <p><i class="lni lni-checkmark-circle"></i>Total horas: {{turnos.horas}}Hrs</p>
-                      <p><i class="lni lni-checkmark-circle"></i>Colacion: {{turnos.colacion}}</p>
-                    
-                    </div>
-                  
-                  </div>
-                </div>
-                
-              </div>
+      <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+      <div class="container content" >
+      <div class="row gutters">
+        <div class="col-lg-4 col-md-4 col-sm-12" *ngFor="let turnos of data3">
+          <div class="plan-card plan-one">
+            <div class="pricing-header">
+              <h4 class="plan-title">Turnos</h4>
+              <div class="plan-save" *ngIf="turnos.guardia">{{turnos.guardia.nombre}} {{turnos.guardia.apellido}}</div>
+         
             </div>
-          </section>
-    </div> 
+            <ul class="plan-features">
+              <li>Cliente: {{turnos.cliente.nombre}}</li>
+              <li>Fecha: {{moment(turnos.inicio).format('LL')}}</li>
+              <li>Ingreso: {{turnos.turno.ingreso}}</li>
+              <li>Turno: {{turnos.turno.nombre}} </li>
+              <li>Supervisor: {{turnos.usuario.nombre}} </li>
+            
+            </ul>
+            
+          </div>
+        </div>
+      
+        
+      </div>
+      </div>
     
 </div>   

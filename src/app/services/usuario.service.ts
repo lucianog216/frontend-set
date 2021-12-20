@@ -3,11 +3,11 @@ import {HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { usuario } from '../models/Usuario';
-import {  img, RESTListarServi, servicio, teamguard, TESTRESP, turnos, IEvent } from '../interfaces/interfaces';
+import {  img, servicio, teamguard, TESTRESP, turnos, turneros, IEvent2 } from '../interfaces/interfaces';
 import { clientes } from '../interfaces/interfaces';
 import { teams } from '../interfaces/interfaces';
 import { Turnos } from '../models/Turnos';
-import { Event } from '../models/event.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +30,9 @@ export class UsuarioService {
    url12 = 'http://localhost:8080/api/uploads/usuarios/';
    url13 = 'http://localhost:8080/api/servicios/';
    url14 = 'http://localhost:8080/api/reportes/'
+   url15 = 'http://localhost:8080/api/turneros/';
+   url16 = 'http://localhost:8080/api/buscar/turnos/';
+   url17 = 'http://localhost:8080/api/buscar/turnos/';
    
    
   constructor( private http: HttpClient) {
@@ -129,11 +132,28 @@ export class UsuarioService {
  postServicio(servicio: servicio): Observable<any> {
   return this.http.post(this.url13, servicio);
 }
- getServicio(evento:Event){
+ getServicio() {
   return this.http.get<any>(this.url13);
+}
+getServicio1() {
+  return this.http.get<IEvent2>(this.url13);
 }
 getReport(): Observable<any> {
   return this.http.get(this.url14);
+}
+//turnero
+postTurneros(turneros: turneros): Observable<any> {
+  return this.http.post(this.url15, turneros);
+}
+getTurneros():Observable<any> {
+  return this.http.get(this.url15);
+}
+getTurnerosid(uid: string): Observable<any> {
+  return this.http.get(this.url16 + uid);
+}
+//equipo por turno
+getTurneroTeams(teamuser: string): Observable<any> {
+  return this.http.get(this.url17 + teamuser);
 }
 
 }

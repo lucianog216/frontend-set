@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Event } from '../../models/event.model';
+
 import { UsuarioService } from '../../services/usuario.service';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -14,16 +14,7 @@ import esLocale from '@fullcalendar/core/locales/es';
 })
 export class SupervisorAddEventoComponent implements OnInit {
 
-  public event: Event;
-  
 
-
-  constructor(private usuarioService: UsuarioService) { 
-    this.event = new Event({});
-
-    this.event.startDate = new Date();
-    this.event.endDate = new Date();
-  }
 
   ngOnInit() {
 
@@ -31,9 +22,7 @@ export class SupervisorAddEventoComponent implements OnInit {
 
   addEvent(){
 
-    console.log(this.event);
-
-    this.usuarioService.getServicio(this.event)
+    
 
 
   }

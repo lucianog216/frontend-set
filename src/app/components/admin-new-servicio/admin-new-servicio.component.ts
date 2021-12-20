@@ -21,9 +21,10 @@ export class AdminNewServicioComponent implements OnInit {
     private router: Router,private aRouter: ActivatedRoute,
     private toastr: ToastrService,) {
       this.ServicioForm = this.fb.group({ 
-        titulo: ['', Validators.required], 
+        title: ['', Validators.required], 
         descripcion: ['', Validators.required], 
         turno: ['', Validators.required], 
+        date: ['', Validators.required], 
         
       }),
        this._id = this.aRouter.snapshot.paramMap.get('_id'); 
@@ -63,9 +64,10 @@ export class AdminNewServicioComponent implements OnInit {
 
     const SERVICIO : servicio = {
       
-      titulo: this.ServicioForm.get('titulo')?.value,
+      title: this.ServicioForm.get('title')?.value,
       descripcion: this.ServicioForm.get('descripcion')?.value,
-      turno: this.ServicioForm.get('turno')?.value
+      turno: this.ServicioForm.get('turno')?.value,
+      date: this.ServicioForm.get('date')?.value
       
     }
     {
@@ -74,7 +76,7 @@ export class AdminNewServicioComponent implements OnInit {
         
       })
       this.toastr.info('El Servicio fue creado con exito!', 'Servicio actualizado');
-      this.router.navigate(['/usuario/lista_equipo'])  
+      this.router.navigate(['/usuario/servicio_list'])  
     
   }
   }
@@ -82,12 +84,16 @@ export class AdminNewServicioComponent implements OnInit {
   
   logout(){
     localStorage.removeItem('token');
-    localStorage.removeItem('rol');
-    localStorage.removeItem('nombre');
-    localStorage.removeItem('correo');
-    localStorage.removeItem('apellido');
-    localStorage.removeItem('celular');
-    localStorage.removeItem('uid')
-    this.router.navigate(['login'])
+      localStorage.removeItem('rol');
+      localStorage.removeItem('nombre');
+      localStorage.removeItem('correo');
+      localStorage.removeItem('apellido');
+      localStorage.removeItem('celular');
+      localStorage.removeItem('uid');
+      localStorage.removeItem('region');
+      localStorage.removeItem('direccion');
+      localStorage.removeItem('ciudad');
+      localStorage.removeItem('team');
+      this.router.navigate(['login'])
   }
 }

@@ -4,17 +4,24 @@ import { Subject } from 'rxjs';
 import {Router} from '@angular/router';
 import Swal from 'sweetalert2';
 import { Turnos } from 'src/app/models/Turnos';
+import * as moment from 'moment';
+import 'moment/locale/es';
+
 @Component({
   selector: 'app-guardia-list-turno',
   templateUrl: './guardia-list-turno.component.html',
   styleUrls: ['./guardia-list-turno.component.css']
 })
 export class GuardiaListTurnoComponent implements OnInit {
+  moment: any = moment;
   listturnos: Turnos[] = [];
   totalturnos: number = 0;
   datoUsuario=[];
+  datoUid : string
   dtOptions: DataTables.Settings = {};
   dtTrigger = new Subject();
+  data2 =[]
+  data3 =[]
 
   constructor(private usuarioService: UsuarioService, private router: Router) { }
 
@@ -33,7 +40,20 @@ export class GuardiaListTurnoComponent implements OnInit {
     }else{
       this.datoUsuario = JSON.parse(datoNombre)
     }
+
+
+    var datoid = localStorage.getItem('uid');
+    if(datoid == null){
+     
+    }else{
+      this.datoUid = datoid
+      
+    }
+
+    
     this.obtenerTurnos(); 
+    this.obtenerTurnero();
+    this.obtenerTurnero1();
     
 
     this.usuarioService.getTurnos().subscribe(data => {
@@ -71,12 +91,43 @@ export class GuardiaListTurnoComponent implements OnInit {
       }
     })      
     }
-    
+    obtenerTurnero() {
+      this.usuarioService.getTurneros().subscribe(data => {
+        this.data2 = data.turnos;
+        
+    }, error => {
+      console.log(error);
+    })
+  }
+
+
+
+  obtenerTurnero1() {
+
+  var datoid = localStorage.getItem('uid');
+  if(datoid == null){
+   
+  }else{
+    this.datoUid = datoid
+    console.log(this.datoUid)
+  }
+    this.usuarioService.getTurnerosid(this.datoUid).subscribe(data => {
+      this.data3 = data.results[0];
+      console.log(this.data3)
+
+  }, error => {
+    console.log(error);
+  })
+}
+
+
+
+
+  
     obtenerTurnos() {
-    this.usuarioService.getTurnos().subscribe(data => {
+    this.usuarioService.getTurneros().subscribe(data => {
       this.totalturnos = data.totalturnos;
-      this.listturnos = data.turnos;
-      console.log(this.listturnos)
+      
     }, error => {
       console.log(error);
     })
@@ -89,7 +140,11 @@ export class GuardiaListTurnoComponent implements OnInit {
       localStorage.removeItem('correo');
       localStorage.removeItem('apellido');
       localStorage.removeItem('celular');
-      localStorage.removeItem('uid')
+      localStorage.removeItem('uid');
+      localStorage.removeItem('region');
+      localStorage.removeItem('direccion');
+      localStorage.removeItem('ciudad');
+      localStorage.removeItem('team');
       this.router.navigate(['login'])
   }
 }

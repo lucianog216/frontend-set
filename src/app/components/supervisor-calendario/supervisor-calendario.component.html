@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 	<div class="container">
-	  <a class="navbar-brand" routerLink="/usuario">
+	  <a class="navbar-brand" routerLink="/supervisor/lista_guardia">
 		<i class="fas fa-link"></i> SET
 	  </a>
 	 
@@ -25,18 +25,18 @@
 		  </li>
 		  <li class="nav-item dropdown" style="margin-left: 15px;">
 			<a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-			  Calendario
+			  Turnos
 			</a>
 			<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-			  <li><a class="dropdown-item" routerLink="/supervisor/CalendarioMañana">Calendario</a></li>
+			  <li><a class="dropdown-item" routerLink="/supervisor/list_turnos">Turnos</a></li>
 			  <div class=dropdown-divider></div>
-			  <li><a class="dropdown-item" routerLink="/supervisor/calendario_evento" >Agregar Evento</a></li>
+			  <li><a class="dropdown-item"  routerLink="/supervisor/turnero"> Asignacion turnos </a></li>
 			</ul>
 		  </li>
 
 		  
 		  <li class="nav-item" style="margin-left: 15px;">
-			<a class="nav-link" routerLink="/supervisor/list_turnos">Turnos</a>
+			<a class="nav-link" routerLink="/supervisor/CalendarioMañana">Calendario</a>
 		  </li>
           <li class="nav-item" style="margin-left: 15px;">
 			<a class="nav-link" routerLink="/supervisor/list_equipos" >Visualizar Equipos</a>
@@ -47,7 +47,8 @@
 		  <li class="nav-item" style="margin-left: 15px;">
 			<a class="nav-link" routerLink="/supervisor/servicio_add"> Servicios </a>
 		  </li>
-		</ul>
+		  
+		</ul> 
 	  </div>
 	  <div class="nav-item ">
   
@@ -77,26 +78,20 @@
 <div class="container">
     <div class="row">
         <div class="col-12 mt-3 mb-1">
-          <p class="p">  Calendario - Modulo Supervisor</p>
+          <p class="p">  Calendario Servicios - Modulo Supervisor</p>
         </div>
       </div>
 	  
-
-
 	  <div class="row">
 		
-
-		<div class="col-md-8 col-12">
+		<div class="col-md-12 col-15">
 		  <div class="container-fluid  ">
-		  <p-fullCalendar [events]="events"  [options]="options"></p-fullCalendar>
+		  <p-fullCalendar id='calendar' [events]="events"  [options]="options"></p-fullCalendar>
+		  
 	</div>
 	</div>
 	
-		<div class="col-md-4 col-12">
-			<div class="container-fluid-2  ">
-			<p-fullCalendar [events]="events" id="calendar" [options]="options2"></p-fullCalendar>
-			</div>
-		</div>
+		
 		<div class="col-md-5 col-12">
 			.
 		</div>

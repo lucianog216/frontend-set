@@ -58,7 +58,7 @@ getimagen(){
           password: '', 
           correo: data.correo, 
           rol: data.rol,
-          region: data.region,
+          region: data.region.nombre,
           ciudad: data.ciudad,
           rut: data.rut,
           ingreso: data.ingreso

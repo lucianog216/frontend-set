@@ -20,7 +20,7 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
     let rol = localStorage.getItem('rol');
-    if (rol== 'ADMIN_ROLE'){
+    if (rol== '60b7fb45c86aab40dc8b5e99'){
       
      
       

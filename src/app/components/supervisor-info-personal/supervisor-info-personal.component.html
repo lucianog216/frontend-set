@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 	<div class="container">
-	  <a class="navbar-brand" routerLink="/usuario">
+	  <a class="navbar-brand" routerLink="/supervisor/lista_guardia">
 		<i class="fas fa-link"></i> SET
 	  </a>
 	 
@@ -23,12 +23,20 @@
 			  <li><a class="dropdown-item" routerLink="/supervisor/AgregarGuardia" >Agregar Guardias</a></li>
 			</ul>
 		  </li>
-		  <li class="nav-item" style="margin-left: 15px;">
-			<a class="nav-link" routerLink="/supervisor/CalendarioMañana">Calendario</a>
+		  <li class="nav-item dropdown" style="margin-left: 15px;">
+			<a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+			  Turnos
+			</a>
+			<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+			  <li><a class="dropdown-item" routerLink="/supervisor/list_turnos">Turnos</a></li>
+			  <div class=dropdown-divider></div>
+			  <li><a class="dropdown-item"  routerLink="/supervisor/turnero"> Asignacion turnos </a></li>
+			</ul>
 		  </li>
+
 		  
 		  <li class="nav-item" style="margin-left: 15px;">
-			<a class="nav-link" routerLink="/supervisor/list_turnos">Turnos</a>
+			<a class="nav-link" routerLink="/supervisor/CalendarioMañana">Calendario</a>
 		  </li>
           <li class="nav-item" style="margin-left: 15px;">
 			<a class="nav-link" routerLink="/supervisor/list_equipos" >Visualizar Equipos</a>
@@ -39,7 +47,8 @@
 		  <li class="nav-item" style="margin-left: 15px;">
 			<a class="nav-link" routerLink="/supervisor/servicio_add"> Servicios </a>
 		  </li>
-		</ul>
+		  
+		</ul> 
 	  </div>
 	  <div class="nav-item ">
   
@@ -157,60 +166,49 @@
                   <div class="tab-pane active show" id="profile">
                       <h5 class="mb-3">Perfil de usuario</h5>
                       <div class="row">
-                          <div class="col-md-6">
-                              <h6>Nombre Completo</h6>
-                              <p>
-                                {{datoUsuario}}  {{apellidoUser}}
-                              </p>
-                              <h6>Rol del Usuario</h6>
-                              <p>
-                                  Administrador de la plataforma 
-                              </p>
-                              
-                          </div>
-                          <div class="col-md-6">
-                              <h6>Correo Electronico</h6>
-                              <p>
-                                {{correoUser}}
-                              </p>
-                              <h6>Ciudad del usuario</h6>
-                              <p>
-                                {{ciudaduser}}
-                              </p>
-                          </div>
-                          <div class="col-md-12">
-                              <h5 class="mt-2 mb-3"><span class="fa fa-clock-o ion-clock float-right"></span> Actividades Recientes</h5>
-                              <table class="table table-hover table-striped">
-                                  <tbody>                                    
-                                      <tr>
-                                          <td>
-                                              <strong>Abby</strong> joined ACME Project Team in <strong>`Collaboration`</strong>
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>
-                                              <strong>Gary</strong> deleted My Board1 in <strong>`Discussions`</strong>
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>
-                                              <strong>Kensington</strong> deleted MyBoard3 in <strong>`Discussions`</strong>
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>
-                                              <strong>John</strong> deleted My Board1 in <strong>`Discussions`</strong>
-                                          </td>
-                                      </tr>
-                                      <tr>
-                                          <td>
-                                              <strong>Skell</strong> deleted his post Look at Why this is.. in <strong>`Discussions`</strong>
-                                          </td>
-                                      </tr>
-                                  </tbody>
-                              </table>
-                          </div>
+                        <div class="col-md-6">
+                            <h6>Nombre Completo</h6>
+                            <p>
+                              {{datoUsuario}}  {{apellidoUser}}
+                            </p>
+                            <h6>Rol del Usuario</h6>
+                            <p>
+                                Guardia  
+                            </p>
+                            
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Region del usuario</h6>
+                            <p>
+                              X REGIÓN DE LOS LAGOS
+                            </p>
+                            <h6>Ciudad del usuario</h6>
+                            <p>
+                              {{ciudaduser}}
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                          <h6>Direccion del usuario</h6>
+                          <p>
+                            {{direccionUser}}
+                          </p>
+                          <h6>Equipo del usuario</h6>
+                          <p>
+                            CUADRILLA VERDE
+                          </p>
                       </div>
+                      <div class="col-md-6">
+                        <h6>Correo del usuario</h6>
+                        <p>
+                          {{correoUser}}
+                        </p>
+                        <h6>Telefono del usuario</h6>
+                        <p>
+                          {{celularUser}}
+                        </p>
+                    </div>
+                        
+                    </div>
                       <!--/row-->
                   </div>
                   <div class="tab-pane" id="messages">

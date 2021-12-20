@@ -8,12 +8,15 @@ import { UsuarioService } from '../../services/usuario.service';
 import {AuthService} from '../../services/auth.service'
 import { Subject } from 'rxjs';
 import { Turnos } from 'src/app/models/Turnos';
+import * as moment from 'moment';
 @Component({
   selector: 'app-supervisor-add-guardia-equipo',
   templateUrl: './supervisor-add-guardia-equipo.component.html',
   styleUrls: ['./supervisor-add-guardia-equipo.component.css']
 })
 export class SupervisorAddGuardiaEquipoComponent implements OnInit {
+  moment: any = moment;
+  public page: number;
   listteams: TeamRESP[] = [];
   totalteams: number = 0;
   listturnos: Turnos[] = [];
@@ -22,6 +25,7 @@ export class SupervisorAddGuardiaEquipoComponent implements OnInit {
   totalResults: number = 0;
   listteams2= [];
   datoUsuario=[];
+  listteams3=[];
   teamsForm: FormGroup;
   titulo = 'Agregar Equipo';
   _id: string | null;
@@ -55,6 +59,7 @@ export class SupervisorAddGuardiaEquipoComponent implements OnInit {
       this.datoUsuario = JSON.parse(datoNombre)
     }
   }
+  
   obtenerTeams() {
     this.usuarioService.getTeams().subscribe(data => {
       this.totalteams = data.total;
@@ -62,6 +67,26 @@ export class SupervisorAddGuardiaEquipoComponent implements OnInit {
     }, error => {
       console.log(error);
     })
+  }
+  geteditarTeams(): void{
+    if(this._id !== null) {
+      this.titulo = 'Editar Equipo';
+      this.usuarioService.obtenerTeams(this._id).subscribe(data =>{
+  
+        this.teamsForm.patchValue({
+  
+          nombre : data.nombre,
+          guardias:{
+             nombre : data.guardias.nombre,
+             _id : data.guardias._id,
+             apellido : data.guardias.apellido,
+          }
+          
+        })
+        this.listteams3 = data.guardias;
+        console.log(this.listteams3)
+      })
+    }
   }
   addTeams(){
     console.log(this.teamsForm)
@@ -81,10 +106,10 @@ export class SupervisorAddGuardiaEquipoComponent implements OnInit {
         
       })
       this.toastr.info('El Guardia fue Agregado con exito!', 'Equipo actualizado');
-      this.router.navigate(['/supervisor/list_equipos'])  
+      this.router.navigate(['/usuario/lista_equipo'])  
     
   }else{
-    this.router.navigate(['/supervisor/list_equipos']) 
+    this.router.navigate(['/usuario/lista_equipo']) 
   }
 }
 obtenerSupervisores() {
@@ -104,28 +129,20 @@ obtenerGuardias() {
     console.log(error);
   })
 }
-//obtener y editar
-geteditarTeams(){
-  if(this._id !== null) {
-    this.titulo = 'Editar Equipo';
-    this.usuarioService.obtenerTeams(this._id).subscribe(data =>{
-      this.listteams2 = data;
-      this.teamsForm.patchValue({
-      
-      })
-      
-    })
-  }
-}
+
   logout(){
     localStorage.removeItem('token');
-    localStorage.removeItem('rol');
-    localStorage.removeItem('nombre');
-    localStorage.removeItem('correo');
-    localStorage.removeItem('apellido');
-    localStorage.removeItem('celular');
-    localStorage.removeItem('uid')
-    this.router.navigate(['login'])
+      localStorage.removeItem('rol');
+      localStorage.removeItem('nombre');
+      localStorage.removeItem('correo');
+      localStorage.removeItem('apellido');
+      localStorage.removeItem('celular');
+      localStorage.removeItem('uid');
+      localStorage.removeItem('region');
+      localStorage.removeItem('direccion');
+      localStorage.removeItem('ciudad');
+      localStorage.removeItem('team');
+      this.router.navigate(['login'])
   }
 
 }

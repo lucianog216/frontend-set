@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {RESTListarUsuario, TeamRESP } from 'src/app/interfaces/interfaces';
+import {RESTListarUsuario, TeamRESP, IEvent } from 'src/app/interfaces/interfaces';
 import{FormBuilder, FormGroup, NgForm, Validators, FormControl, FormArray} from '@angular/forms'
 import { teams, Results,teamguard } from 'src/app/interfaces/interfaces';
 import { ToastrService } from 'ngx-toastr';
@@ -25,7 +25,8 @@ export class AddGuardiaEquiposAdmComponent implements OnInit {
   listteams3: teamguard []= [];
   datoUsuario=[];
   teamsForm: FormGroup;
-  
+
+
   titulo = 'Agregar Equipo';
   _id: string | null;
 
@@ -193,13 +194,17 @@ deleteUsuario(uid: string ) {
   }
   logout(){
     localStorage.removeItem('token');
-    localStorage.removeItem('rol');
-    localStorage.removeItem('nombre');
-    localStorage.removeItem('correo');
-    localStorage.removeItem('apellido');
-    localStorage.removeItem('celular');
-    localStorage.removeItem('uid')
-    this.router.navigate(['login'])
+      localStorage.removeItem('rol');
+      localStorage.removeItem('nombre');
+      localStorage.removeItem('correo');
+      localStorage.removeItem('apellido');
+      localStorage.removeItem('celular');
+      localStorage.removeItem('uid');
+      localStorage.removeItem('region');
+      localStorage.removeItem('direccion');
+      localStorage.removeItem('ciudad');
+      localStorage.removeItem('team');
+      this.router.navigate(['login'])
   }
 
 }

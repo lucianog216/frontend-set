@@ -29,13 +29,10 @@
                   Usuarios
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                  <li><a class="dropdown-item" routerLink="/usuario">Visualizacion General</a></li>
+                  <li><a class="dropdown-item" routerLink="/usuario">Visualizacion Usuario</a></li>
                   <div class=dropdown-divider></div>
                   <li><a class="dropdown-item" routerLink="/usuario/add" >Agregar Usuario</a></li>
-                  <div class=dropdown-divider></div>
-                  <li><a class=dropdown-item  routerLink="/usuario/usuario_guardia_lista" >Lista Guardias</a></li>
-                  <div class=dropdown-divider></div>
-                  <li><a class=dropdown-item  routerLink="/usuario/usuario_supervisor_lista" >Lista Supervisores</a></li>
+               
                 </ul>
               </li>
               <li class="nav-item dropdown" style="margin-left: 15px;">
@@ -53,14 +50,15 @@
                   Guardias
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                  <li><a class="dropdown-item" routerLink="/usuario/lista_turno">Visualizar Turnos</a></li>
+                  <li><a class="dropdown-item" routerLink="/usuario/lista_turno">Visualizar Horarios</a></li>
                   
-                  <li><a class="dropdown-item"routerLink="/usuario/add_turno" >Agregar Turnos</a></li>
+                  <li><a class="dropdown-item"routerLink="/usuario/add_turno" >Agregar Horario</a></li>
                   <div class=dropdown-divider></div>
-                  <li><a class="dropdown-item" routerLink="/usuario/lista_equipo">Visualizar Equipos</a></li>
+                  <li><a class="dropdown-item" routerLink="/usuario/lista_equipo">Visualizar Equipo</a></li>
                   
                   <li><a class="dropdown-item"routerLink="/usuario/add_equipo" >Agregar Equipos</a></li>
-
+                  <div class=dropdown-divider></div>
+                  <li><a class="dropdown-item" routerLink="/usuario/usuario_supervisor_lista">Visualizar Turnos</a></li>
                 </ul>
               </li>
               <li class="nav-item dropdown" style="margin-left: 15px;">
@@ -69,7 +67,7 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                   
-                  <li><a class="dropdown-item"routerLink="/usuario/servicio">Agregar Servicios</a></li>
+                  <li><a class="dropdown-item"routerLink="/usuario/servicio">Agregar Servicio</a></li>
                   <div class=dropdown-divider></div>
                   <li><a class="dropdown-item" routerLink="/usuario/servicio_list">Visualizar Servicios</a></li>
                  

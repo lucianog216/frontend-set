@@ -48,7 +48,7 @@ export class UsuarioAddComponent implements OnInit {
         region: ['', Validators.required], 
         ciudad: ['', Validators.required],
         direccion: ['', Validators.required],
-        img: ['', Validators.required], 
+        
       }),
        this.uid = this.aRouter.snapshot.paramMap.get('uid'); 
       }
@@ -92,7 +92,7 @@ export class UsuarioAddComponent implements OnInit {
       region: this.usuarioForm.get('region')?.value,
       ciudad: this.usuarioForm.get('ciudad')?.value,
       direccion: this.usuarioForm.get('direccion')?.value,
-      img: this.usuarioForm.get('img')?.value,
+      
       
     }
     if (this.uid !== null){
@@ -151,7 +151,11 @@ export class UsuarioAddComponent implements OnInit {
       localStorage.removeItem('correo');
       localStorage.removeItem('apellido');
       localStorage.removeItem('celular');
-      localStorage.removeItem('uid')
+      localStorage.removeItem('uid');
+      localStorage.removeItem('region');
+      localStorage.removeItem('direccion');
+      localStorage.removeItem('ciudad');
+      localStorage.removeItem('team');
       this.router.navigate(['login'])
     }
     

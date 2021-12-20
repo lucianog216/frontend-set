@@ -48,7 +48,7 @@ export class GuardiaProfileListComponent implements OnInit, OnDestroy {
     this.usuarioService.getUsuarios().subscribe(data => {
       this.totalUsuario = data.total;
      this.listUsuario = data.usuarios;
-     
+     console.log(this.listUsuario);
     }, error => {
       console.log(error);
     })
@@ -58,6 +58,15 @@ export class GuardiaProfileListComponent implements OnInit, OnDestroy {
   logout(){
     localStorage.removeItem('token');
     localStorage.removeItem('rol');
+    localStorage.removeItem('nombre');
+    localStorage.removeItem('correo');
+    localStorage.removeItem('apellido');
+    localStorage.removeItem('celular');
+    localStorage.removeItem('uid');
+    localStorage.removeItem('region');
+    localStorage.removeItem('direccion');
+    localStorage.removeItem('ciudad');
+    localStorage.removeItem('team');
     this.router.navigate(['login'])
   }
 

@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from '../../services/usuario.service';
 import { Subject } from 'rxjs';
-import {Router} from '@angular/router';
+import{FormBuilder, FormGroup, NgForm, Validators} from '@angular/forms'
+import {ActivatedRoute, Router} from '@angular/router';
 import Swal from 'sweetalert2';
-import {TeamRESP  } from 'src/app/interfaces/interfaces';
+import { ToastrService } from 'ngx-toastr';
+import {RESTListarUsuario2, TeamRESP, teamguard,  } from 'src/app/interfaces/interfaces';
 @Component({
   selector: 'app-supervisor-list-equipos',
   templateUrl: './supervisor-list-equipos.component.html',
@@ -11,13 +13,25 @@ import {TeamRESP  } from 'src/app/interfaces/interfaces';
 })
 export class SupervisorListEquiposComponent implements OnInit {
   listteams: TeamRESP[] = [];
-
+  teamsForm: FormGroup;
   totalteams: number = 0;
   datoUsuario=[];
-  
+  _id: string | null;
+  uid: string | null;
   dtOptions: DataTables.Settings = {};
   dtTrigger = new Subject();
-  constructor(private usuarioService: UsuarioService, private router: Router) { }
+  constructor(private fb: FormBuilder,private toastr: ToastrService,
+    private usuarioService: UsuarioService,
+     private router: Router,private aRouter: ActivatedRoute) {
+
+    this.teamsForm = this.fb.group({ 
+      guardia: ['', Validators.required], 
+      
+      
+    }),
+    this._id = this.aRouter.snapshot.paramMap.get('_id');
+    this.uid = this.aRouter.snapshot.paramMap.get('uid'); 
+   }
 
   ngOnInit(): void {
      
@@ -56,7 +70,7 @@ export class SupervisorListEquiposComponent implements OnInit {
     this.usuarioService.getTeams().subscribe(data => {
       this.totalteams = data.total;
       this.listteams = data.teams;
-      console.log(this.listteams[0].guardias[1].nombre);
+      console.log(this.listteams[0].guardias[0]);
 
       var listteams2= data.teams[0].guardias
       if(listteams2 == null){
@@ -67,14 +81,36 @@ export class SupervisorListEquiposComponent implements OnInit {
       console.log(error);
     })
   }
+  Delete_guard_Teams(_id: string ){
+    
+  
+    const guardia : teamguard = {
+      guardia: this.teamsForm.get('guardia')?.value,
+      nombre: this.teamsForm.get('nombre')?.value,
+      guardias: this.teamsForm.get('guardias')?.value,
+      apellido: this.teamsForm.get('apellido')?.value,
+      correo: this.teamsForm.get('correo')?.value,
+      ciudad: this.teamsForm.get('ciudad')?.value,
+    }
+    if (this._id !== null){
+      this.usuarioService.deleteGuardia_teams(this._id, guardia ).subscribe(data =>{
+        console.log(data);
+        
+      })
+      this.toastr.info('El Equipo fue actualizado con exito!', 'Equipo actualizado');
+      this.router.navigate(['/usuario/lista_equipo'])  
+    
+  }
+  }
   ngOnDestroy(): void{
     this.dtTrigger.unsubscribe();
   }
   deleteTeams(_id: string ) {
     Swal.fire({
-      title: '¿eliminar Equipo?',
+      title: '¿Eliminar Equipo?',
       text: "el Equipo sera eliminado de forma permanente!",
       icon: 'warning',
+      
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
@@ -85,6 +121,7 @@ export class SupervisorListEquiposComponent implements OnInit {
         this.usuarioService.deleteTeams(_id).subscribe(
         (res) => {
         this.obtenerTeams();
+        
       },
         (err) => console.error(err)
       );
@@ -96,8 +133,82 @@ export class SupervisorListEquiposComponent implements OnInit {
       }
     })      
     }
-    
-    
+    deleteTeamsGuar2(_id: string ) {
+      Swal.fire({
+        title: '¿Eliminar Guardia del Equipo?',
+        text: "el Guardia sera eliminado del Equipo forma permanente!",
+        icon: 'warning',
+        
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, Borrar!',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        
+        if (result.isConfirmed) {
+          this.usuarioService.obtenerTeams(_id).subscribe(
+          (res) => {
+          this.obtenerTeams();
+        },
+          (err) => console.error(err)
+        );
+          Swal.fire(
+            'Eliminado!',
+            'Guardia Eliminado.',
+            'success'
+          )
+        }
+      })      
+      }
+   /* async deleteTeams2(  ) {
+      const { value: fruit } = await Swal.fire({
+        title: 'Select field validation',
+        input: 'select',
+        inputOptions: {
+          'Fruits': {
+            apples: 'Apples',
+            bananas: 'Bananas',
+            grapes: 'Grapes',
+            oranges: 'Oranges'
+          },
+          'Vegetables': {
+            potato: 'Potato',
+            broccoli: 'Broccoli',
+            carrot: 'Carrot'
+          },
+          'icecream': 'Ice cream'
+        },
+        inputPlaceholder: 'Select a fruit',
+        showCancelButton: true,
+        inputValidator: (value) => {
+          return new Promise((resolve) => {
+            if (value === 'oranges') {
+              resolve('mal')
+            } else {
+              resolve('You need to select oranges :)')
+            }
+          })
+        }
+      })
+      
+      if (fruit) {
+        Swal.fire(`You selected: ${fruit}`)
+      }
+      }*/
+    geteditarTeams(){
+      if(this._id !== null) {
+        
+        this.usuarioService.obtenerTeams(this._id).subscribe(data =>{
+        
+          this.teamsForm.patchValue({
+            nombre : data.nombre,
+        
+          })
+          
+        })
+      }
+    }
   
   logout(){
     localStorage.removeItem('token');
@@ -106,9 +217,12 @@ export class SupervisorListEquiposComponent implements OnInit {
       localStorage.removeItem('correo');
       localStorage.removeItem('apellido');
       localStorage.removeItem('celular');
-      localStorage.removeItem('uid')
+      localStorage.removeItem('uid');
+      localStorage.removeItem('region');
+      localStorage.removeItem('direccion');
+      localStorage.removeItem('ciudad');
+      localStorage.removeItem('team');
       this.router.navigate(['login'])
   }
 }
-
 

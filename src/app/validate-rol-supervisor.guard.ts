@@ -15,9 +15,8 @@ export class ValidateRolSupervisorGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       let rol = localStorage.getItem('rol');
-      if (rol== 'GUARDIA_ROLE'){
+      if (rol== '60b7fbd0c86aab40dc8b5e9b'){
         
- 
         return true;
         
       }else{
