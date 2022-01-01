@@ -23,7 +23,8 @@ export class ListaClienteAdmComponent implements OnInit {
   constructor(private usuarioService: UsuarioService, private router: Router) { }
 
   ngOnInit(){
-    this.loading = true;
+    
+
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 5,
@@ -38,14 +39,12 @@ export class ListaClienteAdmComponent implements OnInit {
       this.datoUsuario = JSON.parse(datoNombre)
     }
 
-    
-    this.obtenerClientes(); 
 
     this.usuarioService.getClientes().subscribe(data => {
        this.listclientes = data.clientes;
        this.dtTrigger.next();
       });
-      this.loading = false;
+   
   }
   ngOnDestroy(): void{
     this.dtTrigger.unsubscribe();

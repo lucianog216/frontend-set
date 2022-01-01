@@ -1,0 +1,265 @@
+
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" routerLink="/usuario">
+        <i class="fas fa-link"></i> SET
+      </a>
+     
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ">
+          
+          <li class="nav-item dropdown">
+            
+          <!--<li class="nav-item">
+            <a class="nav-link" routerLink="/usuario/add">Agregar Usuario</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/usuario">Visualizacion General</a>
+          </li>
+         <li class="nav-item">
+            <a class="nav-link" routerLink="/usuario/usuario_supervisor_lista">Supervisores</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link " routerLink="/usuario/usuario_guardia_lista">Lista de Clientes</a>
+          </li>-->
+          <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+            <ul class="navbar-nav">
+              <li class="nav-item dropdown" style="margin-left: 15px;">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Usuarios
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                  <li><a class="dropdown-item" routerLink="/usuario">Visualizacion Usuario</a></li>
+                  <div class=dropdown-divider></div>
+                  <li><a class="dropdown-item" routerLink="/usuario/add" >Agregar Usuario</a></li>
+               
+                </ul>
+              </li>
+              <li class="nav-item dropdown" style="margin-left: 15px;">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Clientes
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                  <li><a class="dropdown-item" routerLink="/usuario/lista_cliente">Visualizacion Clientes</a></li>
+                  <div class=dropdown-divider></div>
+                  <li><a class="dropdown-item"routerLink="/usuario/add_cliente" >Agregar Cliente</a></li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown" style="margin-left: 15px;">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Equipos
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                  <li><a class="dropdown-item" routerLink="/usuario/lista_turno">Visualizar Horarios</a></li>
+                  
+                  <li><a class="dropdown-item"routerLink="/usuario/add_turno" >Agregar Horario</a></li>
+                  <div class=dropdown-divider></div>
+                  <li><a class="dropdown-item" routerLink="/usuario/lista_equipo">Visualizar Equipo</a></li>
+                  
+                  <li><a class="dropdown-item"routerLink="/usuario/add_equipo" >Agregar Equipos</a></li>
+                 </ul>
+              </li>
+              <li class="nav-item dropdown" style="margin-left: 15px;">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Servicios
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                  
+                  <li><a class="dropdown-item"routerLink="/usuario/servicio">Agregar Servicio</a></li>
+                  <div class=dropdown-divider></div>
+                  <li><a class="dropdown-item" routerLink="/usuario/servicio_list">Visualizar Servicios</a></li>
+                 
+                </ul>
+              </li>
+            </ul>
+          </div>
+          
+          <li class="nav-item dropdown" style="margin-left: 15px;">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Reportes
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+              
+              <li><a class="dropdown-item"routerLink="/usuario/reporte_general">Reporte General</a></li>
+              <div class=dropdown-divider></div>
+              <li><a class="dropdown-item" routerLink="/usuario/reporte/equipos">Reporte Equipo</a></li>
+              <div class=dropdown-divider></div>
+              <li><a class="dropdown-item" routerLink="/usuario/reporte/teamguardia">Reporte Guardia</a></li>
+             
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="nav-item ">
+        <ul   class=navbar-nav ml-auto>
+          <li class=nav-item dropdown dropdown-menu-right>
+            <a class=nav-link dropdown-toggle href=# id=navbarDropdown role=button data-toggle=dropdown aria-haspopup=true aria-expanded=false>
+              <i class="far fa-user"> </i>
+              <span class="user" style="margin-left: 5px;" >{{datoUsuario}}</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-dark" aria-labelledby=navbarDropdown>
+              <a class=dropdown-item routerLink="/usuario/informcacion_personal_usuario">Informacion Personal</a>
+              <div class=dropdown-divider></div>
+              <a class=dropdown-item  routerLink="" (click)="logout()">Salir</a>
+            </div>
+          </li>
+        </ul>   
+      </div>
+    </div>
+  </nav>
+  
+
+
+
+
+
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container" >
+   <div class="col-md-12" style="padding: 20px">
+      <div class="invoice">
+         <!-- begin invoice-company -->
+         <div class="invoice-company text-inverse f-w-600">
+            <span class="pull-right hidden-print">
+            <a href="javascript:;" class="btn btn-sm btn-white m-b-10 p-l-5"><i class="fa fa-file t-plus-1 text-danger fa-fw fa-lg"></i> Exportar a PDF</a>
+            <a href="javascript:;" onclick="window.print()" style="margin-left: 8px;" class="btn btn-sm btn-white m-b-10 p-l-5"><i class="fa fa-print t-plus-1 fa-fw fa-lg"></i> imprimir</a>
+            </span>
+            {{cliente}}
+         </div>
+         <!-- end invoice-company -->
+         <!-- begin invoice-header -->
+         <div class="invoice-header">
+            <div class="invoice-from">
+               <small>.</small>
+               <address class="m-t-5 m-b-5">
+                  <strong class="text-inverse">{{guardianombre}} {{guardiaApellido}}</strong><br>
+                  {{guardiaCorreo}} <br>
+                  {{guardiaCiudad}} <br>
+                  {{guardiaDireccion}} <br>
+                  {{guardiaCelular}}
+               </address>
+            </div>
+            <div class="invoice-to">
+               <small>.</small>
+               <address class="m-t-5 m-b-5">
+                  <strong class="text-inverse">{{cliente}}</strong><br>
+                  {{turno}} <br>
+                  {{moment(fecha).format('LL')}} <br>
+                  {{ingreso}} <br>
+                  {{salida}}
+               </address>
+            </div>
+            <div class="invoice-date">
+               <small>Fecha Reporte</small>
+               <div class="date text-inverse m-t-5">{{date}}</div>
+               <div class="invoice-detail">
+                  Administrador<br>
+                  {{datoUsuario}}
+               </div>
+            </div>
+         </div>
+         <!-- end invoice-header -->
+         <!-- begin invoice-content -->
+         <div class="invoice-content">
+            <!-- begin table-responsive -->
+            <div class="table-responsive">
+               <table class="table table-invoice">
+                  <thead>
+                     <tr>
+                        <th>Descripcion General</th>
+                        <th> </th>
+                        <th> </th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                      <td>
+                        <span class="text-inverse">Supervisor y equipo</span><br>
+                        <small>Supervisor y equipo a cargo del turno</small>
+                     </td>
+                       
+                        <td>
+                          <span class="text-inverse"></span><br>
+                       </td>
+                       <td>
+                        <span class="text-inverse">Supervisor {{supervisor}}</span><br>
+                     </td>
+                     <td>
+                      <span class="text-inverse">Equipo {{equipo}} </span><br>
+                   </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <span class="text-inverse">Estado del turno</span><br>
+                           <small>true: turno NO realizado | false: turno realizado</small>
+                        </td>
+                        <td>
+                          <span class="text-inverse"> </span><br>
+                       </td>
+                       <td>
+                        <span class="text-inverse">Estado {{estado}}</span><br>
+                     </td>
+                     <td>
+                      <span class="text-inverse">  </span><br>
+                   </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <span class="text-inverse">Cantidad de horas</span><br>
+                           <small>Horas realizadas o a realizar</small>
+                        </td>
+                        <td class="text-inverse"> </td>
+                        <td class="text-inverse" >Horas del turno {{horas}}</td>
+                        <td class="text-inverse"> </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+            <!-- end table-responsive -->
+            <!-- begin invoice-price -->
+            <div class="invoice-price">
+               <div class="invoice-price-left">
+                  <div class="invoice-price-row">
+                     <div class="sub-price">
+                        <!-- <small>SUBTOTAL</small> -->
+                        <span class="text-inverse">Cantidad total de horas de guardia</span>
+                     </div>
+                     <!-- <div class="sub-price">
+                        <i class="fa fa-plus text-muted"></i>
+                     </div>
+                     <div class="sub-price">
+                        <small>PAYPAL FEE (5.4%)</small>
+                        <span class="text-inverse">$108.00</span>
+                     </div> -->
+                  </div>
+               </div>
+               <div class="invoice-price-right">
+                  <small>TOTAL GUARDIA</small> <span class="f-w-600"> {{totalhoras}} </span>
+               </div>
+            </div>
+            <!-- end invoice-price -->
+         </div>
+         <!-- end invoice-content -->
+         <!-- begin invoice-note -->
+         <!-- <div class="invoice-note">
+            * Make all cheques payable to [Your Company Name]<br>
+            * Payment is due within 30 days<br>
+            * If you have any questions concerning this invoice, contact  [Name, Phone Number, Email]
+         </div> -->
+         <!-- end invoice-note -->
+         <!-- begin invoice-footer -->
+         <!-- <div class="invoice-footer">
+            <p class="text-center m-b-5 f-w-600">
+               THANK YOU FOR YOUR BUSINESS
+            </p>
+            <p class="text-center">
+               <span class="m-r-10"><i class="fa fa-fw fa-lg fa-globe"></i> matiasgallipoli.com</span>
+               <span class="m-r-10"><i class="fa fa-fw fa-lg fa-phone-volume"></i> T:016-18192302</span>
+               <span class="m-r-10"><i class="fa fa-fw fa-lg fa-envelope"></i> rtiemps@gmail.com</span>
+            </p>
+         </div> -->
+         <!-- end invoice-footer -->
+      </div>
+   </div>
+</div>

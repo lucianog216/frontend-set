@@ -24,11 +24,14 @@ export class GuardiaListEquiposComponent implements OnInit {
   celularUser=[];
   rolUser=[];
   datoTeam : string
+  datos =[];
+  datos2 =[]
   data3=[];
   data4=[];
   data5=[];
   data6=[];
   uidUser=[];
+  teamid=[]
   imgUser=[];
   datoUid : string
   img=[];
@@ -55,7 +58,8 @@ export class GuardiaListEquiposComponent implements OnInit {
 
     this.obtenerTeams(); 
     this.obtenerTeams1();
-    this.obtenerTurnero2()
+    this.obtenerTurnero2();
+    this.teamsid();
     var datoNombre = localStorage.getItem('nombre');
     if(datoNombre == null){
       this.datoUsuario =[];
@@ -142,7 +146,7 @@ export class GuardiaListEquiposComponent implements OnInit {
     if(datoteam == null){
       
     }else{
-      this.teamuser = (datoteam)
+      this.teamuser = JSON.parse(datoteam)
       console.log(this.teamuser)
     }
     this.usuarioService.getTurneroTeams(this.teamuser).subscribe(data => {
@@ -154,19 +158,37 @@ export class GuardiaListEquiposComponent implements OnInit {
 }
 
 obtenerTurnero2() {
-  var datoid = localStorage.getItem('uid');
+  var datoid = localStorage.getItem('team');
   if(datoid == null){
   }else{
-    this.datoUid = datoid
+    this.datoUid = JSON.parse(datoid)
     console.log(this.datoUid)
   }
     this.usuarioService.getTurnerosid(this.datoUid).subscribe(data => {
+      console.log(data)
       this.data4 = data.results[0];
       for(let i=0;i<this.data4.length;i++){
         this.data5 = this.data4[i].usuario.nombre,
         this.data6 = this.data4[i].team.nombre
       }
       
+  }, error => {
+    console.log(error);
+  })
+}
+teamsid(){
+  var datoteam = localStorage.getItem ('team');
+    if(datoteam == null){
+      
+    }else{
+      this.teamuser = JSON.parse (datoteam)
+      console.log(this.teamuser)
+    }
+    this.usuarioService.obtenerTeams(this.teamuser).subscribe(data => {
+      this.teamid = data.team.guardias;
+      this.datos = data.team.supervisor.nombre;
+      this.datos2 = data.team.nombre;
+      console.log('botas',this.datos2)
   }, error => {
     console.log(error);
   })

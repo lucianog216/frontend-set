@@ -116,11 +116,11 @@ geteditarTeams(){
     this.usuarioService.obtenerTeams(this._id).subscribe(data =>{
       console.log(data);
       this.teamsForm.patchValue({
-        nombre : data.nombre,
+        nombre : data.team.nombre,
       
-        nivel: data.nivel,
-        supervisor: data.supervisor.nombre,
-        guardias: data.guardias.nombre,
+        nivel: data.team.nivel,
+        supervisor: data.team.supervisor.nombre,
+        guardias: data.team.guardias.nombre,
         
         
       })

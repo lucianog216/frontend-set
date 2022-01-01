@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from '../../services/usuario.service';
 import { Subject } from 'rxjs';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import Swal from 'sweetalert2';
 import { Turnos } from 'src/app/models/Turnos';
 import * as moment from 'moment';
 import 'moment/locale/es';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-guardia-list-turno',
@@ -13,17 +14,45 @@ import 'moment/locale/es';
   styleUrls: ['./guardia-list-turno.component.css']
 })
 export class GuardiaListTurnoComponent implements OnInit {
+  id: string | null;
   moment: any = moment;
   listturnos: Turnos[] = [];
   totalturnos: number = 0;
   datoUsuario=[];
+  usuarioForm: FormGroup;
   datoUid : string
   dtOptions: DataTables.Settings = {};
   dtTrigger = new Subject();
   data2 =[]
   data3 =[]
 
-  constructor(private usuarioService: UsuarioService, private router: Router) { }
+  guardianombre = []
+  guardiaApellido =[]
+  cliente = []
+  fecha = []
+  ingreso = []
+  turno = []
+  supervisor = []
+  idguardia:string
+
+  constructor(private fb: FormBuilder,
+    private usuarioService: UsuarioService, 
+    private router: Router,private aRouter: ActivatedRoute,) {
+      this.usuarioForm = this.fb.group({ 
+        // nombre: ['', Validators.required],     
+        // apellido: ['', Validators.required], 
+        // celular: ['', Validators.required],
+        // password: ['', Validators.required], 
+        // correo: ['', Validators.required], 
+        // rol: ['', Validators.required],
+        // rut: ['', Validators.required], 
+        // region: ['', Validators.required], 
+        // ciudad: ['', Validators.required],
+        // direccion: ['', Validators.required],
+        
+      }),
+       this.id = this.aRouter.snapshot.paramMap.get('id'); 
+      }
 
   ngOnInit(){
     
@@ -50,9 +79,9 @@ export class GuardiaListTurnoComponent implements OnInit {
       
     }
 
-    
+    this.getServicioID()
     this.obtenerTurnos(); 
-    this.obtenerTurnero();
+    
     this.obtenerTurnero1();
     
 
@@ -91,14 +120,7 @@ export class GuardiaListTurnoComponent implements OnInit {
       }
     })      
     }
-    obtenerTurnero() {
-      this.usuarioService.getTurneros().subscribe(data => {
-        this.data2 = data.turnos;
-        
-    }, error => {
-      console.log(error);
-    })
-  }
+   
 
 
 
@@ -120,7 +142,24 @@ export class GuardiaListTurnoComponent implements OnInit {
   })
 }
 
+getServicioID(){
+  if(this.id !== null) {
+    
+    this.usuarioService.getTurneroid(this.id).subscribe(data =>{
+      
 
+      this.guardianombre = data.guardia.nombre
+      this.guardiaApellido = data.guardia.apellido
+      this.cliente = data.cliente.nombre
+      this.fecha = data.inicio
+      this.ingreso = data.turno.ingreso
+      this.turno = data.turno.nombre
+      this.supervisor = data.usuario.nombre
+      this.idguardia = data.id
+      console.log('gatooo', this.idguardia )
+    })
+  }
+}
 
 
   

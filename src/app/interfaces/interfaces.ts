@@ -87,14 +87,16 @@ export interface clientes {
     _id?:     string; 
     estado?:  boolean;
     nombre:   string;     
-    rut: string;
+    rut:       string;
     celular:  number;
     correo:   string;
     region:    string,
-    ciudad:    string
+    ciudad:    string,
+    nivel:     string,
+    empresa:   string,
     direccion: string;
     usuario: {_id:string,
-       nombre:string};
+          nombre:string};
 
     } 
 export interface turnos {
@@ -234,6 +236,10 @@ export interface IEvent1 {
    
     
 }
+export interface evet2{
+    desde: Date;
+    hasta: Date;
+}
 
 
 
@@ -242,13 +248,17 @@ export interface Cliente {
     _id:    string;
     nombre: string;
 }
+export interface teamcliente{
+    cliente:string;
+}
 
-
-
+export interface borrarGuardiaEquipo{
+    guardia:string
+}
 export interface turneros{
     guardia: string;
     inicio: Date;
-    final: Date;
+    team: string;
     cliente: string;
     turno: string;
 }

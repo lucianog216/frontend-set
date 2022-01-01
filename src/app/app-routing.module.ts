@@ -42,7 +42,13 @@ import {SupervisorAddEventoComponent} from './components/supervisor-add-evento/s
 import { Supervisor_turnerosComponent } from './components/supervisor_turneros/supervisor_turneros.component';
 import { SupervisorListaguardiaEquipoComponent } from './components/supervisor-listaguardia-equipo/supervisor-listaguardia-equipo.component';
 import { SupervisorTurnosListComponent } from './components/supervisor-turnos-list/supervisor-turnos-list.component';
-
+import { AdmReporteGeneralComponent } from './components/adm-ReporteGeneral/adm-ReporteGeneral.component';
+import { AdmReporteTeamGuardiaComponent } from './components/adm-reporte-TeamGuardia/adm-reporte-TeamGuardia.component';
+import { AdmEquipoReportesComponent } from './components/adm-equipo-reportes/adm-equipo-reportes.component';
+import { AdmReporteListguardiaComponent } from './components/adm-reporte-listguardia/adm-reporte-listguardia.component';
+import { AdmReporteEquipoCalendarioTurnoComponent } from './components/adm-reporte-equipo-calendarioTurno/adm-reporte-equipo-calendarioTurno.component';
+import { AdmReporteGuardiaComponent } from './components/adm-reporte-guardia/adm-reporte-guardia.component';
+GuardiaListTurnoComponent
 
 
 //TODO:FALTA RUTAS ADMIN, GUARDIAS, SUPERVISOR  
@@ -87,6 +93,16 @@ pathMatch: 'full',
     canActivate: [AuthGuard]
   },
   {
+    path: 'usuario/reporte/gurdiaTurno/:id',
+    component: AdmReporteGuardiaComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'usuario/reporte/calendarioTurno/:_id',
+    component: AdmReporteEquipoCalendarioTurnoComponent,
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'usuario/add_equipo',
     component: AddEquiposAdmComponent,
     canActivate: [AuthGuard]
@@ -94,6 +110,11 @@ pathMatch: 'full',
   {
     path: 'usuario/lista_cliente',
     component: ListaClienteAdmComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'usuario/reporte_general',
+    component: AdmReporteGeneralComponent,
     canActivate: [AuthGuard]
   },
   {
@@ -108,12 +129,12 @@ pathMatch: 'full',
 
   },
   {
-    path:'guardia/list',
+    path:'guardia/list/:id',
     component:GuardiaProfileListComponent,
     canActivate: [ValidateRolSupervisorGuard]
   },
   {
-    path:'guardia/list_turno',
+    path:'guardia/list_turno/:id',
     component:GuardiaListTurnoComponent,
     canActivate: [ValidateRolSupervisorGuard]
   },
@@ -123,7 +144,7 @@ pathMatch: 'full',
     canActivate: [ValidateRolSupervisorGuard]
   },
   {
-    path:'supervisor/servicio_add',
+    path:'supervisor/servicio_add/:id',
     component:GuardiaAddServicioComponent,
     canActivate: [ValidateRolAdminGuard]
   },
@@ -185,25 +206,35 @@ pathMatch: 'full',
     component: SupervisorAddTurnosComponent,
     canActivate: [ValidateRolAdminGuard]
   
-  },
-  {
+},
+{
     path:'supervisor/info_personal',
     component:SupervisorInfoPersonalComponent,
     canActivate: [ValidateRolAdminGuard]
-  },
-  {
+},
+{
     path:'supervisor/AgregarGuardia',
     component:SupervisorAgregarGuardiaComponent,
     canActivate: [ValidateRolAdminGuard]
-  },
-  {
+},
+{
     path:'guardia/editar/:uid',
     component:SupervisorAgregarGuardiaComponent,
     canActivate: [ValidateRolAdminGuard]
-  },
-  {
+},
+{
   path:'usuario/add',
   component: UsuarioAddComponent,
+  canActivate: [AuthGuard ]
+},
+{
+  path:'usuario/reporte/teamguardia',
+  component: AdmReporteTeamGuardiaComponent,
+  canActivate: [AuthGuard ]
+},
+{
+  path:'usuario/reporte/equipos',
+  component: AdmEquipoReportesComponent,
   canActivate: [AuthGuard ]
 },
 {
@@ -241,6 +272,12 @@ pathMatch: 'full',
 
 },
 {
+  path:'usuario/reporte/listaGuradia/:_id',
+  component: AdmReporteListguardiaComponent,
+    canActivate: [AuthGuard]
+
+},
+{
   path:'supervisor/lista_guardia',
   component: SupervisorListaGuardiasComponent,
   canActivate: [ValidateRolAdminGuard]
@@ -257,7 +294,7 @@ pathMatch: 'full',
   canActivate: [ValidateRolAdminGuard]
 },
 {
-  path:'supervisor/turnero',
+  path:'supervisor/turnero/:_id',
   component:Supervisor_turnerosComponent,
   canActivate: [ValidateRolAdminGuard]
 },

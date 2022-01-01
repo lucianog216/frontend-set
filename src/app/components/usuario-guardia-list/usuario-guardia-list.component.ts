@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TeamRESP } from 'src/app/interfaces/interfaces';
 import{FormBuilder, FormGroup, Validators} from '@angular/forms'
-import { teams, Results, teamguard } from 'src/app/interfaces/interfaces';
+import { teams, Results, teamguard, teamcliente } from 'src/app/interfaces/interfaces';
 import { ToastrService } from 'ngx-toastr';
 import { UsuarioService } from '../../services/usuario.service';
 import {AuthService} from '../../services/auth.service'
@@ -11,6 +11,7 @@ import { Turnos } from 'src/app/models/Turnos';
 import * as moment from 'moment';
 import Swal from 'sweetalert2';
 import 'moment/locale/es';
+import { Clientes } from 'src/app/models/Clientes';
 @Component({
   selector: 'app-usuario-guardia-list',
   templateUrl: './usuario-guardia-list.component.html',
@@ -29,6 +30,9 @@ export class UsuarioGuardiaListComponent implements  OnInit {
   listteams2= [];
   datoUsuario=[];
   listteams3=[];
+  listResults2=[]
+  listteams4=[]
+  listclientes: Clientes[] = [];
   teamsForm: FormGroup;
   titulo = 'Agregar Equipo';
   _id: string | null;
@@ -42,7 +46,7 @@ export class UsuarioGuardiaListComponent implements  OnInit {
     private toastr: ToastrService,
     private aRouter: ActivatedRoute ) {
       this.teamsForm = this.fb.group({ 
-        guardia: ['', Validators.required], 
+        cliente: ['', Validators.required], 
         
       }),
        this._id = this.aRouter.snapshot.paramMap.get('_id'); 
@@ -52,6 +56,9 @@ export class UsuarioGuardiaListComponent implements  OnInit {
   ngOnInit(): void {
     
     console.log(this.teamsForm)
+    this.obtenerClientes();
+    this.obtenerTeams()
+    this.geteditarTeams2()
     this.obtenerSupervisores()
     this.geteditarTeams()
     this.obtenerGuardias()
@@ -62,7 +69,14 @@ export class UsuarioGuardiaListComponent implements  OnInit {
       this.datoUsuario = JSON.parse(datoNombre)
     }
   }
-  
+  obtenerClientes() {
+    this.usuarioService.getClientes().subscribe(data => {
+      this.listclientes = data.clientes;
+      console.log(this.listclientes)
+    }, error => {
+      console.log(error);
+    })
+  }
   obtenerTeams() {
     this.usuarioService.getTeams().subscribe(data => {
       this.totalteams = data.total;
@@ -71,23 +85,23 @@ export class UsuarioGuardiaListComponent implements  OnInit {
       console.log(error);
     })
   }
+  geteditarTeams2(): void{
+    if(this._id !== null) {
+      this.usuarioService.obtenerTeams(this._id).subscribe(data =>{
+        this.listteams3 = data.team.guardias;
+        this.listteams4 = data.team.clientes;
+        console.log('gato',this.listteams4)
+      })
+    }
+  }
   geteditarTeams(): void{
     if(this._id !== null) {
       this.titulo = 'Editar Equipo';
       this.usuarioService.obtenerTeams(this._id).subscribe(data =>{
-  
-        this.teamsForm.patchValue({
-  
-          nombre : data.nombre,
-          guardias:{
-             nombre : data.guardias.nombre,
-             _id : data.guardias._id,
-             apellido : data.guardias.apellido,
-          }
-          
-        })
-        this.listteams3 = data.guardias;
+        this.listteams3 = data.team.guardias;
+        
         console.log(this.listteams3)
+        
       })
     }
   }
@@ -95,16 +109,12 @@ export class UsuarioGuardiaListComponent implements  OnInit {
     console.log(this.teamsForm)
     console.log(this.teamsForm.get('turnos')?.value);
 
-    const TEAMSGUARD : teamguard = {
-      guardia: this.teamsForm.get('guardia')?.value,
-      nombre: this.teamsForm.get('nombre')?.value,
-      guardias: this.teamsForm.get('guardias')?.value,
-      apellido: this.teamsForm.get('apellido')?.value,
-      correo: this.teamsForm.get('correo')?.value,
-      ciudad: this.teamsForm.get('ciudad')?.value,
+    const TEAMSCLIENTE : teamcliente = {
+      cliente: this.teamsForm.get('cliente')?.value,
+      
     }
     if (this._id !== null){
-      this.usuarioService.addGuardiaTeams(this._id, TEAMSGUARD ).subscribe(data =>{
+      this.usuarioService.AddClienteaTeams(this._id, TEAMSCLIENTE ).subscribe(data =>{
         console.log(data);
         
       })
@@ -124,16 +134,10 @@ obtenerSupervisores() {
   })
 }
 
- 
-
-
-
 
 obtenerGuardias() {
   this.usuarioService.getResults().subscribe(data => {
    this.listResults1 = data.results;
-   
-   
   }, error => {
     console.log(error);
   })

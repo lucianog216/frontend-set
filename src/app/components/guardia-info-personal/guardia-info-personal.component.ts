@@ -73,19 +73,19 @@ export class GuardiaInfoPersonalComponent implements OnInit {
     }else{
       this.celularUser = JSON.parse(datoCelular)
     }
+    var datodireccion = localStorage.getItem('direccion');
+    if(datodireccion == null){
+      this.direccionUser =[];
+    }else{
+      this.direccionUser = JSON.parse(datodireccion)
+    }
     var datoCorreo = localStorage.getItem('correo');
     if(datoCorreo == null){
       this.correoUser =[];
     }else{
       this.correoUser = JSON.parse(datoCorreo)
     }
-   /* var datoImg = localStorage.getItem('img');
-    if(datoImg == null){
-      this.imgUser =[];
-      console.log(this.imgUser);
-    }else{
-      this.imgUser = JSON.parse(datoImg)
-    }*/
+  
     var datociudad = localStorage.getItem('ciudad');
     if(datociudad == null){
       this.ciudaduser =[];
@@ -104,12 +104,7 @@ export class GuardiaInfoPersonalComponent implements OnInit {
     }else{
       this.teamuser = JSON.parse(datoteam)
     }
-    var datodireccion = localStorage.getItem('direccion');
-    if(datodireccion == null){
-      this.direccionUser =[];
-    }else{
-      this.direccionUser = JSON.parse(datodireccion)
-    }
+    
     
 
     if (this.uid !== null)

@@ -23,7 +23,7 @@ import { LocalizedString } from '@angular/compiler';
 })
 export class UsuarioListComponent implements OnDestroy, OnInit {
 
-  listUsuario: Usuario[] = [];
+  listUsuario = [];
   listResults: results[] = [];
   listResultsSuper: Results[] = [];
   totalResultsSuper: number = 0;
@@ -43,7 +43,7 @@ export class UsuarioListComponent implements OnDestroy, OnInit {
    }
 
   ngOnInit(){
-    
+    this.obtenerUsuario();
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 5,
@@ -57,15 +57,15 @@ export class UsuarioListComponent implements OnDestroy, OnInit {
     }else{
       this.datoUsuario = JSON.parse(datoNombre)
     }
-    this.obtenerUsuario();
-    this.obtenerGuardias();
-    this.obtenerClientes();
-    this.obtenerSupervisores();
-
     this.usuarioService.getUsuarios().subscribe(data => {
        this.listUsuario = data.usuarios;
        this.dtTrigger.next();
       });
+    this.obtenerGuardias();
+    this.obtenerClientes();
+    this.obtenerSupervisores();
+
+    
       
   }
   ngOnDestroy(): void{
@@ -92,7 +92,7 @@ export class UsuarioListComponent implements OnDestroy, OnInit {
     this.usuarioService.getUsuarios().subscribe(data => {
      this.totalUsuario = data.total;
      this.listUsuario = data.usuarios;
-     console.log('Usuarios',this.totalUsuario)
+     
     }, error => {
       console.log(error);
     })
@@ -101,7 +101,7 @@ export class UsuarioListComponent implements OnDestroy, OnInit {
     this.usuarioService.getResults().subscribe(data => {
       this.totalResults = data.total;
       this.listResults = data.results;
-      console.log('Guardias',this.totalResults);
+      
     }, error => {
       console.log(error);
     })
@@ -111,7 +111,6 @@ export class UsuarioListComponent implements OnDestroy, OnInit {
     this.usuarioService.getResultsSupervisor().subscribe(data => {
      this.listResultsSuper = data.results;
      this.totalResultsSuper = data.total;
-     console.log('suoervisor',this.totalResultsSuper);
     }, error => {
       console.log(error);
      
@@ -120,7 +119,6 @@ export class UsuarioListComponent implements OnDestroy, OnInit {
   obtenerClientes() {
     this.usuarioService.getClientes().subscribe(data => {
       this.totalclientes = data.total;
-      console.log('Clientes',this.totalclientes)
     }, error => {
       console.log(error);
     })

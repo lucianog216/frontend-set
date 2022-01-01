@@ -32,13 +32,15 @@ export class AddClienteAdmComponent implements OnInit {
     private toastr: ToastrService,
     private aRouter: ActivatedRoute ) {
       this.clienteForm = this.fb.group({ 
-        nombre: ['', Validators.required],     
+        nombre: ['', Validators.required],
+        empresa: ['', Validators.required],     
         rut: ['', Validators.required], 
         celular: ['', Validators.required], 
         correo: ['', Validators.required], 
         region: ['', Validators.required], 
         ciudad: ['', Validators.required],
         direccion: ['', Validators.required], 
+        nivel: ['', Validators.required],  
       }),
        this._id = this.aRouter.snapshot.paramMap.get('_id'); 
        
@@ -58,7 +60,7 @@ export class AddClienteAdmComponent implements OnInit {
     this.usuarioService.getRegiones().subscribe(data => {
       this.listregiones = data.regiones;
       this.listregiones2 = data.regiones.ciudades;
-      console.log('yuhuijKshi',this.listregiones2)
+      console.log('yuhuijKshi',this.listregiones)
       console.log(data)
     }, error => {
       console.log(error);
@@ -94,11 +96,13 @@ export class AddClienteAdmComponent implements OnInit {
     console.log(this.clienteForm.get('clientes')?.value);
     const CLIENTES : clientes = {
       nombre: this.clienteForm.get('nombre')?.value,
+      empresa: this.clienteForm.get('empresa')?.value,
       rut: this.clienteForm.get('rut')?.value,
       celular: this.clienteForm.get('celular')?.value,
       correo: this.clienteForm.get('correo')?.value,
       usuario: this.clienteForm.get('')?.value,
       region: this.clienteForm.get('region')?.value,
+      nivel: this.clienteForm.get('nivel')?.value,
       ciudad: this.clienteForm.get('ciudad')?.value,
       direccion: this.clienteForm.get('direccion')?.value,
     }
@@ -131,7 +135,8 @@ geteditarCliente(){
         correo: data.correo, 
         region: data.region,
         ciudad: data.ciudad,
-        direccion: data.direccion
+        direccion: data.direccion,
+        empresa: data.empresa
       })
     })
   }

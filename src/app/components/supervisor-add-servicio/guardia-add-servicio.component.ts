@@ -4,6 +4,7 @@ import { RESTListarServi, Servicio } from 'src/app/interfaces/interfaces';
 import { UsuarioService } from '../../services/usuario.service';
 import { Subject } from 'rxjs';
 import * as moment from 'moment';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-guardia-add-servicio',
   templateUrl: './guardia-add-servicio.component.html',
@@ -11,18 +12,44 @@ import * as moment from 'moment';
 })
 export class GuardiaAddServicioComponent implements OnInit {
   moment: any = moment;
-  
+  id: string | null;
+  usuarioForm: FormGroup;
   datoUsuario =[];
   listteams2 =[];
+  team=[]
+  turno=[]
+  usuario=[]
+  dia=[]
+  Inicio=[]
+  fin=[]
+  decripcion=[]
   listServ: Servicio[] = [];
   totalServ: number = 0;
   dtOptions: DataTables.Settings = {};
   dtTrigger = new Subject();
-  constructor( private router: Router,
-    private usuarioService: UsuarioService,) { }
+  constructor(private fb: FormBuilder, 
+     private router: Router,
+    private aRouter: ActivatedRoute,
+    private usuarioService: UsuarioService,){
+      this.usuarioForm = this.fb.group({ 
+        // nombre: ['', Validators.required],     
+        // apellido: ['', Validators.required], 
+        // celular: ['', Validators.required],
+        // password: ['', Validators.required], 
+        // correo: ['', Validators.required], 
+        // rol: ['', Validators.required],
+        // rut: ['', Validators.required], 
+        // region: ['', Validators.required], 
+        // ciudad: ['', Validators.required],
+        // direccion: ['', Validators.required],
+        
+      }),
+       this.id = this.aRouter.snapshot.paramMap.get('id'); 
+      }
 
   ngOnInit(): void {
     this.obtenerSrev();
+    this.getServicioID()
 
 
     var datoNombre = localStorage.getItem('nombre');
@@ -43,6 +70,23 @@ export class GuardiaAddServicioComponent implements OnInit {
     }, error => {
       console.log(error);
     })
+  }
+  getServicioID(){
+    if(this.id !== null) {
+      
+      this.usuarioService.getServicioID(this.id).subscribe(data =>{
+        this.team = data.title
+        this.usuario = data.cliente.nombre
+        this.dia = data.date
+        this.Inicio = data.start
+        this.fin = data.end
+        this.decripcion = data.descripcion
+        this.turno = data.turno.nombre
+        this.usuarioForm.patchValue({
+          
+        })
+      })
+    }
   }
   
   logout(){

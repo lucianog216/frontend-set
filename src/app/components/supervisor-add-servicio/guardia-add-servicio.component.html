@@ -23,17 +23,6 @@
 			  <li><a class="dropdown-item" routerLink="/supervisor/AgregarGuardia" >Agregar Guardias</a></li>
 			</ul>
 		  </li>
-		  <li class="nav-item dropdown" style="margin-left: 15px;">
-			<a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-			  Turnos
-			</a>
-			<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-			  <li><a class="dropdown-item" routerLink="/supervisor/list_turnos">Turnos</a></li>
-			  <div class=dropdown-divider></div>
-			  <li><a class="dropdown-item"  routerLink="/supervisor/turnero"> Asignacion turnos </a></li>
-			</ul>
-		  </li>
-
 		  
 		  <li class="nav-item" style="margin-left: 15px;">
 			<a class="nav-link" routerLink="/supervisor/CalendarioMañana">Calendario</a>
@@ -70,7 +59,6 @@
 	</div>
   </nav>
 	
-  
 
 	
     
@@ -123,19 +111,19 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <div class="container content" >
 <div class="row gutters">
-	<div class="col-lg-4 col-md-4 col-sm-12" *ngFor="let servicios of listServ">
+	<div class="col-lg-4 col-md-4 col-sm-12">
 		<div class="plan-card plan-one">
 			<div class="pricing-header">
 				<h4 class="plan-title">Servicio</h4>
-				<div class="plan-cost">{{servicios.title}}</div>
-				<div class="plan-save" *ngIf="servicios.usuarioIn">Usuario: {{servicios.usuarioIn.nombre}}</div>
+				<div class="plan-cost">{{team}}</div>
+				<div class="plan-save">Usuario: {{usuario}}</div>
 			</div>
 			<ul class="plan-features">
-				<li *ngIf="servicios.turno" >Turno: {{servicios.turno.nombre}}  </li>
-				<li *ngIf="servicios.team">Dia: {{moment(servicios.date).format('LL')}}</li>
-				<li>Inicio: {{servicios.start}}</li>
-				<li>Finalización: {{servicios.end}}</li>
-				<li>Descripcion: {{servicios.descripcion}} </li>
+				<!-- <li>Turno: {{turno}}  </li> -->
+				<li>Dia: {{moment(dia).format('LL')}}</li>
+				<li>Inicio: {{Inicio}}</li>
+				<li>Finalización: {{fin}}</li>
+				<li>Descripcion: {{decripcion}} </li>
 			
 			</ul>
 			<!--<div class="plan-footer">

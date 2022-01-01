@@ -54,12 +54,29 @@ import { AdminListServicioComponent } from './components/admin-list-servicio/adm
 import { GuardiaCalendarioComponent } from './components/guardia-calendario/guardia-calendario.component';
 import { SupervisorCalendarioComponent } from './components/supervisor-calendario/supervisor-calendario.component';
 import { FullCalendarModule } from 'primeng/fullcalendar';
-import { CalendarModule } from 'primeng/calendar';
+//import { CalendarModule } from 'primeng/calendar';
 import { SupervisorAddEventoComponent } from './components/supervisor-add-evento/supervisor-add-evento.component';
 import { Supervisor_turnerosComponent } from './components/supervisor_turneros/supervisor_turneros.component';
 import { SupervisorListaguardiaEquipoComponent } from './components/supervisor-listaguardia-equipo/supervisor-listaguardia-equipo.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { CommonModule } from '@angular/common';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/moment';
+import * as moment from 'moment';
+import{  MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule} from '@angular/material/datepicker'
+import { MatInputModule } from '@angular/material/input'
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { AdmReporteGeneralComponent } from './components/adm-ReporteGeneral/adm-ReporteGeneral.component';
+import { AdmReporteTeamGuardiaComponent } from './components/adm-reporte-TeamGuardia/adm-reporte-TeamGuardia.component';
+import { AdmReporteListguardiaComponent } from './components/adm-reporte-listguardia/adm-reporte-listguardia.component';
+import { AdmReporteEquipoCalendarioTurnoComponent } from './components/adm-reporte-equipo-calendarioTurno/adm-reporte-equipo-calendarioTurno.component';
+import { AdmReporteGuardiaComponent } from './components/adm-reporte-guardia/adm-reporte-guardia.component';
+import { AdmEquipoReportesComponent } from './components/adm-equipo-reportes/adm-equipo-reportes.component';
+
+export function momentAdapterFactory() {
+  return adapterFactory(moment);
+};
 
 @NgModule({
   declarations: [
@@ -101,9 +118,13 @@ import { CommonModule } from '@angular/common';
     SupervisorAddEventoComponent,
     Supervisor_turnerosComponent,
     SupervisorListaguardiaEquipoComponent,
+    AdmReporteGeneralComponent,
+    AdmReporteTeamGuardiaComponent,
+    AdmReporteListguardiaComponent,
+    AdmReporteEquipoCalendarioTurnoComponent,
+    AdmReporteGuardiaComponent,
+    AdmEquipoReportesComponent,
     
-
-
 
   ],
   imports: [
@@ -112,6 +133,9 @@ import { CommonModule } from '@angular/common';
     AngularFireAnalyticsModule,
     AngularFireAuthModule,
     AngularFirestoreModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    MatInputModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
@@ -122,7 +146,9 @@ import { CommonModule } from '@angular/common';
     FullCalendarModule,
     CalendarModule,
     NgxPaginationModule,
-    ToastrModule.forRoot()
+    NgxChartsModule,
+    ToastrModule.forRoot(),
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: momentAdapterFactory })
   
   ],
   providers: [

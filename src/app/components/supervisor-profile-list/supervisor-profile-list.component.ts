@@ -10,7 +10,7 @@ import { UsuarioService } from '../../services/usuario.service';
   styleUrls: ['./supervisor-profile-list.component.css']
 })
 export class SupervisorProfileListComponent implements OnInit, OnDestroy {
-  listUsuario: Usuario[] = [];
+  listUsuario = [];
   totalUsuario: number = 0;
   dtOptions: DataTables.Settings = {};
   datoUsuario=[];

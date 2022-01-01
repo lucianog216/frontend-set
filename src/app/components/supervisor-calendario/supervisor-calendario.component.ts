@@ -1,351 +1,207 @@
-import { Component, OnInit } from '@angular/core';
+import {  OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import{FormBuilder, FormGroup, NgForm, Validators} from '@angular/forms';
-import {AuthService} from '../../services/auth.service';
-import {  IEvent, IEvent1 } from '../../interfaces/interfaces';
 import { UsuarioService } from '../../services/usuario.service';
-import { ToastrService } from 'ngx-toastr';
-import { usuario } from 'src/app/models/Usuario';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import listPlugin from '@fullcalendar/list';
-import interactionPlugin from '@fullcalendar/interaction';
-import esLocale from '@fullcalendar/core/locales/es';
-import { HttpClient } from '@angular/common/http';
-import { data } from 'jquery';
-import { diffDates } from '@fullcalendar/core/util/misc';
+import {Component, ChangeDetectionStrategy, ViewChild, TemplateRef,} from '@angular/core';
+import { startOfDay, endOfDay,subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours,} from 'date-fns';
+import { Subject } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView} from 'angular-calendar';
+import { registerLocaleData } from '@angular/common';
+
+import localeEs from '@angular/common/locales/es';
+
+registerLocaleData(localeEs);
+const colors: any = {
+  red: {
+    primary: '#ad2121',
+    secondary: '#FAE3E3',
+  },
+  blue: {
+    primary: '#1e90ff',
+    secondary: '#D1E8FF',
+  },
+  yellow: {
+    primary: '#e3bc08',
+    secondary: '#FDF1BA',
+  },
+};
 declare var $: any;
+
+
+
 
 @Component({
   selector: 'app-supervisor-calendario',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './supervisor-calendario.component.html',
   styleUrls: ['./supervisor-calendario.component.css']
 })
-export class SupervisorCalendarioComponent implements OnInit {
-
- 
-  public options: any;
-  public options2: any;
-  public events: any=[];
-  public fechaEventosList: Date;
-  title = 'easyfullcalendar';
-  posts: any;
-
-  calendarData : any[];
-  totalUsuario: number = 0;
-  totalResults: number = 0;
-  totalclientes: number = 0;
-  totalResultsSuper: number = 0;
-  datoUsuario=[];
-  apellidoUser=[];
-  correoUser=[];
-  celularUser=[];
-  rolUser=[];
-  uidUser=[];
-  imgUser=[];
-  totalServ=[];
-  listServ=[];
-  img=[];
- data2=[]
-  direccionUser=[];
-  regionUser=[];
-  ciudaduser =[];
- 
-
-
-  usuarioForm: FormGroup;
+export class SupervisorCalendarioComponent  {
+  
+  locale: string = 'es';
+  datoUsuario =[]
+  data3=[]
+  turno=[]
   uid: string | null;
+  datoUid : string;
+  @ViewChild('modalContent', { static: false }) modalContent: TemplateRef<any>;
+
+  view: CalendarView = CalendarView.Month;
+
+  CalendarView = CalendarView;
+
+  viewDate: Date = new Date();
+
+  modalData: {
+    action: string;
+    event: CalendarEvent;
+  };
   
-  constructor(private router: Router,
-    private usuarioService: UsuarioService,
-    private aRouter: ActivatedRoute,
-    private fb: FormBuilder,
-    private http: HttpClient,
-    private toastr: ToastrService,
-    private authService: AuthService ) { 
-      this.usuarioForm = this.fb.group({ 
-        nombre: [ '', Validators.required], 
-        apellido: ['', Validators.required], 
-        password:['', Validators.required], 
-        celular: ['', Validators.required], 
-        correo: ['', Validators.required], 
-        
-      }),
-        this.uid = localStorage.getItem('uid')
-
-       
+  actions: CalendarEventAction[
     
-        this.options = {
-          plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin],
-          defaultDate: new Date(),
-          locale: esLocale,
-          timeZone: 'UTC',
-          
-          header: {
-            left: 'prev,next',
-            center: 'title',
-            right: 'dayGridMonth,timeGridWeek,list',
-            color: '#ff9f89',
-            
-            display: 'background',
-          },
-          eventColor: '#378006',
-         
-          dayMaxEvents: true, // allow "more" link when too many events
-          editable: true,
-          selectable: true,
-         
-        }
-
-       /* eventRender: (e) =>  {
-          var tooltip = new Tooltip(e.el, {
-            title: "<h6>"+e.event.title +"</h6>"+e.event.extendedProps.description,
-            placement: 'top',
-            trigger: 'hover',
-            container: 'body',
-            html: true
-          });
+  ] = [
+    
+    
+  ];
   
-        },
-        editable: false
-      };*/
-    
-       /* this.options2 = {
-          plugins: [listPlugin, dayGridPlugin],
-          locale: esLocale,
-          defaultDate: new Date(),
-          defaultView: 'list',
-          header: {
-            left: 'prev,next',
-            center: 'Proximo evento',
-            right: ''
-          },
-          editable: false
-        };*/
-    }
 
-   
+  refresh = new Subject<void>();
+  
 
+  activeDayIsOpen: boolean = true;
 
+  constructor(private modal: NgbModal, 
+  private usuarioService: UsuarioService,
+  private router: Router) {}
   ngOnInit(): void{
-    this.obtenerGuardias()
-    this.obtenerClientes()
-    this.obtenerUsuario()
-    this.obtenerSupervisores()
-    this.obtenerSrev();
-    
     
 
-
-    /*this.events = [
+    this.usuarioService.getServicio().subscribe(data => {
+      this.data3 = data.servicios;
       
+     this.events=[
+     ]
 
-      {
-        "title": "evento 1",
-        "start": "2021-12-10T14:23:00",
-        "end": "2021-12-10T16:23:00",
-        "description": "Evento1"
+     for(let i=0;i<this.data3.length;i++){
+      console.log(this.data3[i].title);
+      
+      this.events.push(   
+        {
+          title: this.data3[i].descripcion,
+          
+          start: new Date( this.data3[i].date),
+          end: new Date( this.data3[i].date),
+          id: this.data3[i].id,
+          color: colors.yellow,
+      actions: this.actions,
+      allDay: true,
+      resizable: {
+        beforeStart: true,
+        afterEnd: true,
       },
-      {
-        "title": "evento 1.2",
-        "start": "2021-12-10T17:23:00",
-        "end": "2021-12-10T19:23:00",
-        "description": "Evento1.2"
-      },
-      {
-        "title": "Navidad",
-        "start": "2021-12-25T16:23:00",
-        "description": "Evento1"
-      },
-      {
-        title: "evento 2",
-        start: new Date(new Date().getTime()+ 86400000),
-        description: "Evento 2"
-      },
-      {
-        title: "evento 3",
-        start: new Date(new Date().getTime()+ (86400000 * 2) ), 
-        end: new Date(new Date().getTime()+ (86400000 * 3) ), 
-        description: "Evento 3"
-      }
-
-
-    ]*/
+      draggable: true,
+        }
+      );
+       
+    }
+  }, error => {
+    console.log(error);
+  })
+    
+  
 
     var datoNombre = localStorage.getItem('nombre');
     if(datoNombre == null){
       this.datoUsuario =[];
     }else{
       this.datoUsuario = JSON.parse(datoNombre)
-      
-    }
-    
-    var datoApellido = localStorage.getItem('apellido');
-    if(datoApellido == null){
-      this.apellidoUser =[];
-    }else{
-      this.apellidoUser = JSON.parse(datoApellido)
-    }
-    var datoCelular = localStorage.getItem('celular');
-    if(datoCelular == null){
-      this.celularUser =[];
-    }else{
-      this.celularUser = JSON.parse(datoCelular)
-    }
-    var datoCorreo = localStorage.getItem('correo');
-    if(datoCorreo == null){
-      this.correoUser =[];
-    }else{
-      this.correoUser = JSON.parse(datoCorreo)
-    }
-  
-    var datociudad = localStorage.getItem('ciudad');
-    if(datociudad == null){
-      this.ciudaduser =[];
-    }else{
-      this.ciudaduser = JSON.parse(datociudad)
-    }
-    var datoregion = localStorage.getItem('region');
-    if(datoregion == null){
-      this.regionUser =[];
-    }else{
-      this.regionUser = JSON.parse(datoregion)
-    }
-    var datodireccion = localStorage.getItem('direccion');
-    if(datodireccion == null){
-      this.direccionUser =[];
-    }else{
-      this.direccionUser = JSON.parse(datodireccion)
     }
     
 
-    if (this.uid !== null)
-    this.usuarioService.obtenerimg(this.uid).subscribe(res=>{
-     localStorage.setItem('img2', res); 
-     console.log(res);
-     
-    })
-    
-   
   }
- 
-  
-  addUsuario(){
-   
-    
-
-    const USUARIO : usuario = {
-     
-      nombre: this.usuarioForm.get('nombre')?.value,
-      apellido: this.usuarioForm.get('apellido')?.value,
-      celular: this.usuarioForm.get('celular')?.value,
-      password: this.usuarioForm.get('password')?.value,
-      correo: this.usuarioForm.get('correo')?.value,
-      rol: this.usuarioForm.get('rol')?.value,
-      rut: this.usuarioForm.get('rut')?.value,
-      region: this.usuarioForm.get('region')?.value,
-      ciudad: this.usuarioForm.get('ciudad')?.value,
-      direccion: this.usuarioForm.get('direccion')?.value,
-      
-      
-    }
-    if (this.uid !== null)
-      this.usuarioService.editarUsuario(this.uid, USUARIO).subscribe(data =>{})
-      this.toastr.info('El usuario fue actualizado con exito!', 'Usuario actualizado');
-      this.router.navigate(['/usuario'])  
-    
-  }
-  obtenerUsuario() {
-    this.usuarioService.getUsuarios().subscribe(data => {
-     this.totalUsuario = data.total;
-     
-    }, error => {
-      console.log(error);
-    })
-  }
-
-
-  obtenerSrev() {
-    this.usuarioService.getServicio().subscribe(data => {
-      this.data2 = data.servicios;
-      this.events=[];
-      
-
-      
-      for(let i=0;i<this.data2.length;i++){
-        console.log(this.data2[i].title);
-        this.events.push(   
-       
-          {
-            title : this.data2[i].title,
-            start: this.data2[i].date,
-            end: this.data2[i].start,
-            description: this.data2[i].descripcion,
-          }
-        );
-         
-      }
-      
-      
-      
-      // this.events =  [
-       
-      //   {
-      //     title : data.titulo,
-      //     start: data.inicio,
-      //     end: "2021-12-10T16:23:00",
-      //     descripcion: "Evento1"
-      //   },
+  events: CalendarEvent[] 
+  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+    if (isSameMonth(date, this.viewDate)) {
+      if (
+        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
+        events.length === 0
+      ) {
         
-      //  ]
-
-
-
-    }, error => {
-      console.log(error);
-    })
-  }
-
-
-
-
-  obtenerGuardias() {
-    this.usuarioService.getResults().subscribe(data => {
-      this.totalResults = data.total;
+        this.activeDayIsOpen = false;
+        
+      } else {
+        this.activeDayIsOpen = true;
+        
+      }
+      this.viewDate = date;
       
-    }, error => {
-      console.log(error);
-    })
-  }
-  obtenerSupervisores() {
-    this.usuarioService.getResultsSupervisor().subscribe(data => {
-     this.totalResultsSuper = data.total;
-     
-    }, error => {
-      console.log(error);
-    })
-  }
-  obtenerClientes() {
-    this.usuarioService.getClientes().subscribe(data => {
-      this.totalclientes = data.total;
-      
-    }, error => {
-      console.log(error);
-    })
-  }
-  logout(){
-    localStorage.removeItem('token');
-      localStorage.removeItem('rol');
-      localStorage.removeItem('nombre');
-      localStorage.removeItem('correo');
-      localStorage.removeItem('apellido');
-      localStorage.removeItem('celular');
-      localStorage.removeItem('uid');
-      localStorage.removeItem('region');
-      localStorage.removeItem('direccion');
-      localStorage.removeItem('ciudad');
-      localStorage.removeItem('team');
-      this.router.navigate(['login'])
+    }
   }
 
+  eventTimesChanged({
+    event,
+    newStart,
+    newEnd,
+  }: CalendarEventTimesChangedEvent): void {
+    this.events = this.events.map((iEvent) => {
+      if (iEvent === event) {
+        return {
+          ...event,
+          start: newStart,
+          end: newEnd,
+        };
+      }
+      return iEvent;
+    });
+    this.handleEvent('Dropped or resized', event);
+    
+  }
+
+  handleEvent(action: string, event: CalendarEvent): void {
+    this.modalData = { event, action };
+    this.usuarioService.getServicio().subscribe(data => {
+      this.data3 = data.servicios;
+     for(let i=0;i<this.data3.length;i++){
+      console.log(this.turno);
+      this.turno.push(   
+        {
+          id: this.data3[i].id,
+        },
+        this.router.navigate(['supervisor/servicio_add', this.data3[i].id,]),
+      );
+    }
+  }, error => {
+    console.log(error);
+  })
+  }
+
+  setView(view: CalendarView) {
+    this.view = view;
+    
+
+  }
+
+  closeOpenMonthViewDay() {
+    this.activeDayIsOpen = false;
+  }
+
+  
+
+
+ logout(){
+  localStorage.removeItem('token');
+    localStorage.removeItem('rol');
+    localStorage.removeItem('nombre');
+    localStorage.removeItem('correo');
+    localStorage.removeItem('apellido');
+    localStorage.removeItem('celular');
+    localStorage.removeItem('uid');
+    localStorage.removeItem('region');
+    localStorage.removeItem('direccion');
+    localStorage.removeItem('ciudad');
+    localStorage.removeItem('team');
+    this.router.navigate(['login'])
+}
+ 
 }

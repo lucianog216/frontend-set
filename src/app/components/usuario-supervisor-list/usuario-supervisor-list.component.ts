@@ -154,8 +154,6 @@ geteditarTeams(): void{
     this.usuarioService.getTurneroTeams(this._id).subscribe(data =>{
 
       this.listteams3 = data.results[0]; 
-      console.log(this.listteams3)
-
     })
     
   }

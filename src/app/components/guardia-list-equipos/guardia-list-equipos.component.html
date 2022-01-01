@@ -2,7 +2,7 @@
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-      <a class="navbar-brand" routerLink="/usuario">
+      <a class="navbar-brand" routerLink="/guardia/calendario">
         <i class="fas fa-link"></i> SET
       </a>
      
@@ -13,9 +13,9 @@
             <li class="nav-item">
               <a class="nav-link" routerLink="/guardia/calendario">Calendario </a>
             </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" routerLink="/guardia/list_turno">Turnos </a>
-          </li>
+          </li> -->
           
           <!--<li class="nav-item">
             <a class="nav-link" routerLink="/usuario/usuario_supervisor_lista">Supervisores</a>
@@ -23,9 +23,7 @@
           <li class="nav-item">
             <a class="nav-link" routerLink="/guardia/list_equipos"> Mi Equipos</a>
           </li>
-          <li class="nav-item ">
-            <a class="nav-link " routerLink="/guardia/list">Lista general</a>
-          </li>
+          
 
          
         </ul>
@@ -55,8 +53,7 @@
 
 
 
-
-
+ <body>
 
 
 
@@ -85,11 +82,11 @@
                 </div>
                 <div class="wizard">
                     <nav class="list-group list-group-flush">
-                        <a class="list-group-item" target="__blank"><i class="fa fa-shopping-bag text-muted"></i >Equipo: {{data6}} </a><a class="list-group-item" ><i class="fa fa-tag text-muted"></i>{{correoUser}}</a>
+                        <a class="list-group-item" target="__blank"><i class="fa fa-shopping-bag text-muted"></i >Equipo: {{datos2}} </a><a class="list-group-item" ><i class="fa fa-tag text-muted"></i>{{correoUser}}</a>
                         <a class="list-group-item" tagert="__blank">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div><i class="fa fa-user text-muted"></i>
-                                    <div class="d-inline-block font-weight-medium text-uppercase">Supervisor: {{data5}}  </div>
+                                    <div class="d-inline-block font-weight-medium text-uppercase">Supervisor: {{datos}}  </div>
                                 </div>
                             </div>
                         </a>
@@ -115,15 +112,15 @@
                                 <th>Nombre Completo</th>
                                 <th>Correo</th>
                                 <th>Celular</th>
-                                <th>Turno</th>
+                                <th>Ciudad</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let results of data3">
-                                <td><a  data-toggle="modal" *ngIf="results.guardia">{{results.guardia.nombre}} {{results.guardia.apellido}}</a></td>
-                                <td  *ngIf="results.guardia">{{results.guardia.correo}}</td>
-                                <td><span   *ngIf="results.guardia">{{results.guardia.celular}}</span></td>
-                                <td><span  *ngIf="results.turno">{{results.turno.nombre}}</span></td>
+                            <tr *ngFor="let guardia of teamid">
+                                <td><span  data-toggle="modal">{{guardia.nombre}} {{guardia.apellido}}</span></td>
+                                <td>{{guardia.correo}}</td>
+                                <td><span  >{{guardia.celular}}</span></td>
+                                <td><span>{{guardia.ciudad}}</span></td>
                             </tr>
                             
                         </tbody>
@@ -135,4 +132,5 @@
 
 
 
-</div>   
+     </div>   
+</body>

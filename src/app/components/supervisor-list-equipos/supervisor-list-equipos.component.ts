@@ -5,21 +5,27 @@ import{FormBuilder, FormGroup, NgForm, Validators} from '@angular/forms'
 import {ActivatedRoute, Router} from '@angular/router';
 import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
-import {RESTListarUsuario2, TeamRESP, teamguard,  } from 'src/app/interfaces/interfaces';
+import {RESTListarUsuario2, teamguard,  } from 'src/app/interfaces/interfaces';
+import * as moment from 'moment';
 @Component({
   selector: 'app-supervisor-list-equipos',
   templateUrl: './supervisor-list-equipos.component.html',
   styleUrls: ['./supervisor-list-equipos.component.css']
 })
 export class SupervisorListEquiposComponent implements OnInit {
-  listteams: TeamRESP[] = [];
+  moment: any = moment;
+  
   teamsForm: FormGroup;
   totalteams: number = 0;
+  listteams2 =[];
+  listteams3 =[];
   datoUsuario=[];
+  datouid: string;
   _id: string | null;
   uid: string | null;
   dtOptions: DataTables.Settings = {};
   dtTrigger = new Subject();
+
   constructor(private fb: FormBuilder,private toastr: ToastrService,
     private usuarioService: UsuarioService,
      private router: Router,private aRouter: ActivatedRoute) {
@@ -34,14 +40,8 @@ export class SupervisorListEquiposComponent implements OnInit {
    }
 
   ngOnInit(): void {
-     
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 5,
-      language:{
-        url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
-      }
-    };
+    this.obtenerTeams(); 
+    this.getTeamsid();
     var datoNombre = localStorage.getItem('nombre');
     if(datoNombre == null){
       this.datoUsuario =[];
@@ -51,57 +51,25 @@ export class SupervisorListEquiposComponent implements OnInit {
       this.datoUsuario = JSON.parse(datoNombre)
     }
 
-    this.obtenerTeams(); 
-    this.usuarioService.getTeams().subscribe(data => {
-       this.listteams = data.teams;
-
-/*        var listteams2 = data.teams.guardias.nombre
-       if(listteams2 == null){
-        this.guardias=[];
-
-      console.log("guardias",this.guardias);
-       
-      } */
-       this.dtTrigger.next();
-      });
       
   }
   obtenerTeams() {
-    this.usuarioService.getTeams().subscribe(data => {
-      this.totalteams = data.total;
-      this.listteams = data.teams;
-      console.log(this.listteams[0].guardias[0]);
-
-      var listteams2= data.teams[0].guardias
-      if(listteams2 == null){
-        
-      }
-      
-    }, error => {
-      console.log(error);
-    })
-  }
-  Delete_guard_Teams(_id: string ){
-    
-  
-    const guardia : teamguard = {
-      guardia: this.teamsForm.get('guardia')?.value,
-      nombre: this.teamsForm.get('nombre')?.value,
-      guardias: this.teamsForm.get('guardias')?.value,
-      apellido: this.teamsForm.get('apellido')?.value,
-      correo: this.teamsForm.get('correo')?.value,
-      ciudad: this.teamsForm.get('ciudad')?.value,
+    var datoUid = localStorage.getItem('uid');
+    if(datoUid == null){
+    }else{
+      this.datouid = (datoUid)
+      console.log('gatooooo',this.datouid );
     }
-    if (this._id !== null){
-      this.usuarioService.deleteGuardia_teams(this._id, guardia ).subscribe(data =>{
-        console.log(data);
-        
-      })
-      this.toastr.info('El Equipo fue actualizado con exito!', 'Equipo actualizado');
-      this.router.navigate(['/usuario/lista_equipo'])  
-    
+    this.usuarioService.getTeamXsupervisor(this.datouid).subscribe(data => {
+       this.listteams2 = data.results[0];
+       this.listteams3 = data;
+       console.log('gatooooo',this.listteams3 );
+
+     
+      });
+      
   }
-  }
+ 
   ngOnDestroy(): void{
     this.dtTrigger.unsubscribe();
   }
@@ -196,13 +164,13 @@ export class SupervisorListEquiposComponent implements OnInit {
         Swal.fire(`You selected: ${fruit}`)
       }
       }*/
-    geteditarTeams(){
+    getTeamsid(){
       if(this._id !== null) {
         
         this.usuarioService.obtenerTeams(this._id).subscribe(data =>{
-        
+        console.log('equipoooooos',data)
           this.teamsForm.patchValue({
-            nombre : data.nombre,
+            nombre : data.teams.nombre,
         
           })
           

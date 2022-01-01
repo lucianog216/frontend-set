@@ -2,7 +2,7 @@
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-      <a class="navbar-brand" routerLink="/usuario">
+      <a class="navbar-brand" routerLink="/guardia/calendario">
         <i class="fas fa-link"></i> SET
       </a>
      
@@ -13,20 +13,15 @@
             <li class="nav-item">
               <a class="nav-link" routerLink="/guardia/calendario">Calendario </a>
             </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" routerLink="/guardia/list_turno">Turnos </a>
-          </li>
+          </li> -->
           
-          <!--<li class="nav-item">
-            <a class="nav-link" routerLink="/usuario/usuario_supervisor_lista">Supervisores</a>
-          </li>-->
+          
           <li class="nav-item">
             <a class="nav-link" routerLink="/guardia/list_equipos"> Mi Equipos</a>
           </li>
-          <li class="nav-item ">
-            <a class="nav-link " routerLink="/guardia/list">Lista general</a>
-          </li>
-
+         
          
         </ul>
       </div>
@@ -52,23 +47,166 @@
 
 
 
-
-
-
-  
   <div class="container">
-<div class="to">
     <div class="row">
       <div class="col-12 mt-3 mb-1">
          
-        <p class="p"> Informacion General - Modulo Guardia</p>
+        <p class="p"> Turno - Modulo Guardia</p>
         
       </div>
     </div>
-  
 
 
-     <div class="container-fluid">
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<div class="page-inner no-page-title">
+    <!-- start page main wrapper -->
+    <div id="main-wrapper" >
+        <div class="row">
+            <div class="col-lg-1 col-xl-3">
+                <div class="card card-white grid-margin">
+                    <div class="card-heading clearfix">
+                        <h4 class="card-title">Turno de {{nomguardia}} </h4>
+                    </div>
+                    <div class="card-body user-profile-card mb-1">
+                        <img [src]="'http://localhost:8080/api/uploads/usuarios/'+ uid " class="user-profile-image rounded-circle" alt="" />
+                        <h4 class="text-center h6 mt-2">{{nomguardia}} {{apellidoguardia}}</h4>
+                        <p class="btn btn-theme btn-sm">Equipo: {{equipoguardia}}</p>
+                        <p class="btn btn-theme btn-sm">Supervisor: {{supervisorguardia}}</p>
+                        <p class="btn btn-theme btn-sm">Turno: {{turnoguardia}}</p>
+                        <div  >
+                        <button type="button" (click) = "ingresousuario()"  class="btn btn-info">Inicio</button>
+                        <button type="button" (click) = "salidausuario()"  class="btn btn-warning" style="margin-left: 2px;">Salida</button>
+                      </div>
+                    </div>
+                    
+                   
+                    <hr />
+                    <div class="card-heading clearfix mt-1">
+                        <h4 class="card-title">Informacion</h4>
+                    </div>
+                    <p class="btn btn-theme btn-sm">Ingreso: {{ingresoturno}}</p>
+                    <p class="btn btn-theme btn-sm">Salida: {{salidaturno}}</p>
+                    <p class="btn btn-theme btn-sm">Supervisor: {{supervisorguardia}}</p>
+                   
+                </div>
+            </div>
+            <div class="col-lg-7 col-xl-6">
+                <div class="card card-white grid-margin">
+                    <div class="card-body">
+                        <div class="post">
+                            <textarea class="form-control" placeholder="Observaciones" rows="4"></textarea>
+                            <div class="post-options">
+                                <a href="#"><i class="fa fa-camera"></i></a>
+
+                                <button class="btn btn-outline-primary float-right">Actualizar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-timeline">
+                    <ul class="list-unstyled">
+                        <li class="timeline-item">
+                            <div class="card card-white grid-margin">
+                                <div class="card-body">
+                                    <div class="timeline-item-header">
+                                        <img [src]="'http://localhost:8080/api/uploads/usuarios/'+ uid " alt="" />
+                                        <p> {{nomguardia}} {{apellidoguardia}} <span>observacion anterior</span></p>
+                                        
+                                    </div>
+                                    <div class="timeline-item-post">
+                                        <p> este debe ser un registro anterior o observacion anterio</p>
+                                        <div class="timeline-options">
+                                        </div>
+                                     <!---  <textarea class="form-control" placeholder="Replay"></textarea>--> 
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                  
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-12 col-xl-3">
+                <div class="card card-white grid-margin">
+                    <div class="card-heading clearfix">
+                        <h4 class="card-title">Miembros de equipo</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="team">
+                            <div class="team-member" *ngFor="let guardia of teamid ;">
+                                
+                                <img   [src]="'http://localhost:8080/api/uploads/usuarios/'+ guardia._id " height="30px" width="30px" />
+                                <h4 class="text-center h6 mt-2"> {{guardia.nombre}}</h4>
+                            </div>
+                            
+                            
+                        </div>
+                    </div>
+                        <hr />
+                        <div class="card-heading clearfix mt-1">
+                          <h4 class="card-title">Informacion Guardia</h4>
+                      </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-borderless mb-0 text-muted">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">Correo:</th>
+                                        <td>{{correoguardia}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Celular:</th>
+                                        <td>{{celularguardia}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Direccion:</th>
+                                        <td>{{direguardia}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        
+                    </div>
+            </div>
+            <hr />
+            <div class="card-heading clearfix mt-1">
+              <h4 class="card-title">Informacion Turno</h4>
+          </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-borderless mb-0 text-muted">
+                    <tbody>
+                        <tr>
+                            <th scope="row">Ingreso:</th>
+                            <td>{{ingreso}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Salida:</th>
+                            <td>{{salidaturno}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Total horas:</th>
+                            <td>8 hrs</td>
+                        </tr>
+                    </tbody>
+                </table>
+            
+        </div>
+</div>
+        </div>
+        <!-- Row -->
+    </div>
+    <!-- end page main wrapper -->
+    
+</div>
+</div>
+
+
+
+
+
+    <!-- <div class="container-fluid">
       <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" 
       class="table table-striped table-bordered row-border hover">
         
@@ -91,7 +229,7 @@
           </tr>
         </tbody>
       </table>
-    </div>
+    </div>-->
 
 
 

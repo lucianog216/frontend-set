@@ -18,7 +18,7 @@ export class SupervisorListaGuardiasComponent implements OnInit, OnDestroy {
   totalUsuario: number = 0;
   listturnos: Turnos[] = [];
   totalturnos: number = 0;
-  listResults: results[] = [];
+  listResults = [];
   listResultsSuper: Results[] = [];
   totalResultsSuper: number = 0;
   totalResults: number = 0;
@@ -43,11 +43,11 @@ export class SupervisorListaGuardiasComponent implements OnInit, OnDestroy {
     }else{
       this.datoUsuario = JSON.parse(datoNombre)
     }
-    this.obtenerGuardias();
+    
     this.usuarioService.getResults().subscribe(data => {
       this.listResults = data.results;
       this.totalResults = data.total;
-      
+      console.log(this.listResults)
        this.dtTrigger.next();
        
       });
@@ -69,7 +69,7 @@ export class SupervisorListaGuardiasComponent implements OnInit, OnDestroy {
     this.usuarioService.getTurnos().subscribe(data => {
       this.totalturnos = data.totalturnos;
       this.listturnos = data.turnos;
-      console.log(this.listturnos)
+     
     }, error => {
       console.log(error);
     })
@@ -126,7 +126,7 @@ export class SupervisorListaGuardiasComponent implements OnInit, OnDestroy {
       this.usuarioService.getResultsSupervisor().subscribe(data => {
        this.listResultsSuper = data.results;
        this.totalResultsSuper = data.total;
-       console.log('supervisor',this.totalResultsSuper);
+       
       }, error => {
         console.log(error);
        

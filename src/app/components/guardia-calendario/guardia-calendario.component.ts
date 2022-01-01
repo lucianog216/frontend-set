@@ -1,145 +1,78 @@
-import { Component, OnInit } from '@angular/core';
+import {  OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import{FormBuilder, FormGroup, NgForm, Validators} from '@angular/forms';
-import {AuthService} from '../../services/auth.service';
 import { UsuarioService } from '../../services/usuario.service';
 import { ToastrService } from 'ngx-toastr';
 import { usuario } from 'src/app/models/Usuario';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
-import esLocale from '@fullcalendar/core/locales/es';
+import {Component, ChangeDetectionStrategy, ViewChild, TemplateRef,} from '@angular/core';
+import { startOfDay, endOfDay,subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours,} from 'date-fns';
+import { Subject } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView} from 'angular-calendar';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+const colors: any = {
+  red: {
+    primary: '#ad2121',
+    secondary: '#FAE3E3',
+  },
+  blue: {
+    primary: '#1e90ff',
+    secondary: '#D1E8FF',
+  },
+  yellow: {
+    primary: '#e3bc08',
+    secondary: '#FDF1BA',
+  },
+};
+declare var $: any;
+
+
 
 @Component({
   selector: 'app-guardia-calendario',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './guardia-calendario.component.html',
   styleUrls: ['./guardia-calendario.component.css']
 })
 export class GuardiaCalendarioComponent implements OnInit {
+  locale: string = 'es';
+  datoUsuario =[]
+  data3=[];
+  turno=[]
+  uid: string | null;
+  datoUid : string;
+  @ViewChild('modalContent', { static: false }) modalContent: TemplateRef<any>;
 
-  public events: any[];
-  public options: any;
+  view: CalendarView = CalendarView.Month;
 
+  CalendarView = CalendarView;
 
+  viewDate: Date = new Date();
+
+  modalData: {
+    action: string;
+    event: CalendarEvent;
+  };
+  
+  actions: CalendarEventAction[
+    
+  ] = [
+   
+  ];
   
 
+  refresh = new Subject<void>();
+  
 
-  totalUsuario: number = 0;
-  totalResults: number = 0;
-  totalclientes: number = 0;
-  totalResultsSuper: number = 0;
-  datoUsuario=[];
-  apellidoUser=[];
-  correoUser=[];
-  celularUser=[];
-  rolUser=[];
-  uidUser=[];
-  data2=[]
-  data3=[]
-  imgUser=[];
-  img=[];
-  direccionUser=[];
-  regionUser=[];
-  ciudaduser =[];
-  usuarioForm: FormGroup;
-  uid: string | null;
-  datoUid : string
-  constructor(private router: Router,
-    private usuarioService: UsuarioService,
-    private aRouter: ActivatedRoute,
-    private fb: FormBuilder,
-    private toastr: ToastrService,
-    private authService: AuthService ) { 
-      this.usuarioForm = this.fb.group({ 
-        nombre: [ '', Validators.required], 
-        apellido: ['', Validators.required], 
-        password:['', Validators.required], 
-        celular: ['', Validators.required], 
-        correo: ['', Validators.required], 
-        
-      }),
-        this.uid = localStorage.getItem('uid')
-    }
+  activeDayIsOpen: boolean = true;
 
+  constructor(private modal: NgbModal, 
+  private usuarioService: UsuarioService,
+  private router: Router) {}
   ngOnInit(): void{
-    this.obtenerGuardias()
-    this.obtenerClientes()
-    this.obtenerUsuario()
-    this.obtenerSupervisores()
-    
-    this.obtenerTurnero1();
 
-
-    
-
-    this.options = {
-      plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
-      defaultDate: new Date(),
-      locale: esLocale,
-      timeZone: 'UTC',
-      
-      header: {
-        left: 'prev,next',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek,list',
-        color: '#ff9f89',
-        
-        display: 'background',
-      },
-      eventColor: '#378006',
-     
-      dayMaxEvents: true, // allow "more" link when too many events
-      editable: true,
-      selectable: true,
-     
-    }
-   
-
-
-    var datoNombre = localStorage.getItem('nombre');
-    if(datoNombre == null){
-      this.datoUsuario =[];
-    }else{
-      this.datoUsuario = JSON.parse(datoNombre)
-      
-    }
-    var datoApellido = localStorage.getItem('apellido');
-    if(datoApellido == null){
-      this.apellidoUser =[];
-    }else{
-      this.apellidoUser = JSON.parse(datoApellido)
-    }
-    var datoCelular = localStorage.getItem('celular');
-    if(datoCelular == null){
-      this.celularUser =[];
-    }else{
-      this.celularUser = JSON.parse(datoCelular)
-    }
-    var datoCorreo = localStorage.getItem('correo');
-    if(datoCorreo == null){
-      this.correoUser =[];
-    }else{
-      this.correoUser = JSON.parse(datoCorreo)
-    }
-   
-    var datociudad = localStorage.getItem('ciudad');
-    if(datociudad == null){
-      this.ciudaduser =[];
-    }else{
-      this.ciudaduser = JSON.parse(datociudad)
-    }
-    var datoregion = localStorage.getItem('region');
-    if(datoregion == null){
-      this.regionUser =[];
-    }else{
-      this.regionUser = JSON.parse(datoregion)
-    }
-    var datodireccion = localStorage.getItem('direccion');
-    if(datodireccion == null){
-      this.direccionUser =[];
-    }else{
-      this.direccionUser = JSON.parse(datodireccion)
-    }var datoid = localStorage.getItem('uid');
+    var datoid = localStorage.getItem('uid');
     if(datoid == null){
      
     }else{
@@ -147,133 +80,177 @@ export class GuardiaCalendarioComponent implements OnInit {
       
     }
     
-   
-  }
-  obtenerTurnero1() {
-
-  var datoid = localStorage.getItem('uid');
-  if(datoid == null){
-   
-  }else{
-    this.datoUid = datoid
-    console.log(this.datoUid)
-  }
     this.usuarioService.getTurnerosid(this.datoUid).subscribe(data => {
       this.data3 = data.results[0];
-     
-      this.events=[];
-
-      for(let i=0;i<this.data3.length;i++){
-        
-        this.events.push(   
+      console.log(this.data3);
+     this.events=[
+     ]
+     for(let i=0;i<this.data3.length;i++){
+      this.events.push(   
+        {
+          title : this.data3[i].cliente.nombre,
+        start: new Date( this.data3[i].inicio),
+        end: new Date( this.data3[i].inicio),
+          color: colors.yellow,
+      actions: this.actions,
+      allDay: true,
+      resizable: {
+        beforeStart: true,
+        afterEnd: true,
+      },
+      draggable: true,
+        }
+      );
        
-          {
-
-            title : this.data3[i].guardia.nombre,
-            start: this.data3[i].inicio,
-            end: this.data3[i].final,
-            description: this.data3[i].descripcion,
-          }
-        );
-      
-         
-      }
-
+    }
   }, error => {
     console.log(error);
   })
-}
-  
-
-
-
- /* obtenerTurnero() {
-    this.usuarioService.getTurneros().subscribe(data => {
-      this.data2 = data.turnos;
-      this.events=[];
-      console.log(this.data2);
-      for(let i=0;i<this.data2.length;i++){
-        this.events.push(   
-          {
-
-            title : this.data2[i].cliente.nombre,
-            
-            start: this.data2[i].inicio,
-            end: this.data2[i].final,
-            description: this.data2[i].descripcion,
-          }
-        );
-      
-         
-      }
     
+    
+
+    var datoNombre = localStorage.getItem('nombre');
+    if(datoNombre == null){
+      this.datoUsuario =[];
+    }else{
+      this.datoUsuario = JSON.parse(datoNombre)
+    }
+    var datoid = localStorage.getItem('uid');
+    if(datoid == null){
+     
+    }else{
+      this.datoUid = datoid
       
+    }
+    
+
+  }
+  events: CalendarEvent[] 
+  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+    if (isSameMonth(date, this.viewDate)) {
+      if (
+        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
+        events.length === 0
+      ) {
+        this.activeDayIsOpen = false;
+      } else {
+        this.activeDayIsOpen = true;
+      }
+      this.viewDate = date;
+    }
+  }
+
+  eventTimesChanged({
+    event,
+    newStart,
+    newEnd,
+  }: CalendarEventTimesChangedEvent): void {
+    this.events = this.events.map((iEvent) => {
+      if (iEvent === event) {
+        return {
+          ...event,
+          start: newStart,
+          end: newEnd,
+        };
+      }
+      return iEvent;
+    });
+    this.handleEvent('Dropped or resized', event);
+  }
+
+  handleEvent(action: string, event: CalendarEvent): void {
+    this.modalData = { event, action };
+    var datoid = localStorage.getItem('uid');
+    if(datoid == null){
+     
+    }else{
+      this.datoUid = datoid
       
-      // this.events =  [
-       
-      //   {
-      //     title : data.titulo,
-      //     start: data.inicio,
-      //     end: "2021-12-10T16:23:00",
-      //     descripcion: "Evento1"
-      //   },
-        
-      //  ]
+    }
+    
+    this.usuarioService.getTurnerosid(this.datoUid).subscribe(data => {
+      this.data3 = data.results[0];
+      console.log('gatoooo',this.data3);
+     
+     for(let i=0;i<this.data3.length;i++){
+      console.log(this.data3);
+      this.turno.push(   
+        {
+          id: this.data3[i].id,
+        },
+        this.router.navigate(['guardia/list_turno', this.data3[i].id,]),
+      );
+    }
+  }, error => {
+    console.log(error);
+  })
+  }
 
+  setView(view: CalendarView) {
+    this.view = view;
+    
 
+  }
 
-    }, error => {
-      console.log(error);
-    })
-  }*/
+  closeOpenMonthViewDay() {
+    this.activeDayIsOpen = false;
+  }
 
   
-  
-  obtenerUsuario() {
-    this.usuarioService.getUsuarios().subscribe(data => {
-     this.totalUsuario = data.total;
-     
-    }, error => {
-      console.log(error);
-    })
-  }
-  obtenerGuardias() {
-    this.usuarioService.getResults().subscribe(data => {
-      this.totalResults = data.total;
-      
-    }, error => {
-      console.log(error);
-    })
-  }
-  obtenerSupervisores() {
-    this.usuarioService.getResultsSupervisor().subscribe(data => {
-     this.totalResultsSuper = data.total;
-     
-    }, error => {
-      console.log(error);
-    })
-  }
-  obtenerClientes() {
-    this.usuarioService.getClientes().subscribe(data => {
-      this.totalclientes = data.total;
-      
-    }, error => {
-      console.log(error);
-    })
-  }
-  logout(){
-    localStorage.removeItem('token');
-      localStorage.removeItem('rol');
-      localStorage.removeItem('nombre');
-      localStorage.removeItem('correo');
-      localStorage.removeItem('apellido');
-      localStorage.removeItem('celular');
-      localStorage.removeItem('uid');
-      localStorage.removeItem('region');
-      localStorage.removeItem('direccion');
-      localStorage.removeItem('ciudad');
-      localStorage.removeItem('team');
-      this.router.navigate(['login'])
-  }
 
+
+ logout(){
+  localStorage.removeItem('token');
+    localStorage.removeItem('rol');
+    localStorage.removeItem('nombre');
+    localStorage.removeItem('correo');
+    localStorage.removeItem('apellido');
+    localStorage.removeItem('celular');
+    localStorage.removeItem('uid');
+    localStorage.removeItem('region');
+    localStorage.removeItem('direccion');
+    localStorage.removeItem('ciudad');
+    localStorage.removeItem('team');
+    this.router.navigate(['login'])
 }
+ 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*this.usuarioService.getTurnerosid(this.datoUid).subscribe(data => {
+  this.data3 = data.results[0];
+ 
+  this.events=[];
+
+  for(let i=0;i<this.data3.length;i++){
+    
+    this.events.push(   
+   
+      {
+
+        title : this.data3[i].guardia.nombre,
+        start: this.data3[i].inicio,
+        end: this.data3[i].final,
+        description: this.data3[i].descripcion,
+      }
+    );
+  }
+
+}, error => {
+console.log(error);
+})
+}*/

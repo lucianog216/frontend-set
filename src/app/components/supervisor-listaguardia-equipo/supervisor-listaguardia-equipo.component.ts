@@ -52,6 +52,13 @@ export class SupervisorListaguardiaEquipoComponent implements OnInit {
       }
 
   ngOnInit(): void {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 5,
+      language:{
+        url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
+      }
+    };
     
     this.teamsForm= new FormGroup({
 
@@ -120,7 +127,7 @@ export class SupervisorListaguardiaEquipoComponent implements OnInit {
     }
     if (this._id !== null){
       this.usuarioService.addGuardiaTeams(this._id, TEAMSGUARD ).subscribe(data =>{
-        console.log(data);
+        
         
       })
       this.toastr.info('El Guardia fue Agregado con exito!', 'Equipo actualizado');
@@ -152,19 +159,20 @@ geteditarTeams(): void{
   if(this._id !== null) {
     this.titulo = 'Editar Equipo';
     this.usuarioService.getTurneroTeams(this._id).subscribe(data =>{
+      console.log(data)
 
       this.listteams3 = data.results[0]; 
-      console.log(this.listteams3)
+      
 
     })
     
   }
 }
-deleteUsuario(uid: string ) {
+deleteUsuario(id: string ) {
 
   Swal.fire({
-    title: '¿eliminar guardia?',
-    text: "el guardia sera eliminado de forma permanente!",
+    title: '¿eliminar turno?',
+    text: "el turno sera eliminado de forma permanente!",
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
@@ -173,15 +181,15 @@ deleteUsuario(uid: string ) {
     cancelButtonText: 'Cancelar'
   }).then((result) => {
     if (result.isConfirmed) {
-      this.usuarioService.deleteUsuarios(uid).subscribe(
+      this.usuarioService.deleteTurnero(id).subscribe(
       (res) => {
-      this.obtenerGuardias();
+      this.geteditarTeams();
     },
       (err) => console.error(err)
     );  
       Swal.fire(
         'Eliminado!',
-        'guardia Eliminado.',
+        'turno Eliminado.',
         'success'
       )
     }

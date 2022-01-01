@@ -34,7 +34,7 @@
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-      <a class="navbar-brand" routerLink="/usuario">
+      <a class="navbar-brand" routerLink="/guardia/calendario">
         <i class="fas fa-link"></i> SET
       </a>
      
@@ -45,21 +45,17 @@
             <li class="nav-item">
               <a class="nav-link" routerLink="/guardia/calendario">Calendario </a>
             </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" routerLink="/guardia/list_turno">Turnos </a>
           </li>
-          
+           -->
           <!--<li class="nav-item">
             <a class="nav-link" routerLink="/usuario/usuario_supervisor_lista">Supervisores</a>
           </li>-->
           <li class="nav-item">
             <a class="nav-link" routerLink="/guardia/list_equipos"> Mi Equipos</a>
           </li>
-          <li class="nav-item ">
-            <a class="nav-link " routerLink="/guardia/list">Lista general</a>
-          </li>
-
-         
+        
         </ul>
       </div>
       <div class="nav-item ">
@@ -102,22 +98,25 @@
       <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
       <div class="container content" >
       <div class="row gutters">
-        <div class="col-lg-4 col-md-4 col-sm-12" *ngFor="let turnos of data3">
+        <div class="col-lg-4 col-md-4 col-sm-12" >
           <div class="plan-card plan-one">
             <div class="pricing-header">
               <h4 class="plan-title">Turnos</h4>
-              <div class="plan-save" *ngIf="turnos.guardia">{{turnos.guardia.nombre}} {{turnos.guardia.apellido}}</div>
+              <div class="plan-save" >{{guardianombre}} {{guardiaApellido}}</div>
          
             </div>
             <ul class="plan-features">
-              <li>Cliente: {{turnos.cliente.nombre}}</li>
-              <li>Fecha: {{moment(turnos.inicio).format('LL')}}</li>
-              <li>Ingreso: {{turnos.turno.ingreso}}</li>
-              <li>Turno: {{turnos.turno.nombre}} </li>
-              <li>Supervisor: {{turnos.usuario.nombre}} </li>
+              <li>Cliente: {{cliente}}</li>
+              <li>Fecha: {{moment(fecha).format('LL')}}</li>
+              <li>Ingreso: {{ingreso}}</li>
+              <li>Turno: {{turno}} </li>
+              <li>Supervisor: {{supervisor}} </li>
             
             </ul>
-            
+            <div class="plan-footer">
+              <a href="#" [routerLink] =  "['/guardia/list/', idguardia]"   class="btn btn-info">Ingreso</a>
+              
+            </div>
           </div>
         </div>
       

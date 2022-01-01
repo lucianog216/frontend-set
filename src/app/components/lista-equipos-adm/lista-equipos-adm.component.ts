@@ -6,7 +6,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 import {RESTListarUsuario2, TeamRESP, teamguard,  } from 'src/app/interfaces/interfaces';
-
+import * as moment from 'moment';
 @Component({
   selector: 'app-lista-equipos-adm',
   templateUrl: './lista-equipos-adm.component.html',
@@ -14,6 +14,8 @@ import {RESTListarUsuario2, TeamRESP, teamguard,  } from 'src/app/interfaces/int
   providers:[UsuarioService]
 })
 export class ListaEquiposAdmComponent implements OnInit {
+  moment: any = moment;
+  listteams2=[] 
   listteams: TeamRESP[] = [];
   teamsForm: FormGroup;
   totalteams: number = 0;
@@ -71,39 +73,14 @@ export class ListaEquiposAdmComponent implements OnInit {
   obtenerTeams() {
     this.usuarioService.getTeams().subscribe(data => {
       this.totalteams = data.total;
-      this.listteams = data.teams;
-     
-
-      var listteams2= data.teams[0].guardias
-      if(listteams2 == null){
-        
-      }
+      this.listteams2 = data.teams;
+      console.log(this.listteams2 );
       
     }, error => {
       console.log(error);
     })
   }
-  Delete_guard_Teams(_id: string ){
-    
-  
-    const guardia : teamguard = {
-      guardia: this.teamsForm.get('guardia')?.value,
-      nombre: this.teamsForm.get('nombre')?.value,
-      guardias: this.teamsForm.get('guardias')?.value,
-      apellido: this.teamsForm.get('apellido')?.value,
-      correo: this.teamsForm.get('correo')?.value,
-      ciudad: this.teamsForm.get('ciudad')?.value,
-    }
-    if (this._id !== null){
-      this.usuarioService.deleteGuardia_teams(this._id, guardia ).subscribe(data =>{
-        console.log(data);
-        
-      })
-      this.toastr.info('El Equipo fue actualizado con exito!', 'Equipo actualizado');
-      this.router.navigate(['/usuario/lista_equipo'])  
-    
-  }
-  }
+ 
   ngOnDestroy(): void{
     this.dtTrigger.unsubscribe();
   }
@@ -202,7 +179,7 @@ export class ListaEquiposAdmComponent implements OnInit {
       if(this._id !== null) {
         
         this.usuarioService.obtenerTeams(this._id).subscribe(data =>{
-        
+        console.log(data)
           this.teamsForm.patchValue({
             nombre : data.nombre,
         

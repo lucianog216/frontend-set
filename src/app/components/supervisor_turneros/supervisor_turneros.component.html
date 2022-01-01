@@ -23,17 +23,6 @@
 			  <li><a class="dropdown-item" routerLink="/supervisor/AgregarGuardia" >Agregar Guardias</a></li>
 			</ul>
 		  </li>
-		  <li class="nav-item dropdown" style="margin-left: 15px;">
-			<a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-			  Turnos
-			</a>
-			<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-			  <li><a class="dropdown-item" routerLink="/supervisor/list_turnos">Turnos</a></li>
-			  <div class=dropdown-divider></div>
-			  <li><a class="dropdown-item"  routerLink="/supervisor/turnero"> Asignacion turnos </a></li>
-			</ul>
-		  </li>
-
 		  
 		  <li class="nav-item" style="margin-left: 15px;">
 			<a class="nav-link" routerLink="/supervisor/CalendarioMañana">Calendario</a>
@@ -84,8 +73,79 @@
 
   
         <body>
+
+
+    <div class="container" id="advanced-search-form">
+      
+        <form form [formGroup]="teamsForm"  (ngSubmit)="addServ()">
+
+
+            <div class="form-groupp" >
+              <label class="nombre text-dark">Equipo</label>
+              <select class="f"    class="form-select form-select-lg mb-1" formControlName="team" style="height: 50px;"  >
+                <option disabled *ngFor="let equipo of listteams2" [value]="equipo._id" >Nombre: {{equipo.nombre}}</option>
+                    
+            </select>
+          </div>
+		  
+
+		  <div class="form-groupp">
+			<label class="nombre text-dark">Cliente</label>
+			<select class="f"  class="form-select form-select-lg mb-1" formControlName="cliente" style="height: 50px;"  >
+				<option *ngFor="let clientes of listteams4" [value]="clientes._id" >Nombre: {{clientes.nombre}}</option>
+				   
+		  </select>
+		</div>
+		
+
+           <div class="form-groupp">
+			<label class="nombre text-dark">Turno</label>
+			<select class="f"  class="form-select form-select-lg mb-1" formControlName="turno" style="height: 50px;"  >
+				<option *ngFor="let turnos of listturnos" [value]="turnos._id" >Nombre: {{turnos.nombre}}</option>
+				  
+		  </select>
+		</div>
+		
+
+		<div class="form-groupp">
+			<label class="nombre text-dark">Guardia</label>
+			<select class="f"  class="form-select form-select-lg mb-1" formControlName="guardia" style="height: 50px;"  >
+			  <option *ngFor="let results of listteams3" [value]="results._id" >Nombre: {{results.nombre}}</option>
+				  
+		  </select>
+		</div>
+
+
+		<div class="form-groupp" >
+			
+			<mat-form-field appearance="fill" >
+				<mat-label>Fecha Turno</mat-label>
+				<input matInput [matDatepicker]="picker" formControlName="inicio" value="inicio" >
+				<mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
+				<mat-datepicker #picker></mat-datepicker>
+			  </mat-form-field>
+		</div>
+
+
+
+
+		  <p class="center-content">
+			<input type="submit" class="btn btn-info btn-lg btn-responsive" value="Agregar Turno">
+		  </p>
+
     
-          <form form [formGroup]="ServicioForm"  (ngSubmit)="addServ()">
+         </form>
+    </div>
+
+
+
+
+
+
+
+
+    
+          <!--<form form [formGroup]="ServicioForm"  (ngSubmit)="addServ()">
            
             <div class="form-groupp">
               <label class="nombre text-dark">Guardias</label>
@@ -110,21 +170,25 @@
 		  </select>
 		</div>
             
-              
             <div class="col-md-12 col-2">
-              <label >Fecha inicio</label>
-              <p-calendar inputStyleClass="form-control"  value="inicio" formControlName="inicio" name="inicio" id="inicio"  ></p-calendar>
-              
+				<label  class="nombre text-dark"> Fecha inicio </label>
+				<input matInput [matDatepicker]="picker">
+				<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+				<mat-datepicker #picker></mat-datepicker>
             </div>
             <div class="col-md-12 col-2">
-              <label  >Fecha final</label>
-              <p-calendar  inputStyleClass="form-control"  value="final" formControlName="final" name="final" id="final" ></p-calendar>
-              
-            </div>
+				<label  class="nombre text-dark"> Fecha Final </label>
+				<input matInput [matDatepicker]="picker">
+				<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+				<mat-datepicker #picker></mat-datepicker>
+			</div>
               <p class="center-content">
                 <input type="submit" class="btn btn-info btn-lg btn-responsive" value="Agregar Turno">
               </p>
           
-            </form>
+            </form>-->
+
+
+
           </body>
         

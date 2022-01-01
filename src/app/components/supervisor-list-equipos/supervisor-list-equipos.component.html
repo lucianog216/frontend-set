@@ -23,17 +23,6 @@
 			  <li><a class="dropdown-item" routerLink="/supervisor/AgregarGuardia" >Agregar Guardias</a></li>
 			</ul>
 		  </li>
-		  <li class="nav-item dropdown" style="margin-left: 15px;">
-			<a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-			  Turnos
-			</a>
-			<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-			  <li><a class="dropdown-item" routerLink="/supervisor/list_turnos">Turnos</a></li>
-			  <div class=dropdown-divider></div>
-			  <li><a class="dropdown-item"  routerLink="/supervisor/turnero"> Asignacion turnos </a></li>
-			</ul>
-		  </li>
-
 		  
 		  <li class="nav-item" style="margin-left: 15px;">
 			<a class="nav-link" routerLink="/supervisor/CalendarioMañana">Calendario</a>
@@ -69,6 +58,7 @@
 	  </div>
 	</div>
   </nav>
+	
 	
   
 
@@ -146,63 +136,56 @@
 
     <div class="container">
     <div class="mt-2">
-          <div *ngFor="let teams of listteams"  class="d-style btn btn-brc-tp border-2 bgc-white btn-outline-blue btn-h-outline-blue btn-a-outline-blue w-100 my-2 py-3 shadow-sm">
+          <div *ngFor="let teams of listteams2"  class="d-style btn btn-brc-tp border-2 bgc-white btn-outline-blue btn-h-outline-blue btn-a-outline-blue w-100 my-2 py-3 shadow-sm">
             <!-- Basic Plan -->
             <div class="row align-items-center">
               <div class="col-12 col-md-4">
-                <h4 class="pt-3 text-170 text-600 text-primary-d1 letter-spacing">
-                  {{teams.nombre}}
+                <h4 class="pt-3 text-170 text-600 text-primary-d1 letter-spacing" >Nombre equipo: {{teams.nombre}}
                 </h4>
     
                 <div class="text-secondary-d1 text-120">
-                  <span class="ml-n15 align-text-bottom"></span><span class="text-180"></span>Color: {{teams.color}}
+                  <span class="ml-n15 align-text-bottom"></span><span class="text-180"></span>
                 </div>
               </div>
     
               <ul class="list-unstyled mb-0 col-12 col-md-4 text-dark-l1 text-90 text-left my-4 my-md-0">
                 <li>
-                  <i class="fa fa-check text-success-m2 text-110 mr-2 mt-1"></i>
+                  <i class=" text-success-m2 text-110 mr-2 mt-1"></i>
                   
-                    <span class="text-110" *ngIf="teams.supervisor">
+                    <span class="text-110" >
                       <strong> Supervisor a cargo: </strong> {{teams.supervisor.nombre}}
                   
                   </span>
                 </li>
     
                 <li class="mt-25">
-                  <i class="fa fa-check text-success-m2 text-110 mr-2 mt-1"></i>
+                  <i class=" text-success-m2 text-110 mr-2 mt-1"></i>
                   <span class="text-110">
-                    <strong > Usuario creador: </strong> {{teams.usuario.nombre}}
+                    <strong > Nivel de equipo: </strong> {{teams.nivel}}
                 </span>
                 </li>
     
                 <li class="mt-25">
-                  <i class="fa fa-check text-success-m2 text-110 mr-2 mt-1"></i>
+                  <i class="text-success-m2 text-110 mr-2 mt-1"></i>
                   <span class="text-110">
-                   <strong> Nivel de equipo: </strong> {{teams.nivel}}
+                   <strong>Creacion: </strong> {{moment(teams.creacion).format('LL')}}
                 </span>
                 </li>
               </ul>
     
               <div class="col-12 col-md-4 text-center">
-                <a href="#" [routerLink]="['/supervisor/listGuardia_equipo', teams._id]"style="margin: 5px;" class="f-n-hover btn btn-warning btn-raised px-4 py-25 w-75 text-600">Turnos</a>
+                <a href="#" [routerLink]="['/supervisor/listGuardia_equipo', teams._id]" style="margin: 5px;"class="f-n-hover btn btn-outline-info btn-raised px-2 py-15 w-40 text-300">Lista Turnos</a>
+                <a href="#" [routerLink]="['/supervisor/addGuardia_equipo', teams._id]" style="margin: 5px;"  class="f-n-hover btn btn-outline-warning btn-raised px-2 py-15 w-40 text-300">Guardias</a>
+                <a href="#" [routerLink]="['/supervisor/turnero', teams._id]" style="margin: 5px;" class="f-n-hover btn btn-outline-success btn-raised px-2 py-15 w-40 text-300">Asignar Turno</a>
+                <!--<a href="#" [routerLink]="['/supervisor/listGuardia_equipo', teams._id]"style="margin: 5px;" class="f-n-hover btn btn-warning btn-raised px-4 py-25 w-75 text-600">Lista Turnos</a>
                 <a href="#" [routerLink]="['/supervisor/addGuardia_equipo', teams._id]" style="margin: 5px;" class="f-n-hover btn btn-info btn-raised px-4 py-25 w-75 text-600">Guardias</a>
-                
+                <a href="#" [routerLink]="['/supervisor/turnero', teams._id]" style="margin: 5px;" class="f-n-hover btn btn-success btn-raised px-4 py-25 w-75 text-600">asignar turnos</a>-->
               </div>
-
-
             </div>
     
           </div>
-    
-    
-    
-      
-
         </div>
     </div>
-
-
 </div>   
 
 

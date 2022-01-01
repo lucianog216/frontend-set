@@ -47,7 +47,7 @@
               </li>
               <li class="nav-item dropdown" style="margin-left: 15px;">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Guardias
+                  Equipos
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                   <li><a class="dropdown-item" routerLink="/usuario/lista_turno">Visualizar Horarios</a></li>
@@ -57,9 +57,7 @@
                   <li><a class="dropdown-item" routerLink="/usuario/lista_equipo">Visualizar Equipo</a></li>
                   
                   <li><a class="dropdown-item"routerLink="/usuario/add_equipo" >Agregar Equipos</a></li>
-                  <div class=dropdown-divider></div>
-                  <li><a class="dropdown-item" routerLink="/usuario/usuario_supervisor_lista">Visualizar Turnos</a></li>
-                </ul>
+                 </ul>
               </li>
               <li class="nav-item dropdown" style="margin-left: 15px;">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -76,8 +74,19 @@
             </ul>
           </div>
           
-          <li class="nav-item ">
-            <a class="nav-link "    style="margin-left: 15px;">Reportes</a>
+          <li class="nav-item dropdown" style="margin-left: 15px;">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Reportes
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+              
+              <li><a class="dropdown-item"routerLink="/usuario/reporte_general">Reporte General</a></li>
+              <div class=dropdown-divider></div>
+              <li><a class="dropdown-item" routerLink="/usuario/reporte/equipos">Reporte Equipo</a></li>
+              <div class=dropdown-divider></div>
+              <li><a class="dropdown-item" routerLink="/usuario/reporte/teamguardia">Reporte Guardia</a></li>
+             
+            </ul>
           </li>
         </ul>
       </div>
@@ -98,7 +107,6 @@
       </div>
     </div>
   </nav>
-  
 
 
 
@@ -119,47 +127,46 @@
 
     <div class="container">
     <div class="mt-2">
-          <div *ngFor="let teams of listteams"  class="d-style btn btn-brc-tp border-2 bgc-white btn-outline-blue btn-h-outline-blue btn-a-outline-blue w-100 my-2 py-3 shadow-sm">
+          <div *ngFor="let teams of listteams2"  class="d-style btn btn-brc-tp border-2 bgc-white btn-outline-blue btn-h-outline-blue btn-a-outline-blue w-100 my-2 py-3 shadow-sm">
             <!-- Basic Plan -->
             <div class="row align-items-center">
               <div class="col-12 col-md-4">
-                <h4 class="pt-3 text-170 text-600 text-primary-d1 letter-spacing">
-                  {{teams.nombre}}
+                <h4 class="pt-3 text-170 text-600 text-primary-d1 letter-spacing" >Nombre : {{teams.nombre}}
                 </h4>
     
                 <div class="text-secondary-d1 text-120">
-                  <span class="ml-n15 align-text-bottom"></span><span class="text-180"></span>Color: {{teams.color}}
+                  <span class="ml-n15 align-text-bottom"></span><span class="text-180"></span>
                 </div>
               </div>
     
               <ul class="list-unstyled mb-0 col-12 col-md-4 text-dark-l1 text-90 text-left my-4 my-md-0">
                 <li>
-                  <i class="fa fa-check text-success-m2 text-110 mr-2 mt-1"></i>
+                  <i class=" text-success-m2 text-110 mr-2 mt-1"></i>
                   
-                    <span class="text-110" *ngIf="teams.supervisor">
+                    <span class="text-110" >
                       <strong> Supervisor a cargo: </strong> {{teams.supervisor.nombre}}
                   
                   </span>
                 </li>
     
                 <li class="mt-25">
-                  <i class="fa fa-check text-success-m2 text-110 mr-2 mt-1"></i>
+                  <i class=" text-success-m2 text-110 mr-2 mt-1"></i>
                   <span class="text-110">
-                    <strong > Usuario creador: </strong> {{teams.usuario.nombre}}
+                    <strong > Nivel de equipo: </strong> {{teams.nivel}}
                 </span>
                 </li>
     
                 <li class="mt-25">
-                  <i class="fa fa-check text-success-m2 text-110 mr-2 mt-1"></i>
+                  <i class="text-success-m2 text-110 mr-2 mt-1"></i>
                   <span class="text-110">
-                   <strong> Nivel de equipo: </strong> {{teams.nivel}}
+                   <strong>Creacion: </strong> {{moment(teams.creacion).format('LL')}}
                 </span>
                 </li>
               </ul>
     
               <div class="col-12 col-md-4 text-center">
                 <a href="#" [routerLink]="['/usuario/usuario_supervisor_lista', teams._id]" style="margin: 5px;"class="f-n-hover btn btn-outline-info btn-raised px-2 py-15 w-40 text-300">Turnos</a>
-                <a href="#" [routerLink]="['/usuario/usuario_guardia_lista', teams._id]" style="margin: 5px;"  class="f-n-hover btn btn-outline-warning btn-raised px-2 py-15 w-40 text-300">Guardias</a>
+                <a href="#" [routerLink]="['/usuario/usuario_guardia_lista', teams._id]" style="margin: 5px;"  class="f-n-hover btn btn-outline-warning btn-raised px-2 py-15 w-40 text-300">Cliente</a>
                 <a href="#" [routerLink]="['/usuario/editar_equipo', teams._id]" style="margin: 5px;" class="f-n-hover btn btn-outline-success btn-raised px-2 py-15 w-40 text-300">Editar</a>
                 <button href="#" class="btneliminarsolinfo btn" style="margin: 5px;" (click) = "deleteTeams(teams._id)" class="f-n-hover btn btn-outline-danger btn-raised px-2 py-15 w-40 text-300">Eliminar</button>
               </div>

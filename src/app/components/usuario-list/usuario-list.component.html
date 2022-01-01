@@ -47,7 +47,7 @@
               </li>
               <li class="nav-item dropdown" style="margin-left: 15px;">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Guardias
+                  Equipos
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                   <li><a class="dropdown-item" routerLink="/usuario/lista_turno">Visualizar Horarios</a></li>
@@ -57,9 +57,7 @@
                   <li><a class="dropdown-item" routerLink="/usuario/lista_equipo">Visualizar Equipo</a></li>
                   
                   <li><a class="dropdown-item"routerLink="/usuario/add_equipo" >Agregar Equipos</a></li>
-                  <div class=dropdown-divider></div>
-                  <li><a class="dropdown-item" routerLink="/usuario/usuario_supervisor_lista">Visualizar Turnos</a></li>
-                </ul>
+                 </ul>
               </li>
               <li class="nav-item dropdown" style="margin-left: 15px;">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -76,8 +74,19 @@
             </ul>
           </div>
           
-          <li class="nav-item ">
-            <a class="nav-link "   (click)="getreport()" style="margin-left: 15px;">Reportes</a>
+          <li class="nav-item dropdown" style="margin-left: 15px;">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Reportes
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+              
+              <li><a class="dropdown-item"routerLink="/usuario/reporte_general">Reporte General</a></li>
+              <div class=dropdown-divider></div>
+              <li><a class="dropdown-item" routerLink="/usuario/reporte/equipos">Reporte Equipo</a></li>
+              <div class=dropdown-divider></div>
+              <li><a class="dropdown-item" routerLink="/usuario/reporte/teamguardia">Reporte Guardia</a></li>
+             
+            </ul>
           </li>
         </ul>
       </div>
@@ -199,7 +208,7 @@
         <td><strong>{{usuarios.nombre}}</strong></td>
         <td>{{usuarios.apellido}}</td>
         <td>{{usuarios.correo}}</td>
-        <td>{{usuarios.rol}}</td>
+        <td *ngIf="usuarios.rol">{{usuarios.rol.rol}}</td>
         <td><button [routerLink]="['/usuario/descripcion', usuarios.uid]"  type="button" class="btn" style="background-color:#1b9e1d;border: 0px !important;color:white;" data-toggle="tooltip" title="Ver Solicitud"><i class="fa fa-eye" aria-hidden="true"></i> </button>
         <button [routerLink]="['/usuario/editar', usuarios.uid]" class="btn btn-warning" style="background-color:#5172F3;border: 0px !important; margin-left: 5px; color:white;" data-toggle="tooltip" title="Editar Solicitud" ><i class="fa fa-edit" aria-hidden="true"></i></button>
         <button class="btneliminarsolinfo btn" style="background-color:#FF0206;border: 0px !important; margin-left: 5px; color:white;" (click) = "deleteUsuario(usuarios.uid)" ><i class="fa fa-trash" ></i></button></td>

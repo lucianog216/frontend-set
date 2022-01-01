@@ -62,27 +62,7 @@ export class NavigationComponent implements OnInit {
       console.log(error);
     })
   }
-  Delete_guard_Teams(){
-    
   
-    const TEAMSGUARD : teamguard = {
-      guardia: this.teamsForm.get('guardia')?.value,
-      nombre: this.teamsForm.get('nombre')?.value,
-      guardias: this.teamsForm.get('guardias')?.value,
-      apellido: this.teamsForm.get('apellido')?.value,
-      correo: this.teamsForm.get('correo')?.value,
-      ciudad: this.teamsForm.get('ciudad')?.value,
-    }
-    if (this._id !== null){
-      this.usuarioService.deleteGuardia_teams(this._id, TEAMSGUARD ).subscribe(res =>{
-        console.log(res);
-        
-      })
-      this.toastr.info('El Equipo fue actualizado con exito!', 'Equipo actualizado');
-      this.router.navigate(['/usuario/lista_equipo'])  
-    
-  }
-}
 
 obtenerSupervisores() {
 

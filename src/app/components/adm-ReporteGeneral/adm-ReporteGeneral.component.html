@@ -1,0 +1,360 @@
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" routerLink="/usuario">
+        <i class="fas fa-link"></i> SET
+      </a>
+     
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ">
+          
+          <li class="nav-item dropdown">
+            
+          <!--<li class="nav-item">
+            <a class="nav-link" routerLink="/usuario/add">Agregar Usuario</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/usuario">Visualizacion General</a>
+          </li>
+         <li class="nav-item">
+            <a class="nav-link" routerLink="/usuario/usuario_supervisor_lista">Supervisores</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link " routerLink="/usuario/usuario_guardia_lista">Lista de Clientes</a>
+          </li>-->
+          <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+            <ul class="navbar-nav">
+              <li class="nav-item dropdown" style="margin-left: 15px;">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Usuarios
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                  <li><a class="dropdown-item" routerLink="/usuario">Visualizacion Usuario</a></li>
+                  <div class=dropdown-divider></div>
+                  <li><a class="dropdown-item" routerLink="/usuario/add" >Agregar Usuario</a></li>
+               
+                </ul>
+              </li>
+              <li class="nav-item dropdown" style="margin-left: 15px;">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Clientes
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                  <li><a class="dropdown-item" routerLink="/usuario/lista_cliente">Visualizacion Clientes</a></li>
+                  <div class=dropdown-divider></div>
+                  <li><a class="dropdown-item"routerLink="/usuario/add_cliente" >Agregar Cliente</a></li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown" style="margin-left: 15px;">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Equipos
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                  <li><a class="dropdown-item" routerLink="/usuario/lista_turno">Visualizar Horarios</a></li>
+                  
+                  <li><a class="dropdown-item"routerLink="/usuario/add_turno" >Agregar Horario</a></li>
+                  <div class=dropdown-divider></div>
+                  <li><a class="dropdown-item" routerLink="/usuario/lista_equipo">Visualizar Equipo</a></li>
+                  
+                  <li><a class="dropdown-item"routerLink="/usuario/add_equipo" >Agregar Equipos</a></li>
+                 </ul>
+              </li>
+              <li class="nav-item dropdown" style="margin-left: 15px;">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Servicios
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                  
+                  <li><a class="dropdown-item"routerLink="/usuario/servicio">Agregar Servicio</a></li>
+                  <div class=dropdown-divider></div>
+                  <li><a class="dropdown-item" routerLink="/usuario/servicio_list">Visualizar Servicios</a></li>
+                 
+                </ul>
+              </li>
+            </ul>
+          </div>
+          
+          <li class="nav-item dropdown" style="margin-left: 15px;">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Reportes
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+              
+              <li><a class="dropdown-item"routerLink="/usuario/reporte_general">Reporte General</a></li>
+              <div class=dropdown-divider></div>
+              <li><a class="dropdown-item" routerLink="/usuario/reporte/equipos">Reporte Equipo</a></li>
+              <div class=dropdown-divider></div>
+              <li><a class="dropdown-item" routerLink="/usuario/reporte/teamguardia">Reporte Guardia</a></li>
+             
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="nav-item ">
+        <ul   class=navbar-nav ml-auto>
+          <li class=nav-item dropdown dropdown-menu-right>
+            <a class=nav-link dropdown-toggle href=# id=navbarDropdown role=button data-toggle=dropdown aria-haspopup=true aria-expanded=false>
+              <i class="far fa-user"> </i>
+              <span class="user" style="margin-left: 5px;" >{{datoUsuario}}</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-dark" aria-labelledby=navbarDropdown>
+              <a class=dropdown-item routerLink="/usuario/informcacion_personal_usuario">Informacion Personal</a>
+              <div class=dropdown-divider></div>
+              <a class=dropdown-item  routerLink="" (click)="logout()">Salir</a>
+            </div>
+          </li>
+        </ul>   
+      </div>
+    </div>
+  </nav>
+
+ 
+
+<!-- 
+  <div class="row">
+		<div class="col-12 mt-3 mb-1">
+		  <p class="p">  Reportes - Modulo Administrador</p>
+		</div>
+	  </div>
+
+<body class="x">
+  <ngx-charts-bar-vertical
+  [view]="view"
+  [scheme]="colorScheme"
+  [results]="single"
+  [gradient]="gradient"
+  [xAxis]="showXAxis"
+  [yAxis]="showYAxis"
+  [legend]="showLegend"
+  [showXAxisLabel]="showXAxisLabel"
+  [showYAxisLabel]="showYAxisLabel"
+  [xAxisLabel]="xAxisLabel"
+  [yAxisLabel]="yAxisLabel"
+  (select)="onSelect($event)">
+</ngx-charts-bar-vertical>
+</body> -->
+
+
+
+<body> 
+<div class="container-fluid">
+  <div class="row align-items-center">
+      <div class="col-lg-6 mb-4 mb-lg-0">
+          <div class="mx-auto text-center">
+            <ngx-charts-bar-vertical
+            [view]="view"
+            [scheme]="colorScheme"
+            [results]="single"
+            [gradient]="gradient"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="showLegend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel"
+            (select)="onSelect($event)">
+          </ngx-charts-bar-vertical>
+
+
+          </div>
+      </div>
+      <div class="col-lg-6">
+          <div class="ps-lg-6 ps-xl-10 w-lg-90">
+              <div class="mb-4">
+                  
+                  <h2 class="w-90">Reporte General </h2>
+              </div>
+              <p class="mb-4">
+                EQUIPOS - GUARDIAS - SUPERVISOR - ADMINISTRADOR - CLIENTES
+              </p>
+
+
+
+              <div id="accordion" class="accordion-style">
+                  <div class="card">
+                      <div class="card-header" id="headingOne">
+                          <h5 class="mb-0">
+                              <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">Descripcion Equipos</button>
+                          </h5>
+                      </div>
+                      <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-bs-parent="#accordion" style="">
+                          <div class="card-body position-relative">
+                            <div class="container">
+                              <div class="row">
+                                <div class="table-responsive">
+                                  <table class="table table-hover">
+                                    <thead>
+                                      <tr>
+                                        <th>Nombre</th>
+                                        <th>Supervisor</th>
+                                        <th>Nivel</th>
+                                        <th>Creacion</th>
+                                        
+                                      </tr>
+                                    </thead>
+                                    <tbody >
+                                      <tr *ngFor="let teams of listteams2 | paginate: { itemsPerPage: 2, currentPage: page }">
+                                        <td>{{teams.nombre}}</td>
+                                        <td>{{teams.supervisor.nombre}}</td>
+                                        <td>{{teams.nivel}}</td>
+                                        <td>{{moment(teams.creacion).format('LL')}}</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>   
+                                </div>
+                                <div class="col-md-12 text-center">
+                                  <pagination-controls (pageChange)="page = $event"
+                                  previousLabel="Anterior"
+                                  nextLabel="Siguiente"></pagination-controls>
+                                </div>
+                            </div>
+                            
+                          </div>
+                          
+                          </div>
+                          
+                      </div>
+                  </div>
+                  <div class="card">
+                      <div class="card-header" id="headingTwo">
+                          <h5 class="mb-0">
+                              <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Descripcion Guardias</button>
+                          </h5>
+                      </div>
+                      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordion">
+                          <div class="card-body position-relative">
+                            <div class="container">
+                              <div class="row">
+                                <div class="table-responsive">
+                                  <table class="table table-hover">
+                                    <thead>
+                                      <tr>
+                                        <th>Nombre</th>
+                                        <th>Team</th>
+                                        <th>Creacion</th>
+                                        
+                                      </tr>
+                                    </thead>
+                                    <tbody *ngFor="let guardia of totalResultsGuardia | paginate: { itemsPerPage: 3, currentPage: page }">
+                                      <tr>
+                                        <td>{{guardia.nombre}}</td>
+                                        <td *ngIf="guardia.team">{{guardia.team.nombre}}</td>
+                                        <td>{{moment(guardia.ingreso).format('LL')}}</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>   
+                                </div>
+                                <div class="col-md-12 text-center">
+                                  <pagination-controls (pageChange)="page = $event"
+                                  previousLabel="Anterior"
+                                  nextLabel="Siguiente"></pagination-controls>
+                                </div>
+                            </div>
+                          </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="card">
+                      <div class="card-header" id="headingThree">
+                          <h5 class="mb-0">
+                              <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">Descripcion Supervisor</button>
+                          </h5>
+                      </div>
+                      <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-bs-parent="#accordion">
+                          <div class="card-body position-relative">
+
+
+                            <div class="container">
+                              <div class="row">
+                                <div class="table-responsive">
+                                  <table class="table table-hover">
+                                    <thead>
+                                      <tr>
+                                        <th>Nombre</th>
+                                      <!-- <th>Correo</th> -->
+                                        <th>Creacion</th>
+                                        
+                                      </tr>
+                                    </thead>
+                                    <tbody *ngFor="let super of totalResultsSuper | paginate: { itemsPerPage: 3, currentPage: page }">
+                                      <tr>
+                                        <td>{{super.nombre}}</td>
+                                        <!-- <td>{{super.correo}}</td> -->
+                                        <td>{{moment(super.ingreso).format('LL')}}</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>   
+                                </div>
+                                <div class="col-md-12 text-center">
+                                  <pagination-controls (pageChange)="page = $event"
+                                  previousLabel="Anterior"
+                                  nextLabel="Siguiente"></pagination-controls>
+                                </div>
+                            </div>
+                          </div>
+
+
+
+                            </div>
+                      </div>
+                  </div>
+                  <!-- <div class="card">
+                      <div class="card-header" id="headingFour">
+                          <h5 class="mb-0">
+                              <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">Descripcion Administrador</button>
+                          </h5>
+                      </div>
+                      <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-bs-parent="#accordion">
+                          <div class="card-body position-relative">
+                              It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                          </div>
+                      </div>
+                  </div> -->
+                  <div class="card">
+                      <div class="card-header" id="headingFive">
+                          <h5 class="mb-0">
+                              <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">Descripcion Cliente</button>
+                          </h5>
+                      </div>
+                      <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-bs-parent="#accordion">
+                          
+                        <div class="container">
+                          <div class="row">
+                            <div class="table-responsive">
+                              <table class="table table-hover">
+                                <thead>
+                                  <tr>
+                                    <th>Nombre</th>
+                                  <!-- <th>Correo</th> -->
+                                    <th>Supervisor</th>
+                                    
+                                  </tr>
+                                </thead>
+                                <tbody *ngFor="let cliente of listclientes | paginate: { itemsPerPage: 3, currentPage: page }">
+                                  <tr>
+                                    <td>{{cliente.nombre}}</td>
+                                    <!-- <td>{{super.correo}}</td> -->
+                                    <td>{{cliente.usuario.nombre}}</td>
+                                  </tr>
+                                </tbody>
+                              </table>   
+                            </div>
+                            <div class="col-md-12 text-center">
+                              <pagination-controls (pageChange)="page = $event"
+                              previousLabel="Anterior"
+                              nextLabel="Siguiente"></pagination-controls>
+                            </div>
+                        </div>
+                      </div>
+
+
+
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+</body> 

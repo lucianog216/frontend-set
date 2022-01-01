@@ -23,17 +23,6 @@
 			  <li><a class="dropdown-item" routerLink="/supervisor/AgregarGuardia" >Agregar Guardias</a></li>
 			</ul>
 		  </li>
-		  <li class="nav-item dropdown" style="margin-left: 15px;">
-			<a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-			  Turnos
-			</a>
-			<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-			  <li><a class="dropdown-item" routerLink="/supervisor/list_turnos">Turnos</a></li>
-			  <div class=dropdown-divider></div>
-			  <li><a class="dropdown-item"  routerLink="/supervisor/turnero"> Asignacion turnos </a></li>
-			</ul>
-		  </li>
-
 		  
 		  <li class="nav-item" style="margin-left: 15px;">
 			<a class="nav-link" routerLink="/supervisor/CalendarioMañana">Calendario</a>
@@ -98,7 +87,7 @@
 <div class="container py-2">
   <div class="row">
     <div class="col-12 mt-3 mb-1">
-      <p class="p">  Visualizacion Turnos - Modulo Administrador</p>
+      <p class="p">  Visualizacion Turnos - Modulo Supervisor</p>
     </div>
   </div>
 
@@ -114,7 +103,7 @@
 			<th>Fecha</th>
 			<th>Ingreso</th>
 			<th>Horario</th>
-			<th>Supervisor</th>
+			<th>Accion</th>
 		  </tr>
 		  
 		</thead>
@@ -125,7 +114,8 @@
 			<td>{{moment(turnos.inicio).format('LL')}}</td>
 			<td>{{turnos.turno.ingreso}}</td>
 			<td>{{turnos.turno.nombre}}</td>
-			<td>{{turnos.usuario.nombre}}</td>
+			<td><button class="btneliminarsolinfo btn" style="background-color:#FF0206;border: 0px !important; margin-left: 5px; color:white;" (click) = "deleteUsuario(turnos.id)" ><i class="fa fa-trash" ></i></button>
+			</td>
 		  </tr>
 		 </tbody>
 		</table>
