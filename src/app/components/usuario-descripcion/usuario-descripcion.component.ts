@@ -18,12 +18,11 @@ interface HtmlInputEvent extends Event {
   providers: [UsuarioService],
 })
 export class UsuarioDescripcionComponent implements OnInit {
- 
+  archivos : any = []
   usuarioForm: FormGroup;
   uid: string | null;
- 
-
-
+  img: FormData
+  archivo: File
   constructor(private fb: FormBuilder,
     private usuarioService: UsuarioService,
     private toastr: ToastrService,
@@ -47,22 +46,22 @@ export class UsuarioDescripcionComponent implements OnInit {
 
     }
 
-    addUsuario(){
-      console.log(this.usuarioForm)
-      console.log(this.usuarioForm.get('usuario')?.value);
+    // addUsuario(){
+    //   console.log(this.usuarioForm)
+    //   console.log(this.usuarioForm.get('usuario')?.value);
   
-      const IMG : img = {
+    //   const IMG : img = {
       
-      img: this.usuarioForm.get('img')?.value,
+    //   img: this.usuarioForm.get('img')?.value,
         
-      }
-      if (this.uid !== null){
-        this.usuarioService.CargarImagen(this.uid, IMG).subscribe(data =>{})
-        this.toastr.info('El usuario fue actualizado con exito!', 'Usuario actualizado');
-        this.router.navigate(['/usuario'])  
+    //   }
+    //   if (this.uid !== null){
+    //     this.usuarioService.CargarImagen(this.uid, IMG).subscribe(data =>{})
+    //     this.toastr.info('El usuario fue actualizado con exito!', 'Usuario actualizado');
+    //     this.router.navigate(['/usuario'])  
         
-      }
-    }
+    //   }
+    // }
 getimagen(){
   if(this.uid !== null) {
   this.usuarioService.obtenerimg(this.uid).subscribe(
@@ -78,9 +77,31 @@ getimagen(){
 
 
   }
-  
-  
 
+  caturarFile(event):any{
+
+    const archivoCapturado = event.target.files[0]
+    this.archivos.push(archivoCapturado)
+
+
+  }
+
+  subirfoto():any{
+    const formularioFoto = new FormData();
+    this.archivos.forEach(archivo =>{
+      formularioFoto.append('file', archivo)
+      console.log(archivo)
+      this.usuarioService.CargarImagen(this.uid, archivo).subscribe(data =>{})
+        this.toastr.info('El usuario fue actualizado con exito!', 'Usuario actualizado');
+          
+    })
+    
+        
+
+
+}
+
+  
   
   geteditarUsuario(){
     if(this.uid !== null) {
@@ -92,8 +113,8 @@ getimagen(){
           celular: data.celular,
           password: '', 
           correo: data.correo, 
-          rol: data.rol,
-          region: data.region,
+          rol: data.rol.rol,
+          region: data.region.nombre,
           ciudad: data.ciudad,
           rut: data.rut,
           ingreso: data.ingreso,

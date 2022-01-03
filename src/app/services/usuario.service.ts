@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import {HttpClient } from '@angular/common/http';
+import {HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { usuario } from '../models/Usuario';
-import {  img, servicio, teamguard, TESTRESP, turnos, turneros, IEvent2, teamcliente, borrarGuardiaEquipo, evet2 } from '../interfaces/interfaces';
+import {  img, observacion, servicio, teamguard, TESTRESP, turnos, turneros, IEvent2, teamcliente, borrarGuardiaEquipo, evet2 } from '../interfaces/interfaces';
 import { clientes } from '../interfaces/interfaces';
 import { teams } from '../interfaces/interfaces';
 import { Turnos } from '../models/Turnos';
@@ -43,7 +43,8 @@ export class UsuarioService {
    url25 = 'http://localhost:8080/api/servicios/';
    url26 = 'http://localhost:8080/api/reportes/rptTurnos/';
    url27 = 'http://localhost:8080/api/reportes/rptTeams/guardias';
-   url28 = 'http://localhost:8080/api/reportes/rptTurnosHs/'
+   url28 = 'http://localhost:8080/api/reportes/rptTurnosHs/';
+   url29 = 'http://localhost:8080/api/turneros/obs/'
 
   constructor( private http: HttpClient) {
    }
@@ -119,8 +120,9 @@ export class UsuarioService {
   addGuardiaTeams(uid: string, _id:teamguard): Observable<any>{
     return this.http.put(this.url7 + uid, _id)
   }
-  deleteGuardia_teams( guardiadelete :borrarGuardiaEquipo, listteams69:string ): Observable<any>{
-    return this.http.put(this.url11 + guardiadelete, listteams69 ); 
+  deleteGuardia_teams( _id, listteams96): Observable<any>{
+   
+    return this.http.delete(this.url11 + listteams96, _id ); 
   }
   //supervisores
   getResultsSupervisor(): Observable<any> {
@@ -134,7 +136,8 @@ export class UsuarioService {
   obtenerimg(uid: string ){
     return this.http.get<any>(this.url10 );
   }
-  CargarImagen(uid: string, archivo:img): Observable<any>{
+  CargarImagen(uid: string, archivo: img){
+    
     return this.http.put(this.url12 + uid, archivo)
   }
  //servicio
@@ -211,7 +214,12 @@ getGeneralTurnos(_id: string): Observable<any> {
   return this.http.get(this.url28 + _id);
 }
 // turno por id X reporte
-getTurneroIDReporte(id: string): Observable<any> {
-  return this.http.get(this.url15 + id);
+getTurneroIDReporte(turno4: string): Observable<any> {
+  return this.http.get(this.url15 + turno4);
 }
+//observacion Turno
+observacion(id: string, observacion:observacion): Observable<any>{
+  return this.http.put(this.url29 + id, observacion)
+}
+
 }

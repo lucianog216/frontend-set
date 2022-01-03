@@ -18,10 +18,15 @@ import localeEs from '@angular/common/locales/es';
 })
 export class AdmReporteEquipoCalendarioTurnoComponent implements OnInit {
   _id: string | null;
+  id: string | null;
+  turno4: any
   locale: string = 'es';
   datoUsuario =[]
   data3=[];
   turno=[]
+  turno3: CalendarEvent<any>
+  event: CalendarEvent<any>;
+  idguardia:string
   uid: string | null;
   datoUid : string;
   @ViewChild('modalContent', { static: false }) modalContent: TemplateRef<any>;
@@ -31,7 +36,7 @@ export class AdmReporteEquipoCalendarioTurnoComponent implements OnInit {
   CalendarView = CalendarView;
 
   viewDate: Date = new Date();
-
+  turno2:{event: CalendarEvent};
   modalData: {
     action: string;
     event: CalendarEvent;
@@ -40,7 +45,7 @@ export class AdmReporteEquipoCalendarioTurnoComponent implements OnInit {
   actions: CalendarEventAction[] = [];
   
   refresh = new Subject<void>();
-  
+  events: CalendarEvent[]
 
   activeDayIsOpen: boolean = true;
 
@@ -50,8 +55,9 @@ export class AdmReporteEquipoCalendarioTurnoComponent implements OnInit {
     this._id = this.aRouter.snapshot.paramMap.get('_id'); 
   }
   ngOnInit(): void{
-
     
+    this.ObtenerID();
+
     this.getTurno()
 
 
@@ -63,7 +69,8 @@ export class AdmReporteEquipoCalendarioTurnoComponent implements OnInit {
     }
   
   }
-  events: CalendarEvent[] 
+  
+   
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
       if (
@@ -92,16 +99,23 @@ export class AdmReporteEquipoCalendarioTurnoComponent implements OnInit {
         };
       }
       return iEvent;
+      
     });
     this.handleEvent('Dropped or resized', event);
+    
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
-    
-    this.usuarioService.getGeneralTurnos(this._id).subscribe(data => {
-      this.data3 = data.results[0];
-      console.log('gatoooo',this.data3);
+    this.turno4 = event.id
+    console.log('gatoooo',this.turno4)
+  
+   
+    if(this.turno4 !== null) {
+    this.usuarioService.getTurneroIDReporte(this.turno4).subscribe(data => {
+      this.data3 = data.id;
+      console.log(this.data3);
+     this.router.navigate(['usuario/reporte/gurdiaTurno', this.data3])
      
      for(let i=0;i<this.data3.length;i++){
       console.log(this.data3);
@@ -109,13 +123,15 @@ export class AdmReporteEquipoCalendarioTurnoComponent implements OnInit {
         {
           id: this.data3[i].id,
         },
-        this.router.navigate(['usuario/reporte/gurdiaTurno', this.data3[i].id,]),
+        
       );
     }
   }, error => {
     console.log(error);
   })
+}
   }
+  
 
   getTurno(): void{
     if(this._id !== null) {
@@ -124,10 +140,13 @@ export class AdmReporteEquipoCalendarioTurnoComponent implements OnInit {
       this.data3 = data.results[0];
       console.log('turnos',this.data3);
      this.events=[]
-     for(let i=0;i<this.data3.length;i++){
+      
+     for(let i=0;i<this.data3.length;i++)
+     {
       this.events.push(   
         {
           title : this.data3[i].cliente.nombre,
+          id : this.data3[i].id,
         start: new Date( this.data3[i].inicio),
         end: new Date( this.data3[i].inicio),
       actions: this.actions,
@@ -137,14 +156,21 @@ export class AdmReporteEquipoCalendarioTurnoComponent implements OnInit {
         afterEnd: true,
       },
       draggable: true,
-        }
+        },
+        
       );
        
     }
+
   }, error => {
     console.log(error);
   })
     }
+  }
+
+  ObtenerID(){
+    
+
   }
 
   setView(view: CalendarView) {

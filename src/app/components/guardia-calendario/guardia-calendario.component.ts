@@ -38,6 +38,7 @@ declare var $: any;
 export class GuardiaCalendarioComponent implements OnInit {
   locale: string = 'es';
   datoUsuario =[]
+  turno4: any
   data3=[];
   turno=[]
   uid: string | null;
@@ -89,6 +90,7 @@ export class GuardiaCalendarioComponent implements OnInit {
       this.events.push(   
         {
           title : this.data3[i].cliente.nombre,
+          id : this.data3[i].id,
         start: new Date( this.data3[i].inicio),
         end: new Date( this.data3[i].inicio),
           color: colors.yellow,
@@ -160,17 +162,15 @@ export class GuardiaCalendarioComponent implements OnInit {
 
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
-    var datoid = localStorage.getItem('uid');
-    if(datoid == null){
-     
-    }else{
-      this.datoUid = datoid
-      
-    }
-    
-    this.usuarioService.getTurnerosid(this.datoUid).subscribe(data => {
-      this.data3 = data.results[0];
-      console.log('gatoooo',this.data3);
+    this.turno4 = event.id
+    console.log('gatoooo',this.modalData)
+  
+   
+    if(this.turno4 !== null) {
+    this.usuarioService.getTurneroid(this.turno4).subscribe(data => {
+      this.data3 = data.id;
+      console.log(this.data3);
+      this.router.navigate(['guardia/list_turno', this.data3])
      
      for(let i=0;i<this.data3.length;i++){
       console.log(this.data3);
@@ -178,12 +178,13 @@ export class GuardiaCalendarioComponent implements OnInit {
         {
           id: this.data3[i].id,
         },
-        this.router.navigate(['guardia/list_turno', this.data3[i].id,]),
+        
       );
     }
   }, error => {
     console.log(error);
   })
+}
   }
 
   setView(view: CalendarView) {

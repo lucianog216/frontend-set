@@ -43,6 +43,7 @@ export class SupervisorCalendarioComponent  {
   datoUsuario =[]
   data3=[]
   turno=[]
+  turno4: any
   uid: string | null;
   datoUid : string;
   @ViewChild('modalContent', { static: false }) modalContent: TemplateRef<any>;
@@ -160,20 +161,29 @@ export class SupervisorCalendarioComponent  {
 
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
-    this.usuarioService.getServicio().subscribe(data => {
-      this.data3 = data.servicios;
+    this.turno4 = event.id
+    console.log('gatoooo',this.modalData)
+  
+   
+    if(this.turno4 !== null) {
+    this.usuarioService.getServicioID(this.turno4).subscribe(data => {
+      this.data3 = data.id;
+      console.log(this.data3);
+      this.router.navigate(['supervisor/servicio_add', this.data3])
+     
      for(let i=0;i<this.data3.length;i++){
-      console.log(this.turno);
+      console.log(this.data3);
       this.turno.push(   
         {
           id: this.data3[i].id,
         },
-        this.router.navigate(['supervisor/servicio_add', this.data3[i].id,]),
+        
       );
     }
   }, error => {
     console.log(error);
   })
+}
   }
 
   setView(view: CalendarView) {

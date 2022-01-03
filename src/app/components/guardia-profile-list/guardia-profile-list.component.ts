@@ -1,21 +1,27 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Usuario } from 'src/app/interfaces/interfaces';
+import { Usuario, observacion } from 'src/app/interfaces/interfaces';
 import { Subject } from 'rxjs';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import{ FormGroup} from '@angular/forms'
+import{ FormBuilder, FormGroup, Validators} from '@angular/forms'
 import { UsuarioService } from '../../services/usuario.service';
+import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
+import * as moment from 'moment';
+import 'moment/locale/es';
+
 @Component({
   selector: 'app-guardia-profile-list',
   templateUrl: './guardia-profile-list.component.html',
   styleUrls: ['./guardia-profile-list.component.css']
 })
 export class GuardiaProfileListComponent implements OnInit, OnDestroy {
+  moment: any = moment;
+
   listUsuario: Usuario[] = [];
   totalUsuario: number = 0;
   dtOptions: DataTables.Settings = {};
   datoUsuario=[];
-  ServicioForm: FormGroup;
+  
   dtTrigger = new Subject();
   id: string | null;
   uid: string | null;
@@ -42,17 +48,25 @@ export class GuardiaProfileListComponent implements OnInit, OnDestroy {
   ingreso=[]
   salida=[]
   total=[]
-
+  fecha =[]
+  descripcion=[]
+  clienteForm: FormGroup;
   idguardia: string;
-
-  constructor(private router: Router, 
+  searchValue:string = '';
+  constructor(private fb: FormBuilder, 
+    private router: Router, private toastr: ToastrService,
   private usuarioService: UsuarioService,
   private aRouter: ActivatedRoute) {
+    this.clienteForm = this.fb.group({ 
+
+      observacion: ['', Validators.required],
+
+    });
     this.id = this.aRouter.snapshot.paramMap.get('id'); 
     this.uid = localStorage.getItem('uid')
    }
 
-  ngOnInit(): void{
+  ngOnInit(){
 
     
     this.geteditarTeams();
@@ -77,7 +91,8 @@ export class GuardiaProfileListComponent implements OnInit, OnDestroy {
     this.obtenerUsuario();
   }
 
-  geteditarTeams(): void{
+  geteditarTeams(){
+    
     if(this.id !== null) {
       this.usuarioService.getTurneroid(this.id).subscribe(data =>{
         this.idguardia = data.id
@@ -92,11 +107,17 @@ export class GuardiaProfileListComponent implements OnInit, OnDestroy {
         this.ingresoturno = data.turno.ingreso;
         this.salidaturno = data.turno.salida;
         this.equipoguardia = data.team.nombre;
-  console.log('gato',data)
+        this.fecha = data.inicio;
+        this.descripcion = data.observacion
+         console.log('gato',data)
+         
       })
     }
     
+
   }
+
+
   obtenerTeams1(): void{
     var datoteam = localStorage.getItem ('team');
     if(datoteam == null){
@@ -120,6 +141,26 @@ export class GuardiaProfileListComponent implements OnInit, OnDestroy {
 
     })
   }
+
+  clearSearch() {
+    this.searchValue = null;
+  }
+
+  ingresarObservacion(){
+    if(this.id !== null){
+      const observacion : observacion = {
+
+        observacion: this.clienteForm.get('observacion')?.value,
+      }
+      this.usuarioService.observacion(this.id, observacion ).subscribe(data =>{
+        console.log('observacion',data)
+      })
+      this.toastr.info('La observacion fue ingresada con exito!', 'observacion actualizado');
+      window.location.reload();
+    }
+
+  }
+  
   salidausuario( ) {
 
     Swal.fire('salida correcta')

@@ -5,10 +5,8 @@
       <a class="navbar-brand" routerLink="/guardia/calendario">
         <i class="fas fa-link"></i> SET
       </a>
-     
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ">
-          
           <li class="nav-item dropdown">
             <li class="nav-item">
               <a class="nav-link" routerLink="/guardia/calendario">Calendario </a>
@@ -16,17 +14,12 @@
           <!-- <li class="nav-item">
             <a class="nav-link" routerLink="/guardia/list_turno">Turnos </a>
           </li> -->
-          
-          
           <li class="nav-item">
             <a class="nav-link" routerLink="/guardia/list_equipos"> Mi Equipos</a>
           </li>
-         
-         
         </ul>
       </div>
       <div class="nav-item ">
-  
         <ul   class=navbar-nav ml-auto>
           <li class=nav-item dropdown dropdown-menu-right>
             <a class=nav-link dropdown-toggle href=# id=navbarDropdown role=button data-toggle=dropdown aria-haspopup=true aria-expanded=false>
@@ -35,7 +28,6 @@
             </a>
             <div class="dropdown-menu dropdown-menu-dark" aria-labelledby=navbarDropdown>
               <a class=dropdown-item routerLink="/guardia/info_personal">Informacion Personal</a>
-
               <div class=dropdown-divider></div>
               <a class=dropdown-item  routerLink="" (click)="logout()">Salir</a>
             </div>
@@ -46,12 +38,12 @@
   </nav>
 
 
-
-  <div class="container">
+<div class="container " >
+  
     <div class="row">
       <div class="col-12 mt-3 mb-1">
          
-        <p class="p"> Turno - Modulo Guardia</p>
+        <p class="p"> Turno {{nomguardia}}  {{apellidoguardia}} - Modulo Guardia</p>
         
       </div>
     </div>
@@ -60,49 +52,42 @@
 
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
-<div class="page-inner no-page-title">
+ <div class="page-inner no-page-title">
     <!-- start page main wrapper -->
     <div id="main-wrapper" >
-        <div class="row">
+        <div class="row" style="background-color:rgb(226, 236, 241); padding-top: 20px;">
             <div class="col-lg-1 col-xl-3">
                 <div class="card card-white grid-margin">
                     <div class="card-heading clearfix">
-                        <h4 class="card-title">Turno de {{nomguardia}} </h4>
+                        <strong class="card-title">Turno de {{nomguardia}} </strong>
                     </div>
                     <div class="card-body user-profile-card mb-1">
                         <img [src]="'http://localhost:8080/api/uploads/usuarios/'+ uid " class="user-profile-image rounded-circle" alt="" />
                         <h4 class="text-center h6 mt-2">{{nomguardia}} {{apellidoguardia}}</h4>
                         <p class="btn btn-theme btn-sm">Equipo: {{equipoguardia}}</p>
                         <p class="btn btn-theme btn-sm">Supervisor: {{supervisorguardia}}</p>
-                        <p class="btn btn-theme btn-sm">Turno: {{turnoguardia}}</p>
+                        <p class="btn btn-theme btn-sm">Turno: {{turnoguardia}}</p>  
+                        <p class="btn btn-theme btn-sm"> {{moment(fecha).format('LL')}}</p> 
                         <div  >
-                        <button type="button" (click) = "ingresousuario()"  class="btn btn-info">Inicio</button>
-                        <button type="button" (click) = "salidausuario()"  class="btn btn-warning" style="margin-left: 2px;">Salida</button>
+                        <button type="button" (click) = "ingresousuario()"  class="btn btn-outline-info" >Inicio</button>
+                        <button type="button" (click) = "salidausuario()"  class="btn btn-outline-warning" style="margin-left: 5px;">Salida</button>
                       </div>
                     </div>
                     
                    
-                    <hr />
-                    <div class="card-heading clearfix mt-1">
-                        <h4 class="card-title">Informacion</h4>
-                    </div>
-                    <p class="btn btn-theme btn-sm">Ingreso: {{ingresoturno}}</p>
-                    <p class="btn btn-theme btn-sm">Salida: {{salidaturno}}</p>
-                    <p class="btn btn-theme btn-sm">Supervisor: {{supervisorguardia}}</p>
-                   
                 </div>
             </div>
             <div class="col-lg-7 col-xl-6">
-                <div class="card card-white grid-margin">
+                <div class="card card-white grid-margin" >
                     <div class="card-body">
-                        <div class="post">
-                            <textarea class="form-control" placeholder="Observaciones" rows="4"></textarea>
-                            <div class="post-options">
-                                <a href="#"><i class="fa fa-camera"></i></a>
+                        <form form [formGroup]="clienteForm" (ngSubmit)="ingresarObservacion()" >
+                            <textarea class="form-control" type="text" value="observacion" formControlName="observacion" placeholder="Observaciones" [value]="searchValue" rows="4"></textarea>
+                            <div class="post-options"  >
+                                <!-- <a href="#"><i class="fa fa-camera"></i></a> -->
 
-                                <button class="btn btn-outline-primary float-right">Actualizar</button>
+                                <button class=" btn btn-outline-primary float-right" (click)="clearSearch()" type="submit" > Observacion</button>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
                 <div class="profile-timeline">
@@ -112,26 +97,37 @@
                                 <div class="card-body">
                                     <div class="timeline-item-header">
                                         <img [src]="'http://localhost:8080/api/uploads/usuarios/'+ uid " alt="" />
-                                        <p> {{nomguardia}} {{apellidoguardia}} <span>observacion anterior</span></p>
+                                        <p> {{nomguardia}} {{apellidoguardia}} <span>Informacion Turno</span></p>
                                         
                                     </div>
                                     <div class="timeline-item-post">
-                                        <p> este debe ser un registro anterior o observacion anterio</p>
-                                        <div class="timeline-options">
-                                        </div>
-                                     <!---  <textarea class="form-control" placeholder="Replay"></textarea>--> 
+                                      <table class="table table-borderless mb-0 text-muted">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">Turno:</th>
+                                                <td>{{turnoguardia}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Ingreso:</th>
+                                                <td>{{ingresoturno}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Salida:</th>
+                                                <td>{{salidaturno}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                     </div>
                                 </div>
                             </div>
                         </li>
-                  
                     </ul>
                 </div>
             </div>
             <div class="col-lg-12 col-xl-3">
                 <div class="card card-white grid-margin">
                     <div class="card-heading clearfix">
-                        <h4 class="card-title">Miembros de equipo</h4>
+                        <strong class="card-title">Miembros de equipo</strong>
                     </div>
                     <div class="card-body">
                         <div class="team">
@@ -140,15 +136,20 @@
                                 <img   [src]="'http://localhost:8080/api/uploads/usuarios/'+ guardia._id " height="30px" width="30px" />
                                 <h4 class="text-center h6 mt-2"> {{guardia.nombre}}</h4>
                             </div>
-                            
-                            
                         </div>
                     </div>
                         <hr />
-                        <div class="card-heading clearfix mt-1">
+                        <div class="card-heading clearfix mt-2">
+                          <strong class="card-title">Observacion del turno</strong>
+                      </div>
+                   
+                    <p class="btn btn-theme btn-sm">{{descripcion}}</p>
+                   
+                        <!-- <div class="card-heading clearfix mt-1">
                           <h4 class="card-title">Informacion Guardia</h4>
                       </div>
                     <div class="card-body">
+                      
                         <div class="table-responsive">
                             <table class="table table-borderless mb-0 text-muted">
                                 <tbody>
@@ -166,41 +167,17 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        
-                    </div>
-            </div>
-            <hr />
-            <div class="card-heading clearfix mt-1">
-              <h4 class="card-title">Informacion Turno</h4>
-          </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-borderless mb-0 text-muted">
-                    <tbody>
-                        <tr>
-                            <th scope="row">Ingreso:</th>
-                            <td>{{ingreso}}</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Salida:</th>
-                            <td>{{salidaturno}}</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Total horas:</th>
-                            <td>8 hrs</td>
-                        </tr>
-                    </tbody>
-                </table>
-            
-        </div>
-</div>
-        </div>
+                         </div>
+                   </div> -->
+                </div>
+             </div>
         <!-- Row -->
-    </div>
+         </div>
     <!-- end page main wrapper -->
-    
+      </div>
+   </div>
 </div>
-</div>
+  
 
 
 

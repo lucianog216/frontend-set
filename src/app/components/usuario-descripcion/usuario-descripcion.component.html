@@ -3,7 +3,7 @@
   
 
   <body>
-     <form form [formGroup]="usuarioForm"    (ngSubmit)="addUsuario()">
+     <form form [formGroup]="usuarioForm" (submit)="subirfoto()"  >
 
     <div class="wrapper">
         <div class="left">
@@ -67,10 +67,11 @@
             <div class="social_media">
 
                <button type="button" style="margin-left: 10px" class="btn btn-outline-info waves-effect" routerLink="/usuario" >Regresar</button>
-               <input type="file" formControlName="img"  style="margin-left: 10px" class="col-lg-5 btn btn-outline-secondary"  >    
+
+               <input type="file" formControlName="img" (change)="caturarFile($event)"  style="margin-left: 10px" class="col-lg-5 btn btn-outline-secondary"  >    
                 
               
-              <button type="submit" style="margin-left: 10px"  class="btn btn-info btn-lg btn-responsive" id="search"> <span class="glyphicon glyphicon-search"></span> Agregar</button>
+              <button  style="margin-left: 10px"  class="btn btn-info btn-lg btn-responsive" > <span class="glyphicon glyphicon-search"></span> Agregar</button>
  
             </div>
         </div>

@@ -116,13 +116,13 @@
 
 
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-<div class="container" >
-   <div class="col-md-12" style="padding: 20px">
+<div class="container" id="htmlData" >
+   <div class="col-md-12" style="padding: 20px" >
       <div class="invoice">
          <!-- begin invoice-company -->
          <div class="invoice-company text-inverse f-w-600">
             <span class="pull-right hidden-print">
-            <a href="javascript:;" class="btn btn-sm btn-white m-b-10 p-l-5"><i class="fa fa-file t-plus-1 text-danger fa-fw fa-lg"></i> Exportar a PDF</a>
+            <a href="javascript:;" (click)="downloadPDF()" class="btn btn-sm btn-white m-b-10 p-l-5"><i class="fa fa-file t-plus-1 text-danger fa-fw fa-lg"  ></i> Exportar a PDF</a>
             <a href="javascript:;" onclick="window.print()" style="margin-left: 8px;" class="btn btn-sm btn-white m-b-10 p-l-5"><i class="fa fa-print t-plus-1 fa-fw fa-lg"></i> imprimir</a>
             </span>
             {{cliente}}
@@ -192,13 +192,13 @@
                      <tr>
                         <td>
                            <span class="text-inverse">Estado del turno</span><br>
-                           <small>true: turno NO realizado | false: turno realizado</small>
+                           <small>verificar si el turno fue realizado</small>
                         </td>
                         <td>
                           <span class="text-inverse"> </span><br>
                        </td>
                        <td>
-                        <span class="text-inverse">Estado {{estado}}</span><br>
+                        <span class="text-inverse">Turno {{estado === false? 'Realizado':'NO Realizado'  }}</span><br>
                      </td>
                      <td>
                       <span class="text-inverse">  </span><br>
@@ -206,11 +206,11 @@
                      </tr>
                      <tr>
                         <td>
-                           <span class="text-inverse">Cantidad de horas</span><br>
-                           <small>Horas realizadas o a realizar</small>
+                           <span class="text-inverse"> Observación del turno</span><br>
+                           <small> {{observacion}} </small>
                         </td>
                         <td class="text-inverse"> </td>
-                        <td class="text-inverse" >Horas del turno {{horas}}</td>
+                        <td class="text-inverse" ></td>
                         <td class="text-inverse"> </td>
                      </tr>
                   </tbody>
@@ -223,7 +223,7 @@
                   <div class="invoice-price-row">
                      <div class="sub-price">
                         <!-- <small>SUBTOTAL</small> -->
-                        <span class="text-inverse">Cantidad total de horas de guardia</span>
+                        <span class="text-inverse">Cantidad de horas del turno {{horas}} </span>
                      </div>
                      <!-- <div class="sub-price">
                         <i class="fa fa-plus text-muted"></i>
@@ -235,7 +235,7 @@
                   </div>
                </div>
                <div class="invoice-price-right">
-                  <small>TOTAL GUARDIA</small> <span class="f-w-600"> {{totalhoras}} </span>
+                  <small>TOTAL HORAS</small> <span class="f-w-600"> {{totalhoras}} </span>
                </div>
             </div>
             <!-- end invoice-price -->

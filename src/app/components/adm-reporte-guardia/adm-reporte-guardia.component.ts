@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment'
+import 'moment/locale/es';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 import { UsuarioService } from 'src/app/services/usuario.service';
 @Component({
   selector: 'app-adm-reporte-guardia',
@@ -26,18 +29,20 @@ export class AdmReporteGuardiaComponent implements OnInit {
   turno = []
   supervisor = []
   equipo = []
-  estado = []
+  estado : boolean
   horas = []
+  observacion = []
   totalhoras = []
   idguardia:string
   constructor(private router: Router,
     private usuarioService: UsuarioService,
     private aRouter: ActivatedRoute,) {
       this.id = this.aRouter.snapshot.paramMap.get('id'); 
-     }
+    }
+  
 
   ngOnInit() {
-    
+  
     this.date = moment(new Date()).format('DD-MM-YYYY');
     console.log(moment(new Date()).format('YYYY'));
 
@@ -77,13 +82,36 @@ export class AdmReporteGuardiaComponent implements OnInit {
           this.horas = data.turno.horas
           this.totalhoras = data.guardia.totalHoras
           this.idguardia = data.id
+          this.observacion = data.observacion
           console.log('gatooo',data )
+          console.log('observacion',this.estado )
         })
       }
     
+  }
+  downloadPDF() {
+    // Extraemos el
+    const DATA: any = document.getElementById('htmlData');
+    const doc = new jsPDF('p', 'pt', 'a4');
+    const options = {
+      background: 'white',
+      scale: 3
+    };
+    html2canvas(DATA, options).then((canvas) => {
 
+      const img = canvas.toDataURL('image/PNG');
 
-
+      // Add image Canvas to PDF
+      const bufferX = 15;
+      const bufferY = 15;
+      const imgProps = (doc as any).getImageProperties(img);
+      const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      doc.addImage(img, 'PNG', bufferX, bufferY, pdfWidth, pdfHeight, undefined, 'FAST');
+      return doc;
+    }).then((docResult) => {
+      docResult.save(moment(new Date()).format('LL'));
+    });
   }
 
   logout(){

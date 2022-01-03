@@ -148,7 +148,9 @@ export interface teamguard{
 }
 
 export interface img{
-    img: string;
+
+    archivo: string
+
 }
 
 
@@ -241,7 +243,10 @@ export interface evet2{
     hasta: Date;
 }
 
-
+export interface observacion{
+    
+    observacion: string;
+}
 
 
 export interface Cliente {

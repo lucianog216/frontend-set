@@ -27,7 +27,7 @@ export class SupervisorAddGuardiaEquipoComponent implements OnInit {
   listteams2= [];
   datoUsuario=[];
   listteams3=[];
-  listteams69:string
+  listteams96:string
   listResultsg2=[]
   datouid: string;
   datoteams: string;
@@ -72,10 +72,9 @@ export class SupervisorAddGuardiaEquipoComponent implements OnInit {
       console.log('gatooooo',this.datouid );
     }
     this.usuarioService.getTeamXsupervisor(this.datouid).subscribe(data => {
-       this.listteams69 = data.results[0];
-       console.log('gatooooo',this.listteams2 );
+       this.listteams96 = data.results[0][0]._id;
+       console.log('gatooooo2',this.listteams96 );
 
-     
       });
     
 
@@ -139,6 +138,7 @@ export class SupervisorAddGuardiaEquipoComponent implements OnInit {
   }
 }
 obtenerSupervisores() {
+  
 
   this.usuarioService.getResultsSupervisor().subscribe(data => {
    this.listResults = data.results;
@@ -149,6 +149,18 @@ obtenerSupervisores() {
 
 borrarguardia(_id: string ) {
 
+  var datoUid = localStorage.getItem('uid');
+    if(datoUid == null){
+    }else{
+      this.datouid = (datoUid)
+      console.log('gatooooo',this.datouid );
+      
+    }
+    this.usuarioService.getTeamXsupervisor(this.datouid).subscribe(data => {
+      this.listteams96 = data.results[0][0]._id;
+      console.log('gatooooo2',this.listteams96 );
+  
+  
   Swal.fire({
     title: '¿eliminar usuario?',
     text: "el usuario sera eliminado de forma permanente!",
@@ -160,16 +172,13 @@ borrarguardia(_id: string ) {
     cancelButtonText: 'Cancelar'
   }).then((result) => {
 
-    const guardiadelete : borrarGuardiaEquipo = {
-
-      guardia: this.teamsForm.get(_id)?.value,
-    }
+   
     if (result.isConfirmed) {
-      this.usuarioService.deleteGuardia_teams(guardiadelete, this.listteams69).subscribe(
+      this.usuarioService.deleteGuardia_teams(_id, this.listteams96).subscribe(
         
       (res) => {
         console.log('team:', this.datouid)
-        console.log('guardia:', guardiadelete)
+        console.log('guardia:', _id)
 
         this.router.navigate(['supervisor/list_equipos'])  
     },
@@ -182,7 +191,8 @@ borrarguardia(_id: string ) {
         'success'
       )
     }
-  })      
+  })    
+});  
   }
 
   logout(){
